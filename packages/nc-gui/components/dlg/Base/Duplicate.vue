@@ -15,10 +15,6 @@ const { navigateToProject } = useGlobal()
 
 const { refreshCommandPalette } = useCommandPalette()
 
-const { isFeatureEnabled } = useBetaFeatureToggle()
-
-const isScriptsEnabled = computed(() => isFeatureEnabled(FEATURE_FLAG.NOCODB_SCRIPTS))
-
 const { api } = useApi()
 
 const { $e, $poller } = useNuxtApp()
@@ -34,7 +30,6 @@ const options = ref({
   includeViews: true,
   includeHooks: true,
   includeComments: true,
-  includeScripts: true,
 })
 const targetWorkspace = ref(activeWorkspace)
 
@@ -50,13 +45,12 @@ const isEaster = ref(false)
 const dropdownOpen = ref(false)
 
 const optionsToExclude = computed(() => {
-  const { includeData, includeViews, includeHooks, includeComments, includeScripts } = options.value
+  const { includeData, includeViews, includeHooks, includeComments } = options.value
   return {
     excludeData: !includeData,
     excludeViews: !includeViews,
     excludeHooks: !includeHooks,
     excludeComments: !includeComments,
-    excludeScripts: !includeScripts,
   }
 })
 
@@ -224,6 +218,7 @@ onKeyStroke('Enter', () => {
             <NcSwitch :checked="options.includeData" />
             {{ $t('labels.includeRecords') }}
           </div>
+
           <template v-if="isEaster">
             <div
               class="flex gap-3 cursor-pointer leading-5 text-nc-content-gray font-medium items-center"
@@ -248,15 +243,6 @@ onKeyStroke('Enter', () => {
           >
             <NcSwitch :checked="options.includeComments" />
             {{ $t('labels.includeComments') }}
-          </div>
-
-          <div
-            v-if="isScriptsEnabled && isEeUI"
-            class="flex gap-3 cursor-pointer leading-5 text-nc-content-gray font-medium items-center"
-            @click="options.includeScripts = !options.includeScripts"
-          >
-            <NcSwitch :checked="options.includeScripts" />
-            {{ $t('labels.includeScripts') }}
           </div>
         </div>
 

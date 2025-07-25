@@ -119,7 +119,7 @@
     "upgradeToAdd": "Passez à une version supérieure pour ajouter",
     "requestUpgradeToAdd": "Demander la mise à niveau pour ajouter",
     "upgradeToAddMoreExtensions": "Vous êtes actuellement sur le plan Gratuit, qui permet seulement une extension. Passez à une version supérieure pour débloquer des extensions illimitées.",
-    "upgradeToAddMoreScripts": "Vous êtes actuellement sur le plan Gratuit, qui n'autorise qu'un seul script. Passez à une offre supérieure pour débloquer un nombre illimité de scripts.",
+    "upgradeToAddMoreScripts": "You're currently on the Free plan, which allows only one script. Upgrade to unlock unlimited scripts.",
     "upgradeToAccessWsAudit": "Passez à une version supérieure pour accéder à l'audit de l'espace de travail",
     "upgradeToAccessWsAuditSubtitle": "Passez au plan {plan} pour activer les journaux d'audit de l'espace de travail et surveiller efficacement les activités clés.",
     "upgradeToAddMoreAttachments": "Passez à une version supérieure pour ajouter plus de pièces jointes",
@@ -139,25 +139,23 @@
     "WorkspaceOwnerNotified": "Propriétaire de l'espace de travail averti",
     "WorkspaceOwnerNotifiedSubtitle": "Votre demande de mise à niveau a été communiquée au propriétaire de l'espace de travail.",
     "failedToSendUpgradeRequest": "Échec de l'envoi de la demande de mise à niveau",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Débloquez une visibilité complète sur vos sources connectées. Affichez tous les enregistrements en passant au plan Plus.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Vous consultez {limit} des {total} enregistrements. Débloquez l'accès aux {remaining} enregistrements restants en passant au plan Plus.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Passez à une version supérieure pour débloquer l'accès complet aux données",
+    "upgradeToSeeMoreRecordInline": "Passez à une version supérieure pour voir tous les enregistrements provenant des sources de données externes",
+    "upgradeToSeeMoreRecordSubtitle": "Débloquez une visibilité complète sur vos sources connectées. Affichez tous les enregistrements en passant au plan Team.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Vous consultez {limit} des {total} enregistrements. Débloquez l'accès aux {remaining} enregistrements restants en passant au plan Team.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Le plan Gratuit autorise jusqu'à {limit} utilisateurs de type Éditeur, passez à une version supérieure pour obtenir un nombre illimité",
     "adjustCollaboratorRoles": "Ajuster les rôles des collaborateurs",
     "newEditorWillBeChanged": "New Editors will be charged",
     "newEditorWillBeChangedSubtitle": "New Editor and higher role members will be billed in the next billing cycle.",
     "upgradeToUploadWsImage": "Passez à une version supérieure pour téléverser une image d'espace de travail",
     "upgradeToUploadWsImageSubtitle": "Votre plan {activePlan} actuel autorise uniquement les icônes et les émojis. Passez au plan {plan} pour téléverser une image personnalisée comme avatar de votre espace de travail.",
-    "upgradeToUseCurrentUserFilter": "Passez à la version supérieure pour filtrer par l'utilisateur actuel",
-    "upgradeToUseCurrentUserFilterSubtitle": "Passez au plan {plan} pour utiliser des filtres affichant les données en fonction de l’utilisateur actuel.",
-    "upgradeToUseRowColoring": "Mettre à niveau pour utiliser la coloration des lignes",
-    "upgradeToUseRowColoringSubtitle": "Passez au plan {plan} pour colorer les lignes en fonction des valeurs de champ ou des conditions, ce qui facilitera l'analyse et la hiérarchisation de vos données."
+    "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -397,14 +395,14 @@
     "left": "restant",
     "seat": "Siège",
     "seats": "Sièges",
-    "automation": "Automatisation",
-    "resources": "Ressources",
-    "community": "Communauté",
-    "youtube": "YouTube",
-    "changelog": "Journal des modifications",
-    "contactSupport": "Contacter le support",
-    "proceedImport": "Procéder à l'import",
-    "inserting": "Insertion en cours"
+    "automation": "Automation",
+    "resources": "Resources",
+    "community": "Community",
+    "youtube": "Youtube",
+    "changelog": "Changelog",
+    "contactSupport": "Contact Support",
+    "proceedImport": "Proceed Import",
+    "inserting": "Inserting"
   },
   "objects": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Utilisation d'un champ de sélection unique",
-      "usingSingleSelectFieldDescription": "Colorer les enregistrements en fonction d'\u0019un champ à sélection unique",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Vous quittez NocoDB",
     "onlyProceedIfYouTrustThisLink": "Continuez seulement si vous faites confiance à ce lien.",
     "reAssignViewModalSubtitle": "Une fois réaffecté, le propriétaire actuel ne pourra plus modifier la configuration de la vue.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "La fidélité paye — profitez de tarifs plafonnés !",
     "loyaltyBannerSubtitle": "Débloquez des sièges illimités, des enregistrements supplémentaires, plus de stockage, des webhooks conditionnels, le SSO, des intégrations, et bien plus encore !",
     "selectTimezone": "Afficher le fuseau horaire",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Inclure les vues",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Inclure le Webhook",
     "includeComments": "Inclure des commentaires",
     "zoomInToViewColumns": "Zoom avant pour afficher les colonnes",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Cliquer pour résoudre",
@@ -1649,7 +1631,6 @@
     "changePlan": "Changer le plan"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Chaque espace de travail doit avoir au moins un propriétaire. Veuillez attribuer un autre utilisateur en tant que Propriétaire avant de quitter l'espace de travail. Si vous êtes le dernier membre, envisagez de supprimer l'espace de travail à la place.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Rechercher des icônes",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

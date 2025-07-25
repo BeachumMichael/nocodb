@@ -3,13 +3,12 @@ import type { SelectProps } from 'ant-design-vue'
 import type { ColumnType, LinkToAnotherRecordType, TableType } from 'nocodb-sdk'
 import { RelationTypes, UITypes, isHiddenCol, isLinksOrLTAR, isSystemColumn, isVirtualCol } from 'nocodb-sdk'
 
-const { modelValue, isSort, allowEmpty, disableSmartsheet, ...restProps } = defineProps<{
+const { modelValue, isSort, allowEmpty, ...restProps } = defineProps<{
   modelValue?: string
   isSort?: boolean
   columns?: ColumnType[]
   allowEmpty?: boolean
   meta: TableType
-  disableSmartsheet?: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue'])
@@ -27,13 +26,7 @@ const localValue = computed({
   set: (val) => emit('update:modelValue', val),
 })
 
-const { showSystemFields, fieldsMap, isLocalMode } = disableSmartsheet
-  ? {
-      showSystemFields: ref(false),
-      fieldsMap: ref({}),
-      isLocalMode: ref(false),
-    }
-  : useViewColumnsOrThrow()
+const { showSystemFields, metaColumnById, fieldsMap, isLocalMode } = useViewColumnsOrThrow()
 
 const options = computed<SelectProps['options']>(() =>
   (
@@ -42,12 +35,12 @@ const options = computed<SelectProps['options']>(() =>
         isLocalMode.value &&
         c?.id &&
         fieldsMap.value[c.id] &&
-        (!fieldsMap.value[c.id]?.initialShow || (!showSystemFields.value && isSystemColumn(c)))
+        (!fieldsMap.value[c.id]?.initialShow || (!showSystemFields.value && isSystemColumn(metaColumnById?.value?.[c.id!])))
       ) {
         return false
       }
 
-      if (isSystemColumn(c)) {
+      if (isSystemColumn(metaColumnById?.value?.[c.id!])) {
         if (isHiddenCol(c, meta.value)) {
           /** ignore mm relation column, created by and last modified by system field */
           return false
@@ -60,7 +53,7 @@ const options = computed<SelectProps['options']>(() =>
         isLocalMode.value &&
         c?.id &&
         fieldsMap.value[c.id] &&
-        (!fieldsMap.value[c.id]?.initialShow || (!showSystemFields.value && isSystemColumn(c)))
+        (!fieldsMap.value[c.id]?.initialShow || (!showSystemFields.value && isSystemColumn(metaColumnById?.value?.[c.id!])))
       ) {
         return false
       }
@@ -68,7 +61,7 @@ const options = computed<SelectProps['options']>(() =>
       if (c.uidt === UITypes.Links) {
         return true
       }
-      if (isSystemColumn(c)) {
+      if (isSystemColumn(metaColumnById?.value?.[c.id!])) {
         if (isHiddenCol(c, meta.value)) {
           /** ignore mm relation column, created by and last modified by system field */
           return false

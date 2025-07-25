@@ -7,32 +7,23 @@ import { PlanTitles } from 'nocodb-sdk'
 interface Props {
   /** Required plan to access new feature */
   planTitle?: PlanTitles
-  /** Feature to check and show upgrade badge if not available */
-  feature?: PlanFeatureTypes
-  /**
-   * If feature is not provided, then it's important to provide limitOrFeature to send this info to backend for upgrade request
-   */
-  limitOrFeature?: PlanFeatureTypes | PlanLimitTypes
+  /** Feature to check */
+  feature: PlanFeatureTypes
   /** Title to show in upgrade modal */
-  title?: string
+  title: string
   /** Content to show in upgrade modal */
   content: string
   /** Callback will be triggered on click upgrade plan modal buttons or close modal */
   callback?: (type: 'ok' | 'cancel') => void
-
-  disabled?: boolean
-  removeClick?: boolean
-  featureEnabledCallback?: () => boolean
-  onClickCallback?: () => void
-  size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
 withDefaults(defineProps<Props>(), {
-  planTitle: PlanTitles.PLUS,
-  size: 'sm',
+  planTitle: PlanTitles.TEAM,
 })
 </script>
 
 <template>
-  <NcSpanHidden />
+  <span class="hidden"></span>
 </template>
+
+<style lang="scss" scoped></style>

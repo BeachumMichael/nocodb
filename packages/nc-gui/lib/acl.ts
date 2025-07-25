@@ -73,7 +73,6 @@ const rolePermissions = {
       airtableImport: true,
       jsonImport: true,
       excelImport: true,
-      nocodbImport: true,
       settingsPage: true,
       webhook: true,
       fieldEdit: true,
@@ -92,11 +91,6 @@ const rolePermissions = {
       baseAuditList: true,
 
       extensionList: true,
-
-      // Row colouring
-      rowColourUpdate: true,
-
-      projectOverviewTab: true,
     },
   },
   [ProjectRoles.EDITOR]: {

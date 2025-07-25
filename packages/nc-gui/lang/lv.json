@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Darba telpas īpašnieks informēts",
     "WorkspaceOwnerNotifiedSubtitle": "Jūsu jaunināšanas pieprasījums ir nosūtīts darba telpas īpašniekam.",
     "failedToSendUpgradeRequest": "Neizdevās nosūtīt jaunināšanas pieprasījumu",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Atbloķējiet pilnīgu redzamību saviem pieslēgtajiem avotiem. Skatiet visus ierakstus, jauninot uz Plus plānu.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Jūs skatāties {limit} no {total} ierakstiem. Atbloķējiet piekļuvi atlikušajiem {remaining} ierakstiem, jauninot uz Plus plānu.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Jauniniet, lai atbloķētu pilnu datu piekļuvi",
+    "upgradeToSeeMoreRecordInline": "Jauniniet, lai skatītu visus ierakstus no ārējiem datu avotiem",
+    "upgradeToSeeMoreRecordSubtitle": "Atbloķējiet pilnīgu redzamību saviem pieslēgtajiem avotiem. Skatiet visus ierakstus, jauninot uz Team plānu.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Jūs skatāties {limit} no {total} ierakstiem. Atbloķējiet piekļuvi atlikušajiem {remaining} ierakstiem, jauninot uz Team plānu.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Bezmaksas plāns atļauj līdz {limit} redaktora tipa lietotājiem; jauniniet, lai iegūtu neierobežotu skaitu",
     "adjustCollaboratorRoles": "Pielāgot sadarbības lomas",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Jauniniet, lai augšupielādētu darba telpas attēlu",
     "upgradeToUploadWsImageSubtitle": "Pašreizējais plāns {activePlan} ļauj izmantot tikai ikonas un emocijzīmes. Jauniniet uz plānu {plan}, lai kā darba telpas avatāru augšupielādētu pielāgotu attēlu.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Jūs atstājat NocoDB",
     "onlyProceedIfYouTrustThisLink": "Turpiniet tikai tad, ja uzticaties šai saitei.",
     "reAssignViewModalSubtitle": "Pēc pārdales pašreizējais īpašnieks vairs nevarēs rediģēt skata konfigurāciju.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "Lojalitāte atmaksājas — baudiet fiksētu cenu!",
     "loyaltyBannerSubtitle": "Atbloķējiet neierobežotas vietas, papildu ierakstus, lielāku krātuvi, nosacītus tīmekļa āķus, SSO, integrācijas un daudz ko citu!",
     "selectTimezone": "Rādīt laika joslu",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Iekļaut skatījumus",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Iekļaut webhook",
     "includeComments": "Iekļaut komentārus",
     "zoomInToViewColumns": "Tuvināt, lai skatītu kolonnas",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Noklikšķiniet, lai atrisinātu",
@@ -1649,7 +1631,6 @@
     "changePlan": "Mainīt plānu"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Katrā darbvietā jābūt vismaz vienam īpašniekam. Pirms pametiet darbvietu, norādiet citu lietotāju kā īpašnieku. Ja esat pēdējais dalībnieks, apsveriet darbvietas dzēšanu.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Meklēt ikonas",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

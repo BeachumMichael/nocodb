@@ -20,16 +20,7 @@ const position = ref<{ top: number; left: number } | undefined>()
 const mousePosition = ref<{ top: number; left: number } | undefined>()
 const isDragging = ref(false)
 
-/**
- * Tracks whether the size has been updated.
- * Prevents redundant updates when resizing elements.
- */
 const isSizeUpdated = ref(false)
-
-/**
- * Controls whether the next size update should be skipped.
- * Used to avoid unnecessary updates on initialization.
- */
 const skipSizeUpdate = ref(true)
 
 const onMouseMove = (e: MouseEvent) => {
@@ -87,39 +78,19 @@ watch(
 )
 
 watch(isVisible, (open) => {
-  if (open) return
-
-  isSizeUpdated.value = false
-  skipSizeUpdate.value = true
-})
-
-onClickOutside(inputWrapperRef, (e) => {
-  const targetEl = e?.target as HTMLElement
-
-  if (isDragging.value || targetEl?.className.includes('nc-long-text-toggle-expand') || targetEl.tagName === 'CANVAS') return
-
-  if (
-    targetEl?.closest(
-      '.bubble-menu, .tippy-content, .nc-textarea-rich-editor, .tippy-box, .mention, .nc-mention-list, .tippy-content',
-    )
-  ) {
-    return
+  if (!open) {
+    isSizeUpdated.value = false
+    skipSizeUpdate.value = true
   }
-
-  isVisible.value = false
 })
 
-/**
- * Updates the size of the text area based on stored dimensions in localStorage.
- * Retrieves the stored size and applies it to the corresponding text area element.
- */
 const updateSize = () => {
   try {
     const size = localStorage.getItem(STORAGE_KEY)
-    const elem = document.querySelector('.nc-long-text-expanded-textarea') as HTMLElement
+    const elem = inputRef.value as HTMLElement
     const parsedJSON = size ? JSON.parse(size) : null
 
-    if (parsedJSON && elem) {
+    if (parsedJSON && elem?.style) {
       elem.style.width = `${parsedJSON.width}px`
       elem.style.height = `${parsedJSON.height}px`
     }
@@ -128,45 +99,29 @@ const updateSize = () => {
   }
 }
 
-/**
- * Retrieves the element that should be observed for resizing.
- * @returns {HTMLElement | null} The resize target element.
- */
 const getResizeEl = () => {
-  if (!inputWrapperRef.value) return null
-
-  return inputWrapperRef.value.querySelector('.nc-long-text-expanded-textarea') as HTMLElement
+  return inputWrapperRef.value?.querySelector('.nc-long-text-expanded-textarea') as HTMLElement
 }
 
 useResizeObserver(inputWrapperRef, () => {
-  if (!isVisible.value) return
-
-  /**
-   * Updates the size of the resize element when the modal becomes visible.
-   */
   if (!isSizeUpdated.value) {
     nextTick(() => {
       until(() => !!getResizeEl())
         .toBeTruthy()
         .then(() => {
           updateSize()
+          isSizeUpdated.value = true
         })
     })
-    isSizeUpdated.value = true
     return
   }
 
-  /**
-   * When the size is manually updated, this callback is triggered again.
-   * To prevent unnecessary updates at that time, we skip the update.
-   */
   if (skipSizeUpdate.value) {
     skipSizeUpdate.value = false
     return
   }
 
   const resizeEl = getResizeEl()
-
   if (!resizeEl) return
 
   const { width, height } = resizeEl.getBoundingClientRect()
@@ -188,7 +143,6 @@ const urls = replaceUrlsWithLink(result)
 
 <template>
   <a-modal
-    v-if="isVisible"
     v-model:visible="isVisible"
     :closable="false"
     :footer="null"

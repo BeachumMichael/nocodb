@@ -34,14 +34,10 @@ const isSurveyForm = inject(IsSurveyFormInj, ref(false))
 
 const isGrid = inject(IsGridInj, ref(false))
 
-const isAllowed = inject(IsAllowedInj, ref(true))
-
-const isEditColumn = inject(EditColumnInj, ref(false))
-
 const isUnderLookup = inject(IsUnderLookupInj, ref(false))
 const canvasCellEventData = inject(CanvasCellEventDataInj, reactive<CanvasCellEventDataInjType>({}))
 const isCanvasInjected = inject(IsCanvasInjectionInj, false)
-const clientMousePosition = inject(ClientMousePositionInj, reactive(clientMousePositionDefaultValue))
+const clientMousePosition = inject(ClientMousePositionInj)
 const canvasSelectCell = inject(CanvasSelectCellInj, null)
 
 const cellEventHook = inject(CellEventHookInj, null)
@@ -295,7 +291,7 @@ const onCellEvent = (event?: Event) => {
 onMounted(() => {
   cellEventHook?.on(onCellEvent)
 
-  if (!isUnderLookup.value && isCanvasInjected && !isExpandedForm.value && isGrid.value && !isEditColumn.value) {
+  if (!isUnderLookup.value && isCanvasInjected && !isExpandedForm.value && isGrid.value) {
     forcedNextTick(() => {
       if (onCellEvent(canvasCellEventData.event)) return
 
@@ -353,7 +349,7 @@ onUnmounted(() => {
       </NcButton>
     </div>
     <div class="flex">
-      <NcTooltip :disabled="isEditAllowed || !isAllowed" :title="$t('tooltip.sourceDataIsReadonly')">
+      <NcTooltip :disabled="isEditAllowed" :title="$t('tooltip.sourceDataIsReadonly')">
         <NcButton
           data-testid="attachment-cell-file-picker-button"
           type="secondary"

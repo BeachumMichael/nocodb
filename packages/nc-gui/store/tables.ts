@@ -119,7 +119,7 @@ export const useTablesStore = defineStore('tablesStore', () => {
     })
   }
 
-  const openTable = async (table: TableType, replace = false) => {
+  const openTable = async (table: TableType) => {
     if (!table.base_id) return
 
     const bases = basesStore.bases
@@ -156,7 +156,6 @@ export const useTablesStore = defineStore('tablesStore', () => {
       workspaceId: workspaceIdOrType,
       baseId: baseIdOrBaseId,
       tableId: table?.id,
-      replace,
     })
   }
 

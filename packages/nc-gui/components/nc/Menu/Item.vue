@@ -16,7 +16,6 @@ defineProps<{
   mKey?: string
   style?: StyleValue
   disabled?: boolean | number
-  innerClass?: string
 }>()
 
 defineOptions({
@@ -27,7 +26,7 @@ defineOptions({
 <template>
   <div class="w-full" :style="style">
     <a-menu-item :key="mKey" v-bind="$attrs" :disabled="Boolean(disabled)" class="nc-menu-item">
-      <div class="nc-menu-item-inner" :class="innerClass">
+      <div class="nc-menu-item-inner">
         <slot />
       </div>
     </a-menu-item>

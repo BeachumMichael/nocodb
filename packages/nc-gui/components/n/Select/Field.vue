@@ -34,10 +34,7 @@ defineExpose({
 </script>
 
 <template>
-  <a-select v-bind="props" v-model="modelValue" class="nc-select-shadow">
-    <template #suffixIcon>
-      <GeneralIcon icon="arrowDown" class="text-gray-700" />
-    </template>
+  <NSelect v-bind="props" v-model="modelValue">
     <a-select-option v-for="field of fieldsRef" :key="field.id" :value="field.id">
       <div class="w-full flex items-center gap-2">
         <div class="min-w-5 flex items-center justify-center">
@@ -55,5 +52,5 @@ defineExpose({
         />
       </div>
     </a-select-option>
-  </a-select>
+  </NSelect>
 </template>

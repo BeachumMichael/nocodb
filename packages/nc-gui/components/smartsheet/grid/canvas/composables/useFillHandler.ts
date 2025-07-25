@@ -54,8 +54,6 @@ export function useFillHandler({
 
   const { appInfo } = useGlobal()
 
-  const { maxAttachmentsAllowedInCell, showUpgradeToAddMoreAttachmentsInCell } = useEeConfig()
-
   const fillStartRange = ref<CellRange | null>(null)
 
   const isFillEnded = ref(false)
@@ -194,8 +192,6 @@ export function useFillHandler({
     const groupPath = activeCell.value?.path
     const { cachedRows } = getDataCache(groupPath)
     let incrementIndex = 0
-    // We can use this if we want to avoid same info multiple times per column
-    const isColInfoShown = {} as Record<string, boolean>
     for (
       let rowIndex = rowToPaste.start + direction * rawMatrix.length;
       direction === 1 ? rowIndex <= rowToPaste.end : rowIndex >= rowToPaste.end;
@@ -211,12 +207,6 @@ export function useFillHandler({
               to: cpCol.uidt as UITypes,
               column: cpCol,
               appInfo: unref(appInfo),
-              maxAttachmentsAllowedInCell: maxAttachmentsAllowedInCell.value,
-              showUpgradeToAddMoreAttachmentsInCell,
-              isInfoShown: isColInfoShown[cpCol.title!],
-              markInfoShown: () => {
-                isColInfoShown[cpCol.title!] = true
-              },
             },
             isMysql(meta.value?.source_id),
             true,
@@ -349,8 +339,6 @@ export function useFillHandler({
           const rowsToFill: Row[] = []
           const propsToPaste: string[] = []
           const propsToFill: string[] = []
-          // We can use this if we want to avoid same info multiple times per column
-          const isColInfoShown = {} as Record<string, boolean>
 
           // Loop through the selected rows based on fill direction
           for (
@@ -421,12 +409,6 @@ export function useFillHandler({
                       to: colObj.uidt as UITypes,
                       column: colObj,
                       appInfo: unref(appInfo),
-                      maxAttachmentsAllowedInCell: maxAttachmentsAllowedInCell.value,
-                      showUpgradeToAddMoreAttachmentsInCell,
-                      isInfoShown: isColInfoShown[colObj.title!],
-                      markInfoShown: () => {
-                        isColInfoShown[colObj.title!] = true
-                      },
                     },
                     isMysql(meta.value?.source_id),
                     true,

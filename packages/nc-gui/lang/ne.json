@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "वर्कस्पेस छवि अपलोड गर्न अपग्रेड गर्नुहोस्",
     "upgradeToUploadWsImageSubtitle": "तपाईंको हालको {activePlan} योजनाले आइकन र इमोजी मात्र अनुमति दिन्छ। वर्कस्पेस अवतारको रूपमा अनुकूलित छवि अपलोड गर्न {plan} योजना मा अपग्रेड गर्नुहोस्।",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "तपाईं NocoDB छोड्दै हुनुहुन्छ",
     "onlyProceedIfYouTrustThisLink": "यदि तपाईं यस लिङ्कमा भरोसा गर्नुहुन्छ भने मात्र अगाडि बढ्नुहोस्।",
     "reAssignViewModalSubtitle": "पुनः तोकेपछि, हालका मालिकले दृश्य कन्फिगरेसन सम्पादन गर्न अब सक्षम हुने छैनन्।",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "प्रतिबद्धताको फलस्वरूप — सीमित मूल्यमा आनन्द लिनुहोस्!",
     "loyaltyBannerSubtitle": "असीमित सिट, थप रेकर्ड, बढी भण्डारण, सर्तसहितका वेबहुक, SSO, एकीकरणहरू र अझ धेरै अनलक गर्नुहोस्!",
     "selectTimezone": "समय क्षेत्र देखाउनुहोस्",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "दृश्यहरू समावेश गर्नुहोस्",
-    "includeScripts": "Include scripts",
     "includeWebhook": "वेबहुक समावेश गर्नुहोस्",
     "includeComments": "टिप्पणीहरू समावेश गर्नुहोस्",
     "zoomInToViewColumns": "कक्षहरू हेर्नका लागि जुम गर्नुहोस्",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "समाधान गर्न क्लिक गर्नुहोस्",
@@ -1649,7 +1631,6 @@
     "changePlan": "योजना परिवर्तन गर्नुहोस्"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "हरेक कार्यक्षेत्रमा कम्तीमा एक मालिक हुनुपर्छ। कार्यक्षेत्र छोड्नु अघि अर्को प्रयोगकर्तालाई मालिकको रूपमा तोक्नुहोस्। यदि तपाईं अन्तिम सदस्य हुनुहुन्छ भने, त्यसको सट्टा कार्यक्षेत्र मेट्ने विचार गर्नुहोस्।",
     "currentDateNotAvail": "वर्तमान मिति विकल्प डाटा स्रोत वा डाटा प्रकारका लागि उपलब्ध छैन",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "आइकनहरू खोज्नुहोस्",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

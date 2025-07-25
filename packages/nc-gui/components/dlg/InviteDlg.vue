@@ -33,7 +33,7 @@ const { createProjectUser } = basesStore
 
 const { inviteCollaborator: inviteWsCollaborator } = workspaceStore
 
-const { isPaymentEnabled, showUserPlanLimitExceededModal, isPaidPlan, showUserMayChargeAlert } = useEeConfig()
+const { isPaymentEnabled, showUserPlanLimitExceededModal, isPaidPlan } = useEeConfig()
 
 const dialogShow = useVModel(props, 'modelValue', emit)
 
@@ -171,14 +171,11 @@ const isInviteButtonDisabled = computed(() => {
 
 const showUserWillChargedWarning = computed(() => {
   return (
-    isEeUI &&
     !appInfo.value?.isOnPrem &&
     isPaymentEnabled.value &&
     isPaidPlan.value &&
     !NON_SEAT_ROLES.includes(inviteData.roles) &&
-    showUserMayChargeAlert.value &&
-    !isInviteButtonDisabled.value &&
-    !emailValidation.isError
+    !!emailBadges.value.length
   )
 })
 
@@ -294,12 +291,12 @@ const inviteCollaborator = async () => {
 
     for (const email of payloadData?.split(',')) {
       if (props.users?.some((u) => u.email === email.trim())) {
-        let scopeLabel = 'objects.project'
+        let scopeLabel = 'labels.base'
 
         if (props.type === 'workspace') {
-          scopeLabel = 'objects.workspace'
+          scopeLabel = 'labels.workspace'
         } else if (props.type === 'organization') {
-          scopeLabel = 'general.organization'
+          scopeLabel = 'labels.organization'
         }
 
         warningMsg.value = t('msg.userAlreadyExists', { email: email.trim(), scope: t(scopeLabel).toLowerCase() })

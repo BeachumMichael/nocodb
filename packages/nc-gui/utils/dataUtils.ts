@@ -70,10 +70,6 @@ export const rowPkData = (row: Record<string, any>, columns: ColumnType[]) => {
   return pkData
 }
 
-export const getRowHash = (row: Record<string, any>) => {
-  return MD5(JSON.stringify(row))
-}
-
 export const extractPk = (columns: ColumnType[]) => {
   if (!columns && !Array.isArray(columns)) return null
   return columns
@@ -401,13 +397,11 @@ export const getRollupValue = (modelValue: string | null | number, params: Parse
   const relatedTableMeta =
     relationColumnOptions?.fk_related_model_id && metas?.[relationColumnOptions.fk_related_model_id as string]
 
-  let childColumn = relatedTableMeta?.columns.find((c: ColumnType) => c.id === colOptions.fk_rollup_column_id) as
+  const childColumn = relatedTableMeta?.columns.find((c: ColumnType) => c.id === colOptions.fk_rollup_column_id) as
     | ColumnType
     | undefined
 
   if (!childColumn) return modelValue?.toString() ?? ''
-  // may use deepClone
-  childColumn = { ...childColumn }
 
   const renderAsTextFun = getRenderAsTextFunForUiType((childColumn.uidt ?? UITypes.SingleLineText) as UITypes)
 

@@ -6,6 +6,7 @@ const props = defineProps<{
 const { isSqlView } = useSmartsheetStoreOrThrow()
 
 const expandedFormStore = useExpandedFormStoreOrThrow()
+const isAuditsEnabled = true
 
 const tab = ref<'fields' | 'comments' | 'audits'>(props.showFieldsTab ? 'fields' : 'comments')
 
@@ -18,7 +19,7 @@ watch(tab, (newValue) => {
 
 <template>
   <div class="flex flex-col bg-white !h-full w-full rounded-br-2xl overflow-hidden">
-    <NcTabs v-model:active-key="tab" class="h-full">
+    <NcTabs v-model:activeKey="tab" class="h-full">
       <a-tab-pane v-if="props.showFieldsTab" key="fields" class="w-full h-full">
         <template #tab>
           <div v-e="['c:row-expand:fields']" class="flex items-center gap-2">
@@ -39,11 +40,20 @@ watch(tab, (newValue) => {
         <SmartsheetExpandedFormSidebarComments />
       </a-tab-pane>
 
-      <a-tab-pane v-if="!isSqlView" key="audits" class="w-full">
+      <a-tab-pane v-if="!isSqlView" key="audits" :disabled="!isAuditsEnabled" class="w-full">
         <template #tab>
-          <div v-e="['c:row-expand:audit']" class="flex items-center gap-2">
+          <NcTooltip v-if="!isAuditsEnabled" class="tab flex-1">
+            <template #title>{{ $t('title.comingSoon') }}</template>
+
+            <div v-e="['c:row-expand:audit']" class="flex items-center gap-2 text-gray-400">
+              <GeneralIcon icon="audit" class="w-4 h-4" />
+              <span class="<lg:hidden"> {{ $t('title.audits') }} </span>
+            </div>
+          </NcTooltip>
+
+          <div v-else v-e="['c:row-expand:audit']" class="flex items-center gap-2">
             <GeneralIcon icon="audit" class="w-4 h-4" />
-            <span class="<lg:hidden"> {{ $t('labels.revisionHistory') }} </span>
+            <span class="<lg:hidden"> {{ $t('title.audits') }} </span>
           </div>
         </template>
         <SmartsheetExpandedFormSidebarAudits />
@@ -88,15 +98,6 @@ watch(tab, (newValue) => {
     .ant-tabs-content {
       @apply h-full;
     }
-  }
-}
-</style>
-
-<style lang="scss">
-.ant-tabs-dropdown {
-  @apply overflow-hidden;
-  .ant-tabs-dropdown-content {
-    @apply !rounded-lg overflow-hidden border-1 border-nc-border-gray-medium;
   }
 }
 </style>

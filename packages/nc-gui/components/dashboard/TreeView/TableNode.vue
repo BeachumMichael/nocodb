@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type BaseType, PlanFeatureTypes, PlanTitles, type TableType, ViewTypes } from 'nocodb-sdk'
+import { type BaseType, type TableType, ViewTypes } from 'nocodb-sdk'
 
 import type { SidebarTableNode } from '~/lib/types'
 
@@ -55,8 +55,6 @@ const { refreshCommandPalette } = useCommandPalette()
 
 const { showRecordPlanLimitExceededModal } = useEeConfig()
 
-const { isTableAndFieldPermissionsEnabled } = usePermissions()
-
 // todo: temp
 const { baseTables } = storeToRefs(useTablesStore())
 const tables = computed(() => baseTables.value.get(base.value.id!) ?? [])
@@ -68,9 +66,10 @@ const source = computed(() => {
 })
 
 const isTableDeleteDialogVisible = ref(false)
-const isTablePermissionsDialogVisible = ref(false)
 
 const isOptionsOpen = ref(false)
+
+const isSyncModalOpen = ref(false)
 
 const input = ref<HTMLInputElement>()
 
@@ -329,12 +328,6 @@ async function onDuplicate() {
   isOptionsOpen.value = false
 }
 
-async function onPermissions(_table: SidebarTableNode) {
-  isOptionsOpen.value = false
-
-  isTablePermissionsDialogVisible.value = true
-}
-
 // TODO: Should find a way to render the components without using the `nextTick` function
 const refreshViews = async () => {
   isExpanded.value = false
@@ -590,7 +583,7 @@ async function onRename() {
                   <div v-e="['c:table:update-description']" class="flex gap-2 items-center">
                     <!-- <GeneralIcon icon="ncAlignLeft" class="text-gray-700" /> -->
                     <GeneralIcon icon="ncAlignLeft" class="opacity-80" />
-                    {{ $t('labels.editTableDescription') }}
+                    {{ $t('labels.editDescription') }}
                   </div>
                 </NcMenuItem>
 
@@ -615,10 +608,24 @@ async function onRename() {
                   </NcMenuItem>
 
                   <NcMenuItem
+                    v-if="isUIAllowed('tableDescriptionEdit', { roles: baseRole, source })"
+                    :data-testid="`sidebar-table-description-${table.title}`"
+                    class="nc-table-description"
+                    @click="openTableDescriptionDialog(table)"
+                  >
+                    <div v-e="['c:table:update-description']" class="flex gap-2 items-center">
+                      <!-- <GeneralIcon icon="ncAlignLeft" class="text-gray-700" /> -->
+                      <GeneralIcon icon="ncAlignLeft" class="opacity-80" />
+                      {{ $t('labels.editDescription') }}
+                    </div>
+                  </NcMenuItem>
+
+                  <NcMenuItem
                     v-if="
                       isUIAllowed('tableDuplicate', {
                         source,
                       }) &&
+                      base.sources?.[sourceIndex] &&
                       (source?.is_meta || source?.is_local)
                     "
                     :data-testid="`sidebar-table-duplicate-${table.title}`"
@@ -629,66 +636,6 @@ async function onRename() {
                       {{ $t('general.duplicate') }} {{ $t('objects.table').toLowerCase() }}
                     </div>
                   </NcMenuItem>
-                  <NcDivider />
-
-                  <NcMenuItem
-                    v-if="isUIAllowed('tableDescriptionEdit', { roles: baseRole, source })"
-                    :data-testid="`sidebar-table-description-${table.title}`"
-                    class="nc-table-description"
-                    @click="openTableDescriptionDialog(table)"
-                  >
-                    <div v-e="['c:table:update-description']" class="flex gap-2 items-center">
-                      <!-- <GeneralIcon icon="ncAlignLeft" class="text-gray-700" /> -->
-                      <GeneralIcon icon="ncAlignLeft" class="opacity-80" />
-                      {{ $t('labels.editTableDescription') }}
-                    </div>
-                  </NcMenuItem>
-                  <PaymentUpgradeBadgeProvider
-                    v-if="
-                      isTableAndFieldPermissionsEnabled &&
-                      isEeUI &&
-                      isUIAllowed('tableDuplicate', {
-                        source,
-                      }) &&
-                      (source?.is_meta || source?.is_local)
-                    "
-                    :feature="PlanFeatureTypes.FEATURE_TABLE_AND_FIELD_PERMISSIONS"
-                  >
-                    <template #default="{ click }">
-                      <NcMenuItem
-                        :data-testid="`sidebar-table-permissions-${table.title}`"
-                        class="nc-table-permissions"
-                        @click="
-                          click(PlanFeatureTypes.FEATURE_TABLE_AND_FIELD_PERMISSIONS, () => {
-                            onPermissions(table)
-                          })
-                        "
-                      >
-                        <div v-e="['c:table:permissions']" class="flex gap-2 items-center w-full">
-                          <GeneralIcon icon="ncLock" class="opacity-80" />
-                          <div class="flex-1">
-                            {{ $t('title.editTablePermissions') }}
-                          </div>
-
-                          <LazyPaymentUpgradeBadge
-                            :feature="PlanFeatureTypes.FEATURE_TABLE_AND_FIELD_PERMISSIONS"
-                            :title="$t('upgrade.upgradeToUseTableAndFieldPermissions')"
-                            :content="
-                              $t('upgrade.upgradeToUseTableAndFieldPermissionsSubtitle', {
-                                plan: PlanTitles.PLUS,
-                              })
-                            "
-                            :on-click-callback="
-                              () => {
-                                isOptionsOpen = false
-                              }
-                            "
-                            size="xs"
-                          />
-                        </div>
-                      </NcMenuItem>
-                    </template>
-                  </PaymentUpgradeBadgeProvider>
                   <NcDivider />
 
                   <NcMenuItem @click="onDuplicate">
@@ -744,12 +691,13 @@ async function onRename() {
       :table-id="table.id"
       :base-id="base.id"
     />
-    <DlgTablePermissions
-      v-if="table.id && isEeUI"
-      v-model:visible="isTablePermissionsDialogVisible"
+    <LazyDashboardSettingsSyncEdit
+      v-if="table && table.id && table.synced && base?.id && isSyncModalOpen"
+      v-model:open="isSyncModalOpen"
       :table-id="table.id"
-      :title="table.title"
+      :base-id="base.id"
     />
+
     <DashboardTreeViewViewsList v-if="isExpanded" :table-id="table.id" :base-id="base.id" @deleted="refreshViews" />
   </div>
 </template>
@@ -763,9 +711,5 @@ async function onRename() {
   &:not(.nc-info-icon) {
     @apply text-primary text-opacity-60;
   }
-}
-
-:deep(.nc-menu-item-inner) {
-  @apply !w-full;
 }
 </style>

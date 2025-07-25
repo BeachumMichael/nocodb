@@ -7,12 +7,10 @@ interface Props {
   objectFit?: string
   controls?: boolean
   isCellPreview?: boolean
-  imageClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isCellPreview: true,
-  imageClass: '',
 })
 const emit = defineEmits(['error'])
 
@@ -133,7 +131,7 @@ const onTouchStart = (e: TouchEvent) => {
         :src="props.srcs[index]"
         :alt="props?.alt || ''"
         :style="transformStyle"
-        :class="[imageClass, { '!object-contain': props.objectFit === 'contain' }]"
+        :class="{ '!object-contain': props.objectFit === 'contain' }"
         class="m-auto h-full max-h-full w-auto nc-attachment-image object-cover origin-center"
         loading="lazy"
         @error="onError"

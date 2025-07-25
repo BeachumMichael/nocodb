@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Proprietario del workspace avvisato",
     "WorkspaceOwnerNotifiedSubtitle": "La tua richiesta di upgrade è stata inviata al proprietario del workspace.",
     "failedToSendUpgradeRequest": "Invio della richiesta di upgrade non riuscito",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Sblocca la visibilità completa delle tue sorgenti collegate. Visualizza tutti i record passando al piano Plus.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Stai visualizzando {limit} di {total} record. Sblocca l'accesso ai restanti {remaining} record passando al piano Plus.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Esegui l'upgrade per sbloccare l'accesso completo ai dati",
+    "upgradeToSeeMoreRecordInline": "Esegui l'upgrade per visualizzare tutti i record dalle sorgenti dati esterne",
+    "upgradeToSeeMoreRecordSubtitle": "Sblocca la visibilità completa delle tue sorgenti collegate. Visualizza tutti i record passando al piano Team.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Stai visualizzando {limit} di {total} record. Sblocca l'accesso ai restanti {remaining} record passando al piano Team.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Il piano Free consente fino a {limit} utenti di tipo Editor, esegui l'upgrade per ottenere utenti illimitati",
     "adjustCollaboratorRoles": "Modifica ruoli dei collaboratori",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Esegui l'upgrade per caricare un'immagine del workspace",
     "upgradeToUploadWsImageSubtitle": "Il tuo attuale piano {activePlan} consente solo icone ed emoji. Passa al piano {plan} per caricare un'immagine personalizzata come avatar del workspace.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Stai lasciando NocoDB",
     "onlyProceedIfYouTrustThisLink": "Procedi solo se ti fidi di questo link.",
     "reAssignViewModalSubtitle": "Una volta riassegnata, l'attuale proprietario non potrà più modificare la configurazione della vista.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "La fedeltà paga: goditi prezzi bloccati!",
     "loyaltyBannerSubtitle": "Sblocca posti illimitati, record aggiuntivi, più spazio di archiviazione, webhook condizionali, SSO, integrazioni e molto altro!",
     "selectTimezone": "Fuso orario di visualizzazione",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Includi viste",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Includi webhook",
     "includeComments": "Includi commenti",
     "zoomInToViewColumns": "Zoom per visualizzare le colonne",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Fai clic per risolvere",
@@ -1649,7 +1631,6 @@
     "changePlan": "Cambia piano"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Ogni spazio di lavoro deve avere almeno un proprietario. Assegna un altro utente come proprietario prima di uscire. Se sei l'ultimo membro, prendi in considerazione l'eliminazione dello spazio di lavoro.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Icona di ricerca",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

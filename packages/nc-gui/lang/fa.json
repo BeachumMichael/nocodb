@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "برای بارگذاری تصویر ورک‌اسپیس ارتقاء دهید",
     "upgradeToUploadWsImageSubtitle": "پلن فعلی {activePlan} تنها از آیکن‌ها و ایموجی‌ها پشتیبانی می‌کند. برای بارگذاری تصویر سفارشی به عنوان آواتار ورک‌اسپیس، به پلن {plan} ارتقاء دهید.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "در حال ترک NocoDB هستید",
     "onlyProceedIfYouTrustThisLink": "تنها در صورتی ادامه دهید که به این لینک اعتماد دارید.",
     "reAssignViewModalSubtitle": "پس از بازتخصیص، مالک فعلی دیگر قادر به ویرایش پیکربندی نما نخواهد بود.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "وفاداری سودآور است — از قیمت ثابت لذت ببرید!",
     "loyaltyBannerSubtitle": "صندلی‌های نامحدود، رکوردهای بیشتر، فضای ذخیره‌سازی افزوده، وبهوک‌های شرطی، SSO، یکپارچگی‌ها و بسیار بیشتر را باز کنید!",
     "selectTimezone": "نمایش منطقهٔ زمانی",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "شامل نماها",
-    "includeScripts": "Include scripts",
     "includeWebhook": "شامل وب‌هوک",
     "includeComments": "شامل دیدگاه‌ها",
     "zoomInToViewColumns": "بزرگنمایی برای مشاهده ستون‌ها",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "کلیک کنید تا حل شود",
@@ -1649,7 +1631,6 @@
     "changePlan": "تغییر پلن"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "هر فضای کار باید حداقل یک مالک داشته باشد. قبل از ترک فضای کار، کاربر دیگری را به‌عنوان مالک تعیین کنید. اگر آخرین عضو هستید، به‌جای آن، فضای کار را حذف کنید.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "جستجو آیکون",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

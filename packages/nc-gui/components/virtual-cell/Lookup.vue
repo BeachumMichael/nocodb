@@ -24,7 +24,7 @@ const onDivDataCellEventHook = inject(OnDivDataCellEventHookInj, null)
 
 const isCanvasInjected = inject(IsCanvasInjectionInj, false)
 
-const clientMousePosition = inject(ClientMousePositionInj, reactive(clientMousePositionDefaultValue))
+const clientMousePosition = inject(ClientMousePositionInj)
 
 const isUnderLookup = inject(IsUnderLookupInj, ref(false))
 

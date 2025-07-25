@@ -9,7 +9,6 @@ const props = defineProps<{
   active?: boolean
   path?: Array<number>
   readOnly?: boolean
-  isAllowed?: boolean
 }>()
 
 const emit = defineEmits(['update:modelValue', 'navigate', 'save'])
@@ -19,7 +18,6 @@ const active = toRef(props, 'active', false)
 const row = toRef(props, 'row')
 const path = toRef(props, 'path')
 const readOnly = toRef(props, 'readOnly', false)
-const isAllowed = toRef(props, 'isAllowed', true)
 
 provide(ColumnInj, column)
 provide(ActiveCellInj, active)
@@ -28,7 +26,6 @@ provide(GroupPathInj, path)
 provide(CellValueInj, toRef(props, 'modelValue'))
 provide(SaveRowInj, () => emit('save'))
 provide(ReadonlyInj, readOnly)
-provide(IsAllowedInj, isAllowed)
 
 const isGrid = inject(IsGridInj, ref(false))
 

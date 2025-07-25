@@ -7,15 +7,12 @@ const props = withDefaults(
     tableId: string
     viewId?: string
     modelValue: Row
-    disabled?: boolean
     fields?: string[]
-    version?: 'v3' | 'v2'
     allowRecordCreation?: boolean
     records?: Row[]
   }>(),
   {
     label: '- select a record -',
-    version: 'v2',
   },
 )
 
@@ -23,11 +20,7 @@ const emits = defineEmits<{
   'update:modelValue': (value: Row) => void
 }>()
 
-const { internalApi } = useApi()
-
 const searchQuery = ref('')
-
-const debouncedSearch = refDebounced(searchQuery, 200)
 
 const ncRecordPickerDropdownRef = ref<HTMLDivElement>()
 
@@ -114,27 +107,8 @@ onMounted(async () => {
   await loadMetas()
 })
 
-provide(MetaInj, tableMeta)
-
-const displayField = computed(() => (tableMeta?.value?.columns ?? []).find((c) => c.pv))
-
-const localState = ref()
-const resolveInput = async (row: Row) => {
-  localState.value = row
-  if (props.version === 'v2') {
-    vModel.value = row
-  } else {
-    const rowId = extractPkFromRow(row?.row, tableMeta?.value?.columns ?? [])
-    try {
-      const data = await internalApi.dbDataTableRowRead(tableMeta?.value?.base_id, tableMeta?.value?.id, rowId, {
-        fields: props.fields,
-      })
-      vModel.value = data
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
+const resolveInput = (row: Row) => {
+  vModel.value = row
   isOpen.value = false
 }
 const filterQueryRef = ref<{ input: HTMLInputElement }>()
@@ -149,7 +123,6 @@ whenever(isOpen, () => {
 <template>
   <NcDropdown
     v-model:visible="isOpen"
-    :disabled="props.disabled"
     :trigger="['click']"
     :class="`.nc-${randomClass}`"
     :overlay-class-name="`nc-record-picker-dropdown !min-w-[540px] xs:(!min-w-[90vw]) ${isOpen ? 'active' : ''}`"
@@ -157,27 +130,14 @@ whenever(isOpen, () => {
     <NcButton
       type="secondary"
       size="small"
-      :disabled="disabled"
       icon-position="right"
       full-width
-      :class="{ 'record-picker-active': isOpen, '!bg-[#F5F5F5]': disabled }"
-      class="!border-[#d9d9d9]"
+      :class="{ 'record-picker-active': isOpen }"
+      class="hover:!bg-nc-bg-gray-extralight"
     >
-      <span v-if="displayField && localState?.row" class="truncate text-left !leading-[1.5]">
-        <SmartsheetPlainCell :model-value="localState?.row[displayField.title]" :column="displayField" />
-      </span>
-      <span
-        v-else
-        :class="{
-          'text-[rgba(0,0,0,.25)]': disabled,
-        }"
-        class="truncate text-left !leading-[1.5]"
-      >
-        {{ props.label }}
-      </span>
-
+      <span class="truncate text-left !leading-[1.5]">{{ props.label }}</span>
       <template #icon>
-        <GeneralIcon :icon="isOpen ? 'arrowUp' : 'arrowDown'" class="self-center text-gray-700" />
+        <GeneralIcon :icon="isOpen ? 'arrowUp' : 'arrowDown'" class="self-center" />
       </template>
     </NcButton>
 
@@ -206,7 +166,7 @@ whenever(isOpen, () => {
             :data="records"
             :fields="fields"
             :meta="tableMeta"
-            :where="debouncedSearch"
+            :where="searchQuery"
             @resolve="resolveInput"
           />
         </div>

@@ -3,30 +3,6 @@ import type { CSSProperties } from '@vue/runtime-dom'
 
 import { type PaginatedType } from 'nocodb-sdk'
 
-interface Props {
-  columns: NcTableColumnProps[]
-  data: Record<string, any>[]
-  headerRowHeight?: CSSProperties['height']
-  rowHeight?: CSSProperties['height']
-  orderBy?: Record<string, SordDirectionType>
-  multiFieldOrderBy?: boolean
-  bordered?: boolean
-  isDataLoading?: boolean
-  stickyHeader?: boolean
-  forceStickyHeader?: boolean
-  stickyFirstColumn?: boolean
-  disableTableScroll?: boolean
-  headerRowClassName?: string
-  bodyRowClassName?: string
-  headerCellClassName?: string
-  bodyCellClassName?: string
-  customHeaderRow?: (columns: NcTableColumnProps[]) => Record<string, any>
-  customRow?: (record: Record<string, any>, recordIndex: number) => Record<string, any>
-  pagination?: boolean
-  paginationOffset?: number
-  tableToolbarClassName?: string
-}
-
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [] as NcTableColumnProps[],
   data: () => [] as Record<string, any>[],
@@ -37,7 +13,6 @@ const props = withDefaults(defineProps<Props>(), {
   bordered: true,
   isDataLoading: false,
   stickyHeader: true,
-  forceStickyHeader: false,
   disableTableScroll: false,
   headerRowClassName: '',
   bodyRowClassName: '',
@@ -47,22 +22,39 @@ const props = withDefaults(defineProps<Props>(), {
   customRow: () => ({}),
   pagination: false,
   paginationOffset: 10,
-  tableToolbarClassName: '',
 })
 
 const emit = defineEmits(['update:orderBy', 'rowClick'])
 
 const defaultPaginationData = { page: 1, pageSize: 25, totalRows: 0, isLoading: true }
 
+interface Props {
+  columns: NcTableColumnProps[]
+  data: Record<string, any>[]
+  headerRowHeight?: CSSProperties['height']
+  rowHeight?: CSSProperties['height']
+  orderBy?: Record<string, SordDirectionType>
+  multiFieldOrderBy?: boolean
+  bordered?: boolean
+  isDataLoading?: boolean
+  stickyHeader?: boolean
+  stickyFirstColumn?: boolean
+  disableTableScroll?: boolean
+  headerRowClassName?: string
+  bodyRowClassName?: string
+  headerCellClassName?: string
+  bodyCellClassName?: string
+  customHeaderRow?: (columns: NcTableColumnProps[]) => Record<string, any>
+  customRow?: (record: Record<string, any>, recordIndex: number) => Record<string, any>
+  pagination?: boolean
+  paginationOffset?: number
+}
+
 const tableWrapper = ref<HTMLDivElement>()
 
 const tableHeader = ref<HTMLTableElement>()
 
 const tableFooterRef = ref<HTMLDivElement>()
-
-const tableToolbarRef = ref<HTMLDivElement>()
-
-const { height: _tableToolbarHeight } = useElementBounding(tableToolbarRef)
 
 const { height: tableHeadHeight, width: tableHeadWidth } = useElementBounding(tableHeader)
 
@@ -99,10 +91,6 @@ const paginatedData = computed(() => {
   const end = start + pageSize!
 
   return data.value.slice(start, end)
-})
-
-const tableToolbarHeight = computed(() => {
-  return _tableToolbarHeight.value || 0
 })
 
 const tableFooterHeight = computed(() => {
@@ -193,20 +181,6 @@ useEventListener(tableWrapper, 'scroll', () => {
 const onRowClick = (record: Record<string, any>, recordIndex: number) => {
   emit('rowClick', record, recordIndex)
 }
-
-/**
- * We have to reset page if `page * pageSize` is greater than totalRows
- */
-watch(
-  () => paginationData.value.pageSize,
-  () => {
-    if (paginationData.value.page === 1) return
-
-    if (paginationData.value.page! * paginationData.value.pageSize! > data.value.length) {
-      paginationData.value.page = 1
-    }
-  },
-)
 </script>
 
 <template>
@@ -218,21 +192,6 @@ watch(
       'min-h-120': isDataLoading,
     }"
   >
-    <template v-if="$slots.tableToolbar">
-      <div
-        ref="tableToolbarRef"
-        class="nc-table-toolbar pb-4"
-        :class="[
-          tableToolbarClassName,
-          {
-            'sticky z-5 top-0 bg-white': forceStickyHeader,
-          },
-        ]"
-      >
-        <slot name="tableToolbar" />
-      </div>
-    </template>
-
     <div
       ref="tableWrapper"
       class="nc-table-wrapper relative"
@@ -242,7 +201,7 @@ watch(
         'nc-scrollbar-thin !overflow-auto max-h-full': !disableTableScroll,
       }"
       :style="{
-        maxHeight: disableTableScroll ? undefined : `calc(100% - ${tableToolbarHeight + tableFooterHeight}px)`,
+        maxHeight: disableTableScroll ? undefined : `calc(100% - ${tableFooterHeight}px)`,
       }"
     >
       <table
@@ -250,10 +209,6 @@ watch(
         class="w-full max-w-full"
         :class="{
           '!sticky top-0 z-5': stickyHeader && !disableTableScroll,
-          '!sticky z-5': forceStickyHeader,
-        }"
-        :style="{
-          ...(forceStickyHeader ? { top: `${tableToolbarHeight}px` } : {}),
         }"
       >
         <thead>
@@ -389,7 +344,7 @@ watch(
       v-if="!isDataLoading && !data?.length"
       class="flex-none nc-table-empty flex items-center justify-center py-8 px-6 h-full"
       :style="{
-        maxHeight: `calc(100% - ${headerRowHeight} - ${tableToolbarHeight + tableFooterHeight}px)`,
+        maxHeight: `calc(100% - ${headerRowHeight} - ${tableFooterHeight}px)`,
       }"
     >
       <div class="flex-none text-center flex flex-col items-center gap-3">

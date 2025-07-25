@@ -11,12 +11,6 @@ export const useNocoAi = createSharedComposable(() => {
 
   const { activeProjectId } = storeToRefs(basesStore)
 
-  const { isFeatureEnabled } = useBetaFeatureToggle()
-
-  const isAiFeaturesEnabled = computed(() => isFeatureEnabled(FEATURE_FLAG.AI_FEATURES))
-
-  const isAiBetaFeaturesEnabled = computed(() => isFeatureEnabled(FEATURE_FLAG.AI_BETA_FEATURES))
-
   const aiLoading = ref(false)
 
   const aiError = ref<string>('')
@@ -173,11 +167,6 @@ export const useNocoAi = createSharedComposable(() => {
     }
 
     return []
-  }
-
-  const completeScript = async (body: any) => {
-    const res = await $api.ai.completion(activeProjectId.value, body)
-    return res
   }
 
   const predictNextFormulas = async (
@@ -394,8 +383,5 @@ export const useNocoAi = createSharedComposable(() => {
     repairFormula,
     predictViews,
     aiIntegrations,
-    completeScript,
-    isAiFeaturesEnabled,
-    isAiBetaFeaturesEnabled,
   }
 })

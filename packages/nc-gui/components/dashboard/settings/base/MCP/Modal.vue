@@ -98,7 +98,7 @@ const code = computed(
             {{ $t('labels.mcpSetup') }}
           </div>
 
-          <NcTabs v-model:active-key="activeTab">
+          <NcTabs v-model:activeKey="activeTab">
             <a-tab-pane key="claude" class="!h-full">
               <template #tab>
                 <span

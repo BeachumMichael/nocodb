@@ -21,8 +21,6 @@ const column = computed<ColumnType>(() => {
   return menuColumn?.value || canvasColumn?.value
 })
 
-const { eventBus } = useSmartsheetStoreOrThrow()
-
 const meta = inject(MetaInj, ref())
 
 const { getMeta } = useMetas()
@@ -86,7 +84,6 @@ const onDelete = async () => {
       metaId: meta.value?.id as string,
       columnIds: new Set([column.value.id as string]),
     })
-    eventBus.emit(SmartsheetStoreEvents.FIELD_UPDATE)
 
     $e('a:column:delete')
     visible.value = false

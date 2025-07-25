@@ -33,7 +33,7 @@ const onChange = (e: Event) => {
   </a-checkbox>
 </template>
 
-<style lang="scss">
+<style>
 .nc-checkbox {
   @apply flex flex-row !items-center text-nc-content-gray;
 

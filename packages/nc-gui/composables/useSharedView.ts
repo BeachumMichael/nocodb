@@ -180,7 +180,6 @@ export function useSharedView() {
         ...param,
         filterArrJson: JSON.stringify(param.filtersArr ?? nestedFilters.value),
         sortArrJson: JSON.stringify(param.sortsArr ?? sorts.value),
-        include_row_color: true,
       } as any,
       {
         headers: {
@@ -223,7 +222,6 @@ export function useSharedView() {
         ...param,
         filterArrJson: JSON.stringify(param.filtersArr ?? nestedFilters.value),
         sortArrJson: JSON.stringify(param.sortsArr ?? sorts.value),
-        include_row_color: true,
       } as any,
       {
         headers: {
@@ -381,7 +379,7 @@ export function useSharedView() {
 
   const fetchSharedViewGroupedData = async (
     columnId: string,
-    { sortsArr, filtersArr, include_row_color }: { sortsArr: SortType[]; filtersArr: FilterType[]; include_row_color?: boolean },
+    { sortsArr, filtersArr }: { sortsArr: SortType[]; filtersArr: FilterType[] },
   ) => {
     if (!sharedView.value) return
 
@@ -395,7 +393,6 @@ export function useSharedView() {
         offset: (page - 1) * pageSize,
         filterArrJson: JSON.stringify(filtersArr ?? nestedFilters.value),
         sortArrJson: JSON.stringify(sortsArr ?? sorts.value),
-        include_row_color,
       } as any,
       {
         headers: {

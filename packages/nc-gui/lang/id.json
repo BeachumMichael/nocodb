@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Pemilik ruang kerja telah diberitahu",
     "WorkspaceOwnerNotifiedSubtitle": "Permintaan peningkatan Anda telah dibagikan kepada pemilik ruang kerja.",
     "failedToSendUpgradeRequest": "Gagal mengirim permintaan peningkatan",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Buka visibilitas penuh ke sumber yang terhubung. Lihat semua rekaman dengan meningkatkan ke paket Plus.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Anda melihat {limit} dari {total} rekaman. Buka akses ke {remaining} rekaman tersisa dengan meningkatkan ke paket Plus.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Tingkatkan untuk membuka akses data penuh",
+    "upgradeToSeeMoreRecordInline": "Tingkatkan untuk melihat semua rekaman dari sumber data eksternal",
+    "upgradeToSeeMoreRecordSubtitle": "Buka visibilitas penuh ke sumber yang terhubung. Lihat semua rekaman dengan meningkatkan ke paket Team.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Anda melihat {limit} dari {total} rekaman. Buka akses ke {remaining} rekaman tersisa dengan meningkatkan ke paket Team.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Paket Gratis memungkinkan hingga {limit} pengguna tipe Editor, tingkatkan untuk mendapatkan tanpa batas",
     "adjustCollaboratorRoles": "Sesuaikan Peran Kolaborator",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Tingkatkan untuk mengunggah gambar ruang kerja",
     "upgradeToUploadWsImageSubtitle": "Paket {activePlan} Anda saat ini hanya mengizinkan ikon dan emoji. Tingkatkan ke paket {plan} untuk mengunggah gambar kustom sebagai avatar ruang kerja Anda.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Anda akan meninggalkan NocoDB",
     "onlyProceedIfYouTrustThisLink": "Lanjutkan hanya jika Anda mempercayai tautan ini.",
     "reAssignViewModalSubtitle": "Setelah dialihkan, pemilik saat ini tidak lagi dapat mengedit konfigurasi tampilan.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "Loyalitas terbayar — nikmati harga tetap!",
     "loyaltyBannerSubtitle": "Buka kursi tanpa batas, rekaman tambahan, lebih banyak penyimpanan, webhook bersyarat, SSO, integrasi, dan masih banyak lagi!",
     "selectTimezone": "Tampilkan zona waktu",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Sertakan tampilan",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Sertakan webhook",
     "includeComments": "Sertakan komentar",
     "zoomInToViewColumns": "Perbesar untuk melihat kolom",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Klik untuk selesaikan",
@@ -1649,7 +1631,6 @@
     "changePlan": "Ubah Paket"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Setiap workspace harus memiliki setidaknya satu pemilik. Harap tetapkan pengguna lain sebagai Pemilik sebelum meninggalkan workspace. Jika Anda adalah anggota terakhir, pertimbangkan untuk menghapus workspace.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Cari ikon",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

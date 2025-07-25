@@ -46,7 +46,7 @@ const readOnly = computed(() => readOnlyInj.value || column.value.readonly)
 
 const canvasCellEventData = inject(CanvasCellEventDataInj, reactive<CanvasCellEventDataInjType>({}))
 const isCanvasInjected = inject(IsCanvasInjectionInj, false)
-const clientMousePosition = inject(ClientMousePositionInj, reactive(clientMousePositionDefaultValue))
+const clientMousePosition = inject(ClientMousePositionInj)
 const isUnderLookup = inject(IsUnderLookupInj, ref(false))
 const canvasSelectCell = inject(CanvasSelectCellInj, null)
 
@@ -103,7 +103,7 @@ const height = computed(() => {
 })
 
 const localRowHeight = computed(() => {
-  if (readOnly.value && !isExpandedFormOpen.value && (isGallery.value || isKanban.value)) return 4
+  if (readOnly.value && !isExpandedFormOpen.value && (isGallery.value || isKanban.value)) return 6
 
   return rowHeight.value
 })
@@ -318,7 +318,7 @@ const onCellEvent = (event?: Event) => {
 onMounted(() => {
   cellEventHook?.on(onCellEvent)
 
-  if (isUnderLookup.value || !isCanvasInjected || !clientMousePosition || isExpandedFormOpen.value || isEditColumn.value) return
+  if (isUnderLookup.value || !isCanvasInjected || !clientMousePosition || isExpandedFormOpen.value) return
   const position = { clientX: clientMousePosition.clientX, clientY: clientMousePosition.clientY + 2 }
   forcedNextTick(() => {
     if (onCellEvent(canvasCellEventData.event)) return
@@ -909,3 +909,5 @@ textarea:focus {
   }
 }
 </style>
+
+<style lang="scss"></style>

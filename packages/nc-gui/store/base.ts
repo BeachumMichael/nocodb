@@ -65,10 +65,6 @@ export const useBase = defineStore('baseStore', () => {
     }
   })
 
-  const isPrivateBase = computed(() => false)
-
-  const showBaseAccessRequestOverlay = computed(() => false)
-
   const sqlUis = computed(() => {
     const temp: Record<string, any> = {}
     for (const source of sources.value) {
@@ -231,17 +227,7 @@ export const useBase = defineStore('baseStore', () => {
     sharedProject.value = baseVal
   }
 
-  const baseUrl = ({
-    id,
-    type: _type,
-    isSharedBase,
-    projectPage,
-  }: {
-    id: string
-    type: 'database'
-    isSharedBase?: boolean
-    projectPage?: ProjectPageType
-  }) => {
+  const baseUrl = ({ id, type: _type, isSharedBase }: { id: string; type: 'database'; isSharedBase?: boolean }) => {
     if (isSharedBase) {
       const typeOrId = route.value.params.typeOrId as string
       const baseId = route.value.params.baseId as string
@@ -249,9 +235,7 @@ export const useBase = defineStore('baseStore', () => {
       return `/${typeOrId}/${baseId}`
     }
 
-    const basUrl = `/nc/${id}`
-
-    return `${basUrl}${projectPage ? `?page=${projectPage}` : ''}`
+    return `/nc/${id}`
   }
 
   watch(
@@ -273,13 +257,7 @@ export const useBase = defineStore('baseStore', () => {
     },
   )
 
-  const navigateToProjectPage = async ({
-    page,
-    action,
-  }: {
-    page: 'overview' | 'collaborator' | 'data-source'
-    action?: string
-  }) => {
+  const navigateToProjectPage = async ({ page }: { page: 'all-table' | 'collaborator' | 'data-source' }) => {
     await router.push({
       name: 'index-typeOrId-baseId-index-index',
       params: {
@@ -288,7 +266,6 @@ export const useBase = defineStore('baseStore', () => {
       },
       query: {
         page,
-        ...(action ? { action } : {}),
       },
     })
   }
@@ -324,8 +301,6 @@ export const useBase = defineStore('baseStore', () => {
     getBaseType,
     navigateToProjectPage,
     idUserMap,
-    isPrivateBase,
-    showBaseAccessRequestOverlay,
   }
 })
 

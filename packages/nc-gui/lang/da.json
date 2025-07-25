@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Arbejdsområdeejer underrettet",
     "WorkspaceOwnerNotifiedSubtitle": "Din opgraderingsanmodning er blevet delt med arbejdsområdeejeren.",
     "failedToSendUpgradeRequest": "Kunne ikke sende opgraderingsanmodning",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Få fuld synlighed i dine tilsluttede kilder. Se alle poster ved at opgradere til Plus-planen.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Du ser {limit} af {total} poster. Få adgang til de resterende {remaining} poster ved at opgradere til Plus-planen.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Opgrader for at låse op for fuld dataadgang",
+    "upgradeToSeeMoreRecordInline": "Opgrader for at se alle poster fra eksterne datakilder",
+    "upgradeToSeeMoreRecordSubtitle": "Få fuld synlighed i dine tilsluttede kilder. Se alle poster ved at opgradere til Team-planen.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Du ser {limit} af {total} poster. Få adgang til de resterende {remaining} poster ved at opgradere til Team-planen.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Gratisplanen tillader op til {limit} Editor-brugere; opgrader for at få ubegrænsede.",
     "adjustCollaboratorRoles": "Justér samarbejdsroller",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Opgrader for at uploade et arbejdsområdebillede",
     "upgradeToUploadWsImageSubtitle": "Din nuværende {activePlan}-plan tillader kun ikoner og emojis. Opgrader til {plan}-planen for at uploade et brugerdefineret billede som arbejdsområdets avatar.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Du er ved at forlade NocoDB",
     "onlyProceedIfYouTrustThisLink": "Fortsæt kun, hvis du stoler på dette link.",
     "reAssignViewModalSubtitle": "Når ejerskabet er overdraget, kan den nuværende ejer ikke længere redigere visningskonfigurationen.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "Loyalitet betaler sig — nyd fastlåste priser!",
     "loyaltyBannerSubtitle": "Lås op for ubegrænsede pladser, ekstra poster, mere lagerplads, betingede webhooks, SSO, integrationer og meget mere!",
     "selectTimezone": "Vis tidszone",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Medtag visninger",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Medtag webhook",
     "includeComments": "Medtag kommentarer",
     "zoomInToViewColumns": "Zoom ind for at se kolonner",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Klik for at løse",
@@ -1649,7 +1631,6 @@
     "changePlan": "Skift plan"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Hvert arbejdsområde skal have mindst én ejer. Tildel en anden bruger som ejer, før du forlader arbejdsområdet. Hvis du er det sidste medlem, bør du i stedet slette arbejdsområdet.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Søg ikoner",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

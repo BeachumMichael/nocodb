@@ -43,7 +43,7 @@ const pasteText = (target: HTMLInputElement, value: string) => {
   }
 }
 const refreshVModel = () => {
-  if (inputRef.value && (vModel.value || vModel.value === 0)) {
+  if (inputRef.value && vModel.value) {
     if (typeof vModel.value === 'number') {
       if (props.precision) {
         inputRef.value.value = vModel.value.toFixed(props.precision) ?? ''
@@ -175,12 +175,10 @@ const registerEvents = (input: HTMLInputElement) => {
 onMounted(() => {
   if (inputRef.value) {
     registerEvents(inputRef.value as HTMLInputElement)
-    nextTick(() => {
-      refreshVModel()
-      if (props.isFocusOnMounted) {
-        inputRef.value.focus()
-      }
-    })
+    refreshVModel()
+    if (props.isFocusOnMounted) {
+      inputRef.value.focus()
+    }
   }
 })
 </script>

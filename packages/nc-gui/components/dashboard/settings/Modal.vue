@@ -196,7 +196,7 @@ watch(
         <a-layout-content class="h-full scrollbar-thumb-gray-500">
           <a-menu
             v-if="selectedTabKeys[0] !== 'dataSources'"
-            v-model:selected-keys="selectedSubTabKeys"
+            v-model:selectedKeys="selectedSubTabKeys"
             :open-keys="[]"
             mode="horizontal"
             class="px-4"

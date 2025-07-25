@@ -19,7 +19,7 @@ const { activeView, views } = storeToRefs(viewsStore)
 
 const { navigateToView, onOpenViewCreateModal } = viewsStore
 
-const { isAiFeaturesEnabled } = useNocoAi()
+const { isFeatureEnabled } = useBetaFeatureToggle()
 
 const isOpen = ref<boolean>(false)
 
@@ -239,16 +239,14 @@ async function onOpenModal({
                   </div>
                 </a-menu-item>
 
-                <template v-if="isAiFeaturesEnabled">
+                <template v-if="isFeatureEnabled(FEATURE_FLAG.AI_FEATURES)">
                   <NcDivider />
-                  <NcTooltip :title="`Auto suggest views for ${activeTable?.title || 'the current table'}`" placement="right">
-                    <a-menu-item data-testid="sidebar-view-create-ai" @click="onOpenModal({ type: 'AI' })">
-                      <div class="nc-viewlist-submenu-popup-item">
-                        <GeneralIcon icon="ncAutoAwesome" class="!w-4 !h-4 text-nc-fill-purple-dark" />
-                        <div>{{ $t('labels.useNocoAI') }}</div>
-                      </div>
-                    </a-menu-item>
-                  </NcTooltip>
+                  <a-menu-item data-testid="sidebar-view-create-ai" @click="onOpenModal({ type: 'AI' })">
+                    <div class="nc-viewlist-submenu-popup-item">
+                      <GeneralIcon icon="ncAutoAwesome" class="!w-4 !h-4 text-nc-fill-purple-dark" />
+                      <div>{{ $t('labels.aiSuggested') }}</div>
+                    </div>
+                  </a-menu-item>
                 </template>
               </a-sub-menu>
             </a-menu>

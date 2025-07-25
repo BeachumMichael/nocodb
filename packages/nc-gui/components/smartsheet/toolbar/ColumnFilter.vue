@@ -7,12 +7,10 @@ interface Props {
   parentId?: string
   autoSave: boolean
   hookId?: string
-  widgetId?: string
   showLoading?: boolean
   modelValue?: FilterType[] | null
   webHook?: boolean
   link?: boolean
-  widget?: boolean
   draftFilter?: Partial<FilterType>
   isOpen?: boolean
   rootMeta?: any
@@ -23,11 +21,9 @@ interface Props {
   filterOption?: (column: ColumnType) => boolean
   visibilityError?: Record<string, string>
   disableAddNewFilter?: boolean
-  hiddenAddNewFilter?: boolean
   isViewFilter?: boolean
   readOnly?: boolean
   queryFilter?: boolean
-  isColourFilter?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,8 +32,6 @@ const props = withDefaults(defineProps<Props>(), {
   showLoading: true,
   parentId: undefined,
   hookId: undefined,
-  widgetId: undefined,
-  widget: false,
   webHook: false,
   link: false,
   linkColId: undefined,
@@ -45,10 +39,8 @@ const props = withDefaults(defineProps<Props>(), {
   actionBtnType: 'text',
   visibilityError: () => ({}),
   disableAddNewFilter: false,
-  hiddenAddNewFilter: false,
   isViewFilter: false,
   readOnly: false,
-  isColourFilter: false,
 })
 
 const emit = defineEmits(['update:filtersLength', 'update:draftFilter', 'update:modelValue', 'update:isOpen'])
@@ -70,11 +62,9 @@ const {
   parentId,
   autoSave,
   hookId,
-  widgetId,
   showLoading,
   webHook,
   link,
-  widget,
   linkColId,
   parentColId,
   visibilityError,
@@ -107,13 +97,7 @@ const isLockedView = computed(() => isLocked.value && isViewFilter.value)
 
 const { $e } = useNuxtApp()
 
-const { nestedFilters, isForm, eventBus } = widget.value
-  ? {
-      nestedFilters: ref([]),
-      isForm: ref(false),
-      eventBus: null,
-    }
-  : useSmartsheetStoreOrThrow()
+const { nestedFilters, isForm, eventBus } = useSmartsheetStoreOrThrow()
 
 const currentFilters = modelValue.value || (!link.value && !webHook.value && nestedFilters.value) || []
 
@@ -160,8 +144,6 @@ const {
   props.nestedLevel > 0,
   webHook.value,
   link.value,
-  widget.value,
-  widgetId,
   linkColId,
   fieldsToFilter,
   parentColId,
@@ -261,18 +243,10 @@ watch(
   () => activeView.value?.id,
   (n, o) => {
     // if nested no need to reload since it will get reloaded from parent
-    if (
-      !nested.value &&
-      n !== o &&
-      (hookId?.value || !webHook.value) &&
-      (linkColId?.value || !link.value) &&
-      (widgetId.value || !widget.value)
-    )
+    if (!nested.value && n !== o && (hookId?.value || !webHook.value) && (linkColId?.value || !link.value))
       loadFilters({
         hookId: hookId.value,
         isWebhook: webHook.value,
-        widgetId: widgetId.value,
-        isWidget: widget.value,
         linkColId: unref(linkColId),
         isLink: link.value,
       })
@@ -375,6 +349,11 @@ const updateFilterValue = (value: string, filter: Filter, index: number) => {
   saveOrUpdateDebounced(filter, index)
 }
 
+defineExpose({
+  applyChanges,
+  parentId,
+})
+
 const scrollToBottom = () => {
   wrapperDomRef.value?.scrollTo({
     top: wrapperDomRef.value.scrollHeight,
@@ -433,25 +412,13 @@ const showFilterInput = (filter: Filter) => {
   }
 }
 
-const eventBusHandler = async (event) => {
-  if (event === SmartsheetStoreEvents.FIELD_UPDATE) {
-    await loadFilters({
-      loadAllFilters: true,
-    })
-  }
-}
-
 onMounted(async () => {
-  eventBus?.on?.(eventBusHandler)
-
   await Promise.all([
     (async () => {
       if (!initialModelValue)
         await loadFilters({
           hookId: hookId?.value,
           isWebhook: webHook.value,
-          isWidget: widget.value,
-          widgetId: widgetId.value,
           linkColId: unref(linkColId),
           isLink: link.value,
         })
@@ -462,7 +429,6 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
-  eventBus?.off?.(eventBusHandler)
   if (parentId.value) delete allFilters.value[parentId.value]
 })
 
@@ -602,11 +568,12 @@ const changeToDynamic = async (filter, i) => {
   await saveOrUpdate(filter, i)
 }
 
-defineExpose({
-  applyChanges,
-  parentId,
-  addFilterGroup,
-  addFilter,
+eventBus.on(async (event) => {
+  if (event === SmartsheetStoreEvents.FIELD_UPDATE) {
+    await loadFilters({
+      loadAllFilters: true,
+    })
+  }
 })
 </script>
 
@@ -709,8 +676,6 @@ defineExpose({
                   :show-loading="false"
                   :root-meta="rootMeta"
                   :link-col-id="linkColId"
-                  :widget-id="widgetId"
-                  :widget="widget"
                   :parent-col-id="parentColId"
                   :filter-option="filterOption"
                   :visibility-error="visibilityError"
@@ -828,7 +793,6 @@ defineExpose({
                 }"
                 class="nc-filter-field-select min-w-32 max-h-8"
                 :columns="fieldsToFilter"
-                :disable-smartsheet="!!widget"
                 :disabled="filter.readOnly || isLockedView || readOnly"
                 :meta="meta"
                 @click.stop
@@ -915,7 +879,6 @@ defineExpose({
                   <SmartsheetToolbarFieldListAutoCompleteDropdown
                     v-if="showFilterInput(filter)"
                     v-model="filter.fk_value_col_id"
-                    :disable-smartsheet="!!widget"
                     class="nc-filter-field-select min-w-32 w-full max-h-8"
                     :columns="dynamicColumns(filter)"
                     :meta="rootMeta"
@@ -1020,90 +983,87 @@ defineExpose({
     </div>
 
     <template v-if="!nested">
-      <div class="flex">
-        <template v-if="isEeUI && !isPublic">
-          <div
-            v-if="!readOnly && filtersCount < getPlanLimit(PlanLimitTypes.LIMIT_FILTER_PER_VIEW) && !hiddenAddNewFilter"
-            class="flex gap-2"
-            :class="{
-              'mt-1 mb-2': filters.length,
-            }"
+      <template v-if="isEeUI && !isPublic">
+        <div
+          v-if="!readOnly && filtersCount < getPlanLimit(PlanLimitTypes.LIMIT_FILTER_PER_VIEW)"
+          class="flex gap-2"
+          :class="{
+            'mt-1 mb-2': filters.length,
+          }"
+        >
+          <NcButton
+            size="small"
+            :type="actionBtnType"
+            :disabled="disableAddNewFilter || isLockedView || readOnly"
+            class="nc-btn-focus"
+            data-testid="add-filter"
+            @click.stop="addFilter()"
           >
-            <NcButton
-              v-if="!hiddenAddNewFilter"
-              size="small"
-              :type="actionBtnType"
-              :disabled="disableAddNewFilter || isLockedView || readOnly"
-              class="nc-btn-focus"
-              data-testid="add-filter"
-              @click.stop="addFilter()"
-            >
-              <div class="flex items-center gap-1">
-                <component :is="iconMap.plus" />
-                <!-- Add Filter -->
-                {{ isForm && !webHook ? $t('activity.addCondition') : $t('activity.addFilter') }}
-              </div>
-            </NcButton>
+            <div class="flex items-center gap-1">
+              <component :is="iconMap.plus" />
+              <!-- Add Filter -->
+              {{ isForm && !webHook ? $t('activity.addCondition') : $t('activity.addFilter') }}
+            </div>
+          </NcButton>
 
-            <NcButton
-              v-if="nestedLevel < 5 && !readOnly"
-              class="nc-btn-focus"
-              :disabled="disableAddNewFilter || isLockedView"
-              :type="actionBtnType"
-              size="small"
-              data-testid="add-filter-group"
-              @click.stop="addFilterGroup()"
-            >
-              <div class="flex items-center gap-1">
-                <!-- Add Filter Group -->
-                <component :is="iconMap.plus" />
-                {{ isForm && !webHook ? $t('activity.addConditionGroup') : $t('activity.addFilterGroup') }}
-              </div>
-            </NcButton>
-          </div>
-        </template>
-
-        <template v-else-if="!readOnly && !hiddenAddNewFilter">
-          <div
-            ref="addFiltersRowDomRef"
-            class="flex gap-2"
-            :class="{
-              'mt-1 mb-2': filters.length,
-            }"
+          <NcButton
+            v-if="nestedLevel < 5 && !readOnly"
+            class="nc-btn-focus"
+            :disabled="disableAddNewFilter || isLockedView"
+            :type="actionBtnType"
+            size="small"
+            data-testid="add-filter-group"
+            @click.stop="addFilterGroup()"
           >
-            <NcButton
-              class="nc-btn-focus"
-              size="small"
-              :type="actionBtnType"
-              data-testid="add-filter"
-              :disabled="isLockedView"
-              @click.stop="addFilter()"
-            >
-              <div class="flex items-center gap-1">
-                <component :is="iconMap.plus" />
-                <!-- Add Filter -->
-                {{ isForm && !webHook ? $t('activity.addCondition') : $t('activity.addFilter') }}
-              </div>
-            </NcButton>
+            <div class="flex items-center gap-1">
+              <!-- Add Filter Group -->
+              <component :is="iconMap.plus" />
+              {{ isForm && !webHook ? $t('activity.addConditionGroup') : $t('activity.addFilterGroup') }}
+            </div>
+          </NcButton>
+        </div>
+      </template>
 
-            <NcButton
-              v-if="!link && !webHook && nestedLevel < 5"
-              class="nc-btn-focus"
-              :type="actionBtnType"
-              size="small"
-              :disabled="isLockedView"
-              data-testid="add-filter-group"
-              @click.stop="addFilterGroup()"
-            >
-              <div class="flex items-center gap-1">
-                <!-- Add Filter Group -->
-                <component :is="iconMap.plus" />
-                {{ isForm && !webHook ? $t('activity.addConditionGroup') : $t('activity.addFilterGroup') }}
-              </div>
-            </NcButton>
-          </div>
-        </template>
-      </div>
+      <template v-else-if="!readOnly">
+        <div
+          ref="addFiltersRowDomRef"
+          class="flex gap-2"
+          :class="{
+            'mt-1 mb-2': filters.length,
+          }"
+        >
+          <NcButton
+            class="nc-btn-focus"
+            size="small"
+            :type="actionBtnType"
+            data-testid="add-filter"
+            :disabled="isLockedView"
+            @click.stop="addFilter()"
+          >
+            <div class="flex items-center gap-1">
+              <component :is="iconMap.plus" />
+              <!-- Add Filter -->
+              {{ isForm && !webHook ? $t('activity.addCondition') : $t('activity.addFilter') }}
+            </div>
+          </NcButton>
+
+          <NcButton
+            v-if="!link && !webHook && nestedLevel < 5"
+            class="nc-btn-focus"
+            :type="actionBtnType"
+            size="small"
+            :disabled="isLockedView"
+            data-testid="add-filter-group"
+            @click.stop="addFilterGroup()"
+          >
+            <div class="flex items-center gap-1">
+              <!-- Add Filter Group -->
+              <component :is="iconMap.plus" />
+              {{ isForm && !webHook ? $t('activity.addConditionGroup') : $t('activity.addFilterGroup') }}
+            </div>
+          </NcButton>
+        </div>
+      </template>
     </template>
     <div
       v-if="!visibleFilters || !visibleFilters.length"

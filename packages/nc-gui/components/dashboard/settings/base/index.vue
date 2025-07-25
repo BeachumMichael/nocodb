@@ -1,64 +1,37 @@
 <script setup lang="ts">
 const { isUIAllowed } = useRoles()
 
-const hasPermissionForBaseAccess = computed(() => isEeUI && isUIAllowed('manageBaseType'))
+const hasPermissionForSnapshots = computed(() => isUIAllowed('baseMiscSettings') && isUIAllowed('manageSnapshot'))
 
-const hasPermissionForSnapshots = computed(() => isEeUI && isUIAllowed('baseMiscSettings') && isUIAllowed('manageSnapshot'))
-
-const hasPermissionForMigrate = computed(() => !isEeUI && isUIAllowed('baseMiscSettings') && isUIAllowed('migrateBase'))
+const hasPermissionForMigrate = computed(() => isUIAllowed('baseMiscSettings') && isUIAllowed('migrateBase'))
 
 const router = useRouter()
 
-const allTabs = ['baseType', 'snapshots', 'visibility', 'mcp', 'migrate']
-
-const activeMenu = ref(
-  hasPermissionForBaseAccess.value ? 'baseType' : hasPermissionForSnapshots.value ? 'snapshots' : 'visibility',
-)
+const activeMenu = ref(isEeUI && hasPermissionForSnapshots.value ? 'snapshots' : 'visibility')
 
 const { isFeatureEnabled } = useBetaFeatureToggle()
 
 const isMCPEnabled = computed(() => isUIAllowed('baseMiscSettings') && isFeatureEnabled(FEATURE_FLAG.MODEL_CONTEXT_PROTOCOL))
 
-const selectMenu = (option: string, updateQuery = true) => {
+const selectMenu = (option: string) => {
   if (!hasPermissionForSnapshots.value && option === 'snapshots') {
     return
   }
-
-  if (!hasPermissionForBaseAccess.value && option === 'baseType') {
-    return
-  }
-
-  if (!hasPermissionForMigrate.value && option === 'migrate') {
-    return
-  }
-
-  if (updateQuery) {
-    router.push({
-      query: {
-        ...router.currentRoute.value.query,
-        tab: option,
-      },
-    })
-  }
+  router.push({
+    query: {
+      ...router.currentRoute.value.query,
+      tab: option,
+    },
+  })
   activeMenu.value = option
 }
 
 onMounted(() => {
   const query = router.currentRoute.value.query
-
-  if (query && query.tab && allTabs.includes(query.tab as string)) {
+  if (query && query.tab && ['snapshots', 'visibility', 'mcp'].includes(query.tab as string)) {
     selectMenu(query.tab as string)
   }
 })
-
-watch(
-  () => router.currentRoute.value.query.tab,
-  (tab) => {
-    if (tab && allTabs.includes(tab as string) && tab !== activeMenu.value) {
-      selectMenu(tab as string, false)
-    }
-  },
-)
 </script>
 
 <template>
@@ -67,22 +40,7 @@ watch(
     <div class="flex flex-col">
       <div class="h-full flex flex-col gap-1 w-60">
         <div
-          v-if="hasPermissionForBaseAccess"
-          data-testid="base-access-tab"
-          :class="{
-            'active-menu': activeMenu === 'baseType',
-          }"
-          class="gap-3 hover:bg-gray-100 transition-all text-nc-content-gray flex rounded-lg items-center cursor-pointer py-1.5 px-3"
-          @click="selectMenu('baseType')"
-        >
-          <GeneralIcon icon="ncUsers" />
-
-          <span>
-            {{ $t('general.baseType') }}
-          </span>
-        </div>
-        <div
-          v-if="hasPermissionForSnapshots"
+          v-if="isEeUI && hasPermissionForSnapshots"
           data-testid="snapshots-tab"
           :class="{
             'active-menu': activeMenu === 'snapshots',
@@ -127,7 +85,7 @@ watch(
         </div>
 
         <div
-          v-if="hasPermissionForMigrate"
+          v-if="!isEeUI && hasPermissionForMigrate"
           :class="{
             'active-menu': activeMenu === 'migrate',
           }"
@@ -143,7 +101,6 @@ watch(
     <!-- Data Pane -->
 
     <div class="flex flex-col flex-1 max-w-[760px]">
-      <DashboardSettingsBaseAccess v-if="activeMenu === 'baseType'" />
       <DashboardSettingsBaseSnapshots v-if="activeMenu === 'snapshots'" />
       <DashboardSettingsBaseVisibility v-if="activeMenu === 'visibility'" />
       <DashboardSettingsBaseMigrate v-if="activeMenu === 'migrate'" />

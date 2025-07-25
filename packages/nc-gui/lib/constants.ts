@@ -32,5 +32,3 @@ export const EXTERNAL_SOURCE_TOTAL_ROWS = 200
 export const EXTERNAL_SOURCE_VISIBLE_ROWS = 100
 
 export const MINI_SIDEBAR_WIDTH = 48
-
-export const clientMousePositionDefaultValue = { clientX: 0, clientY: 0 }

@@ -1,13 +1,5 @@
 import type { AuditType, ColumnType, MetaType, PlanLimitExceededDetailsType, TableType } from 'nocodb-sdk'
-import {
-  PermissionEntity,
-  PermissionKey,
-  PlanLimitTypes,
-  ViewTypes,
-  isReadOnlyColumn,
-  isSystemColumn,
-  isVirtualCol,
-} from 'nocodb-sdk'
+import { PlanLimitTypes, ViewTypes, isReadOnlyColumn, isSystemColumn, isVirtualCol } from 'nocodb-sdk'
 import type { Ref } from 'vue'
 import dayjs from 'dayjs'
 
@@ -73,20 +65,6 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
     const { isUIAllowed } = useRoles()
 
     const { handleUpgradePlan, isPaymentEnabled } = useEeConfig()
-
-    const { isAllowed } = usePermissions()
-
-    const isAllowedAddNewRecord = computed(() => {
-      if (!isEeUI) return true
-
-      return meta.value?.id && isAllowed(PermissionEntity.TABLE, meta.value.id, PermissionKey.TABLE_RECORD_ADD)
-    })
-
-    const getIsAllowedEditField = (fieldId: string) => {
-      if (!isEeUI) return true
-
-      return fieldId && isAllowed(PermissionEntity.FIELD, fieldId, PermissionKey.RECORD_FIELD_EDIT)
-    }
 
     // getters
     const displayValue = computed(() => {
@@ -183,66 +161,47 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
       }
     })
 
-    const auditToCursor = (audit: any) => {
-      return `${audit.id}|${audit.created_at}`
-    }
-
     const primaryKey = computed(() => {
       return extractPkFromRow(row.value.row, meta.value.columns as ColumnType[])
     })
 
-    const currentAuditCursor = ref('')
-    const hasMoreAudits = ref(false)
+    const auditsInAPage = 25
+    const currentAuditPages = ref(1)
+    const mightHaveMoreAudits = ref(false)
 
     const loadAudits = async (_rowId?: string, showLoading = true) => {
-      if (!isUIAllowed('recordAuditList') || (!row.value && !_rowId)) return
+      if (!isUIAllowed('auditListRow') || (!row.value && !_rowId)) return
 
       const rowId = _rowId ?? extractPkFromRow(row.value.row, meta.value.columns as ColumnType[])
 
-      if (!rowId || !meta.value.base_id) return
+      if (!rowId) return
 
       try {
         if (showLoading) {
           isAuditLoading.value = true
         }
 
-        const response = await $api.internal.getOperation(
-          base.value.fk_workspace_id ?? NO_SCOPE,
-          (meta.value.base_id as string) ?? (base.value.id as string),
-          {
-            operation: 'recordAuditList',
-            fk_model_id: meta.value.id as string,
-            row_id: rowId,
-            cursor: currentAuditCursor.value,
-          },
-        )
-
-        // Skip insert as it will be first for all
-        response.list = response.list.filter((audit) => !audit?.op_type.includes('INSERT'))
-
-        const lastRecord = response.list?.[response.list.length - 1]
-
-        if (lastRecord) {
-          currentAuditCursor.value = auditToCursor(lastRecord)
-        }
-
-        hasMoreAudits.value = !response.pageInfo?.isLastPage
+        const response = await $api.utils.auditList({
+          row_id: rowId,
+          fk_model_id: meta.value.id as string,
+          offset: 0,
+          limit: currentAuditPages.value * auditsInAPage,
+        })
 
         const res = response.list?.reverse?.() || []
 
-        audits.value.unshift(
-          ...res.map((audit) => {
-            const user = baseUsers.value.find((u) => u.id === audit.fk_user_id || u.email === audit.user)
-            return {
-              ...audit,
-              created_display_name: user?.display_name ?? (user?.email ?? '').split('@')[0],
-              created_by_email: user?.email,
-              created_by_meta: user?.meta,
-            }
-          }),
-        )
+        audits.value = res.map((audit) => {
+          const user = baseUsers.value.find((u) => u.id === audit.fk_user_id || u.email === audit.user)
+          return {
+            ...audit,
+            created_display_name: user?.display_name ?? (user?.email ?? '').split('@')[0],
+            created_by_email: user?.email,
+            created_by_meta: user?.meta,
+          }
+        })
+
+        mightHaveMoreAudits.value = audits.value.length < (response.pageInfo?.totalRows ?? +Infinity)
       } catch (e: any) {
-        console.error(e)
         const errorInfo = await extractSdkResponseErrorMsgv2(e)
 
         if (isPaymentEnabled.value && errorInfo.error === NcErrorType.PLAN_LIMIT_EXCEEDED) {
@@ -285,16 +244,16 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
     }
 
     const loadMoreAudits = async () => {
-      if (!hasMoreAudits.value) {
+      if (!mightHaveMoreAudits.value) {
         return
       }
+
+      currentAuditPages.value++
       await loadAudits()
     }
 
     const resetAuditPages = async () => {
-      currentAuditCursor.value = ''
-      audits.value = []
-      hasMoreAudits.value = false
+      currentAuditPages.value = 1
       await loadAudits()
     }
 
@@ -775,7 +734,7 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
       clearColumns,
       auditCommentGroups,
       consolidatedAudits,
-      hasMoreAudits,
+      mightHaveMoreAudits,
       loadMoreAudits,
       resetAuditPages,
       resolveComment,
@@ -796,9 +755,6 @@ const [useProvideExpandedFormStore, useExpandedFormStore] = useInjectionState(
       fieldsFromParent,
       fields,
       hiddenFields,
-      isAllowedAddNewRecord,
-      getIsAllowedEditField,
-      meta,
     }
   },
   'expanded-form-store',

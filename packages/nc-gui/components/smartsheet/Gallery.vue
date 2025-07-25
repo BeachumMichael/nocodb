@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PermissionEntity, PermissionKey, UITypes, ViewTypes, isVirtualCol } from 'nocodb-sdk'
+import { UITypes, ViewTypes, isVirtualCol } from 'nocodb-sdk'
 import type { Attachment } from '../../lib/types'
 import type { Row as RowType } from '#imports'
 
@@ -235,8 +235,6 @@ const visibleRows = computed(() => {
   })
 })
 
-const { isRowColouringEnabled } = useViewRowColorRender()
-
 const updateVisibleRows = async () => {
   const { start, end } = rowSlice
 
@@ -398,28 +396,16 @@ const handleOpenNewRecordForm = () => {
             </div>
           </NcMenuItem>
           <NcDivider />
-          <PermissionsTooltip
+          <NcMenuItem
             v-if="contextMenuTarget?.index !== undefined"
-            :entity="PermissionEntity.TABLE"
-            :entity-id="meta?.id"
-            :permission="PermissionKey.TABLE_RECORD_DELETE"
-            placement="right"
+            class="!text-red-600 !hover:bg-red-50"
+            @click="deleteRow(contextMenuTarget.index)"
           >
-            <template #default="{ isAllowed }">
-              <NcMenuItem
-                :class="{
-                  '!text-red-600 !hover:bg-red-50': isAllowed,
-                }"
-                :disabled="!isAllowed"
-                @click="deleteRow(contextMenuTarget.index)"
-              >
-                <div v-e="['a:row:delete']" class="flex items-center gap-2">
-                  <component :is="iconMap.delete" class="flex" />
-                  {{ $t('activity.deleteRow') }}
-                </div>
-              </NcMenuItem>
-            </template>
-          </PermissionsTooltip>
+            <div v-e="['a:row:delete']" class="flex items-center gap-2">
+              <component :is="iconMap.delete" class="flex" />
+              {{ $t('activity.deleteRow') }}
+            </div>
+          </NcMenuItem>
         </NcMenu>
       </template>
       <div class="flex-1">
@@ -441,20 +427,16 @@ const handleOpenNewRecordForm = () => {
             >
               <LazySmartsheetRow :row="record">
                 <a-card
-                  class="!rounded-xl h-full border-gray-200 border-1 group overflow-hidden break-all max-w-[450px] cursor-pointer flex flex-col"
-                  :body-style="{ padding: '12px !important', flex: 1, display: 'flex' }"
+                  class="!rounded-xl h-full border-gray-200 border-1 group overflow-hidden break-all max-w-[450px] cursor-pointer"
+                  :body-style="{ padding: '16px !important' }"
                   :data-testid="`nc-gallery-card-${record.rowMeta.rowIndex}`"
-                  :style="{
-                    ...extractRowBackgroundColorStyle(record).rowBgColor,
-                    ...extractRowBackgroundColorStyle(record).rowBorderColor,
-                  }"
                   @click="expandFormClick($event, record)"
                   @contextmenu="showContextMenu($event, { row: record, index: record.rowMeta.rowIndex })"
                 >
                   <template v-if="galleryData?.fk_cover_image_col_id" #cover>
                     <a-carousel
                       v-if="!reloadAttachments && attachments(record).length"
-                      class="gallery-carousel !border-b-1 !border-gray-200 min-h-52 !bg-white"
+                      class="gallery-carousel !border-b-1 !border-gray-200 min-h-52"
                       arrows
                     >
                       <template #customPaging>
@@ -491,107 +473,89 @@ const handleOpenNewRecordForm = () => {
                           v-if="isImage(attachment.title, attachment.mimetype ?? attachment.type)"
                           :key="`carousel-${record.rowMeta.rowIndex}-${index}`"
                           class="h-52"
-                          image-class="!w-full"
                           :object-fit="coverImageObjectFitStyle"
                           :srcs="getPossibleAttachmentSrc(attachment, 'card_cover')"
                           @click="expandFormClick($event, record)"
                         />
                       </template>
                     </a-carousel>
-                    <div
-                      v-else
-                      class="h-52 w-full !flex flex-row !border-b-1 !border-gray-200 items-center justify-center !bg-white"
-                    >
+                    <div v-else class="h-52 w-full !flex flex-row !border-b-1 !border-gray-200 items-center justify-center">
                       <img class="object-contain w-[48px] h-[48px]" src="~assets/icons/FileIconImageBox.png" />
                     </div>
                   </template>
-
-                  <div class="flex-1 flex content-stretch gap-3 w-full">
-                    <div
-                      v-if="isRowColouringEnabled"
-                      class="w-1 flex-none min-h-4 rounded-sm"
-                      :style="extractRowBackgroundColorStyle(record).rowLeftBorderColor"
-                    ></div>
-                    <div
-                      class="flex-1 flex flex-col gap-3 !children:pointer-events-none"
+                  <div class="flex flex-col gap-3 !children:pointer-events-none">
+                    <h2
+                      v-if="displayField"
+                      class="nc-card-display-value-wrapper"
                       :class="{
-                        'w-[calc(100%_-_16px)]': isRowColouringEnabled,
-                        'w-full': !isRowColouringEnabled,
+                        '!children:pointer-events-auto':
+                          isButton(displayField) ||
+                          (isRowEmpty(record, displayField) && isAllowToRenderRowEmptyField(displayField)),
                       }"
                     >
-                      <h2
-                        v-if="displayField"
-                        class="nc-card-display-value-wrapper"
-                        :class="{
-                          '!children:pointer-events-auto':
-                            isButton(displayField) ||
-                            (isRowEmpty(record, displayField) && isAllowToRenderRowEmptyField(displayField)),
-                        }"
+                      <template
+                        v-if="
+                          !isRowEmpty(record, displayField) ||
+                          isAllowToRenderRowEmptyField(displayField) ||
+                          isPercent(displayField)
+                        "
                       >
-                        <template
-                          v-if="
-                            !isRowEmpty(record, displayField) ||
-                            isAllowToRenderRowEmptyField(displayField) ||
-                            isPercent(displayField)
-                          "
+                        <LazySmartsheetVirtualCell
+                          v-if="isVirtualCol(displayField)"
+                          v-model="record.row[displayField.title]"
+                          class="!text-brand-500"
+                          :column="displayField"
+                          :row="record"
+                        />
+                        <LazySmartsheetCell
+                          v-else
+                          v-model="record.row[displayField.title]"
+                          class="!text-brand-500"
+                          :column="displayField"
+                          :edit-enabled="false"
+                          :read-only="true"
+                        />
+                      </template>
+                      <template v-else> - </template>
+                    </h2>
+                    <div
+                      v-for="col in fieldsWithoutDisplay"
+                      :key="`record-${record.rowMeta.rowIndex}-${col.id}`"
+                      class="nc-card-col-wrapper"
+                      :class="{
+                        '!children:pointer-events-auto':
+                          isButton(col) || (isRowEmpty(record, col) && isAllowToRenderRowEmptyField(col)),
+                      }"
+                      @click="handleClick(col, $event)"
+                    >
+                      <div class="flex flex-col rounded-lg w-full">
+                        <div class="flex flex-row w-full justify-start">
+                          <div class="nc-card-col-header w-full !children:text-gray-500">
+                            <LazySmartsheetHeaderVirtualCell v-if="isVirtualCol(col)" :column="col" :hide-menu="true" />
+                            <LazySmartsheetHeaderCell v-else :column="col" :hide-menu="true" />
+                          </div>
+                        </div>
+                        <div
+                          v-if="!isRowEmpty(record, col) || isAllowToRenderRowEmptyField(col)"
+                          class="flex flex-row w-full text-gray-800 items-center justify-start min-h-7 py-1"
                         >
                           <LazySmartsheetVirtualCell
-                            v-if="isVirtualCol(displayField)"
-                            v-model="record.row[displayField.title]"
-                            class="!text-brand-500"
-                            :column="displayField"
+                            v-if="isVirtualCol(col)"
+                            v-model="record.row[col.title]"
+                            :column="col"
                             :row="record"
+                            class="!text-gray-800"
                           />
                           <LazySmartsheetCell
                             v-else
-                            v-model="record.row[displayField.title]"
-                            class="!text-brand-500"
-                            :column="displayField"
+                            v-model="record.row[col.title]"
+                            :column="col"
                             :edit-enabled="false"
                             :read-only="true"
+                            class="!text-gray-800"
                           />
-                        </template>
-                        <template v-else> - </template>
-                      </h2>
-                      <div
-                        v-for="col in fieldsWithoutDisplay"
-                        :key="`record-${record.rowMeta.rowIndex}-${col.id}`"
-                        class="nc-card-col-wrapper"
-                        :class="{
-                          '!children:pointer-events-auto':
-                            isButton(col) || (isRowEmpty(record, col) && isAllowToRenderRowEmptyField(col)),
-                        }"
-                        @click="handleClick(col, $event)"
-                      >
-                        <div class="flex flex-col rounded-lg w-full">
-                          <div class="flex flex-row w-full justify-start">
-                            <div class="nc-card-col-header w-full !children:text-gray-500">
-                              <LazySmartsheetHeaderVirtualCell v-if="isVirtualCol(col)" :column="col" :hide-menu="true" />
-                              <LazySmartsheetHeaderCell v-else :column="col" :hide-menu="true" />
-                            </div>
-                          </div>
-                          <div
-                            v-if="!isRowEmpty(record, col) || isAllowToRenderRowEmptyField(col)"
-                            class="flex flex-row w-full text-gray-800 items-center justify-start min-h-7 py-1"
-                          >
-                            <LazySmartsheetVirtualCell
-                              v-if="isVirtualCol(col)"
-                              v-model="record.row[col.title]"
-                              :column="col"
-                              :row="record"
-                              class="!text-gray-800"
-                            />
-                            <LazySmartsheetCell
-                              v-else
-                              v-model="record.row[col.title]"
-                              :column="col"
-                              :edit-enabled="false"
-                              :read-only="true"
-                              class="!text-gray-800"
-                            />
-                          </div>
-                          <div v-else class="flex flex-row w-full h-7 pl-1 items-center justify-start">-</div>
                         </div>
+                        <div v-else class="flex flex-row w-full h-7 pl-1 items-center justify-start">-</div>
                       </div>
                     </div>
                   </div>
@@ -606,22 +570,19 @@ const handleOpenNewRecordForm = () => {
         </div>
       </div>
     </NcDropdown>
-    <div class="sticky bottom-4 w-[fit-content]">
-      <PermissionsTooltip
+    <div class="sticky bottom-4">
+      <NcButton
         v-if="isUIAllowed('dataInsert') && !isSyncedTable"
-        :entity="PermissionEntity.TABLE"
-        :entity-id="meta?.id"
-        :permission="PermissionKey.TABLE_RECORD_ADD"
+        size="xs"
+        type="secondary"
+        class="ml-4"
+        @click="handleOpenNewRecordForm"
       >
-        <template #default="{ isAllowed }">
-          <NcButton size="xs" type="secondary" class="ml-4" :disabled="!isAllowed" @click="handleOpenNewRecordForm">
-            <div class="flex items-center gap-2">
-              <component :is="iconMap.plus" class="" />
-              {{ $t('activity.newRecord') }}
-            </div>
-          </NcButton>
-        </template>
-      </PermissionsTooltip>
+        <div class="flex items-center gap-2">
+          <component :is="iconMap.plus" class="" />
+          {{ $t('activity.newRecord') }}
+        </div>
+      </NcButton>
     </div>
   </div>
   <Suspense>

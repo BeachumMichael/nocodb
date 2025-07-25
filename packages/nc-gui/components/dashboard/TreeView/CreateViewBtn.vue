@@ -15,7 +15,7 @@ const alignLeftLevel = toRef(props, 'alignLeftLevel')
 const viewsStore = useViewsStore()
 const { loadViews, onOpenViewCreateModal } = viewsStore
 
-const { isAiFeaturesEnabled } = useNocoAi()
+const { isFeatureEnabled } = useBetaFeatureToggle()
 
 const table = inject(SidebarTableInj)!
 const base = inject(ProjectInj)!
@@ -184,18 +184,16 @@ async function onOpenModal({
             <GeneralIcon v-else class="plus" icon="plus" />
           </div>
         </NcMenuItem>
-        <template v-if="isAiFeaturesEnabled">
+        <template v-if="isFeatureEnabled(FEATURE_FLAG.AI_FEATURES)">
           <NcDivider />
-          <NcTooltip :title="`Auto suggest views for ${table?.title || 'the current table'}`" placement="right">
-            <NcMenuItem data-testid="sidebar-view-create-ai" @click="onOpenModal({ type: 'AI' })">
-              <div class="item">
-                <div class="item-inner">
-                  <GeneralIcon icon="ncAutoAwesome" class="!w-4 !h-4 text-nc-fill-purple-dark" />
-                  <div>{{ $t('labels.useNocoAI') }}</div>
-                </div>
+          <NcMenuItem data-testid="sidebar-view-create-ai" @click="onOpenModal({ type: 'AI' })">
+            <div class="item">
+              <div class="item-inner">
+                <GeneralIcon icon="ncAutoAwesome" class="!w-4 !h-4 text-nc-fill-purple-dark" />
+                <div>{{ $t('labels.aiSuggested') }}</div>
               </div>
-            </NcMenuItem>
-          </NcTooltip>
+            </div>
+          </NcMenuItem>
         </template>
       </NcMenu>
     </template>

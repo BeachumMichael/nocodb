@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PermissionEntity, PermissionKey, UITypes } from 'nocodb-sdk'
+import { UITypes } from 'nocodb-sdk'
 import type { Row as RowType } from '#imports'
 
 const { $e } = useNuxtApp()
@@ -9,8 +9,6 @@ const meta = inject(MetaInj, ref())
 const view = inject(ActiveViewInj, ref())
 
 const { isMobileMode } = useGlobal()
-
-const { isAllowed } = usePermissions()
 
 const reloadViewMetaHook = inject(ReloadViewMetaHookInj)
 
@@ -88,9 +86,7 @@ const expandRecord = (row: RowType, state?: Record<string, any>) => {
 }
 
 const newRecord = (row: RowType) => {
-  if (isPublic.value || (meta.value?.id && !isAllowed(PermissionEntity.TABLE, meta.value?.id, PermissionKey.TABLE_RECORD_ADD))) {
-    return
-  }
+  if (isPublic.value) return
 
   $e('c:calendar:new-record', activeCalendarView.value)
   expandRecord({

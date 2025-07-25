@@ -162,19 +162,19 @@ watch(activeLang, (newLang) => {
 const supportedDocs = [
   {
     title: 'Data APIs',
-    href: 'https://nocodb.com/apis/v2/data',
+    href: 'https://data-apis-v2.nocodb.com/',
   },
   {
     title: 'Meta APIs',
-    href: 'https://nocodb.com/apis/v2/meta',
+    href: 'https://meta-apis-v2.nocodb.com/',
   },
   {
     title: 'Create API Token',
-    href: 'https://nocodb.com/docs/product-docs/account-settings/api-tokens#create-api-token',
+    href: 'https://docs.nocodb.com/account-settings/api-tokens/#create-api-token',
   },
   {
     title: 'Swagger',
-    href: 'https://nocodb.com/docs/product-docs/bases/actions-on-base#rest-apis',
+    href: 'https://docs.nocodb.com/bases/actions-on-base/#rest-apis',
   },
 ] as {
   title: string

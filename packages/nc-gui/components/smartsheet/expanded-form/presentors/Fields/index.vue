@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ColumnType, PermissionEntity, PermissionKey } from 'nocodb-sdk'
+import { type ColumnType } from 'nocodb-sdk'
 
 /* interface */
 
@@ -14,7 +14,7 @@ const props = defineProps<{
   newRecordSubmitBtnText?: string
 }>()
 
-const emits = defineEmits(['copyRecordUrl', 'deleteRow', 'save'])
+const emits = defineEmits(['copy:record-url', 'delete:row', 'save'])
 
 const rowId = toRef(props, 'rowId')
 const fields = toRef(props, 'fields')
@@ -27,15 +27,7 @@ const newRecordSubmitBtnText = toRef(props, 'newRecordSubmitBtnText')
 
 /* stores */
 
-const {
-  commentsDrawer,
-  changedColumns,
-  isNew,
-  loadRow: _loadRow,
-  row: _row,
-  meta,
-  isAllowedAddNewRecord,
-} = useExpandedFormStoreOrThrow()
+const { commentsDrawer, changedColumns, isNew, loadRow: _loadRow, row: _row } = useExpandedFormStoreOrThrow()
 
 const { isSqlView } = useSmartsheetStoreOrThrow()
 
@@ -86,35 +78,24 @@ export default {
                     {{ $t('general.reload') }}
                   </div>
                 </NcMenuItem>
-                <NcMenuItem v-if="rowId" @click="!isNew ? emits('copyRecordUrl') : () => {}">
+                <NcMenuItem v-if="rowId" @click="!isNew ? emits('copy:record-url') : () => {}">
                   <div v-e="['c:row-expand:copy-url']" class="flex gap-2 items-center" data-testid="nc-expanded-form-copy-url">
                     <component :is="iconMap.copy" class="cursor-pointer nc-duplicate-row" />
                     {{ $t('labels.copyRecordURL') }}
                   </div>
                 </NcMenuItem>
                 <NcDivider />
-                <PermissionsTooltip
+                <NcMenuItem
                   v-if="isUIAllowed('dataEdit') && !isNew"
-                  :entity="PermissionEntity.TABLE"
-                  :entity-id="meta?.id"
-                  :permission="PermissionKey.TABLE_RECORD_DELETE"
+                  v-e="['c:row-expand:delete']"
+                  class="!text-red-500 !hover:bg-red-50"
+                  @click="!isNew && emits('delete:row')"
                 >
-                  <template #default="{ isAllowed }">
-                    <NcMenuItem
-                      v-e="['c:row-expand:delete']"
-                      :class="{
-                        '!text-red-500 !hover:bg-red-50': isAllowed,
-                      }"
-                      :disabled="!isAllowed"
-                      @click="!isNew && emits('deleteRow')"
-                    >
-                      <div data-testid="nc-expanded-form-delete">
-                        <component :is="iconMap.delete" class="cursor-pointer nc-delete-row" />
-                        Delete record
-                      </div>
-                    </NcMenuItem>
-                  </template>
-                </PermissionsTooltip>
+                  <div data-testid="nc-expanded-form-delete">
+                    <component :is="iconMap.delete" class="cursor-pointer nc-delete-row" />
+                    Delete record
+                  </div>
+                </NcMenuItem>
               </NcMenu>
             </template>
           </NcDropdown>
@@ -125,7 +106,7 @@ export default {
         <div v-if="isMobileMode && !isSqlView" class="p-2">
           <NcButton
             v-e="['c:row-expand:save']"
-            :disabled="(!isAllowedAddNewRecord && isNew) || (changedColumns.size === 0 && !isUnsavedFormExist)"
+            :disabled="changedColumns.size === 0 && !isUnsavedFormExist"
             :loading="isSaving"
             class="nc-expand-form-save-btn !xs:(text-sm) !px-2"
             :class="{

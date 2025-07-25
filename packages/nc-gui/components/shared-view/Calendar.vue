@@ -22,8 +22,6 @@ useProvideSmartsheetStore(sharedView, meta, true, ref([]), nestedFilters)
 useProvideKanbanViewStore(meta, sharedView)
 
 useProvideCalendarViewStore(meta, sharedView, true, nestedFilters)
-
-useViewRowColorProvider({ shared: true })
 </script>
 
 <template>

@@ -82,11 +82,11 @@ export const Link = TiptapLink.extend<LinkOptions>({
         }, 100)
       },
       'Space': () => {
-        const { state } = this.editor.view
+        const { state, dispatch } = this.editor.view
         const { selection } = state
         const { $to } = selection
         const nodeBefore = $to.nodeBefore
-        const nodeAfter = $to.nodeAfter
+        const nodeAfter = $to.nodeAfter // Get the next node after the cursor
 
         const linkMarkType = state.schema.marks.link
         if (!linkMarkType || !nodeBefore) return false
@@ -99,10 +99,8 @@ export const Link = TiptapLink.extend<LinkOptions>({
         const isAtEndOfLink = !nodeAfter || !linkMarkType.isInSet(nodeAfter.marks)
         if (!isAtEndOfLink) return false
 
-        // ✅ Insert space and then remove ALL marks
-        const tr = state.tr.insertText(' ', $to.pos).setSelection(state.selection)
-        this.editor.view.dispatch(tr)
-        this.editor.commands.unsetAllMarks() // This clears bold, italic, underline, link, etc.
+        // ✅ Insert space first, then remove link mark
+        dispatch(state.tr.insertText(' ', $to.pos).removeMark($to.pos, $to.pos + 1, linkMarkType))
 
         return true
       },
@@ -142,17 +140,11 @@ export const Link = TiptapLink.extend<LinkOptions>({
           }
         },
       }),
-      // ✅ Remove link when typing after it and before it
+      // ✅ Remove link when typing after it
       new Plugin({
         appendTransaction: (transactions, oldState, newState) => {
           try {
-            // ✅ Skip if it's a paste transaction
-            if (transactions.some((tr) => tr.getMeta('paste') || tr.getMeta('uiEvent') === 'paste')) {
-              return null
-            }
-
             if (transactions.length !== 1) return null
-
             const steps = transactions[0].steps
             if (steps.length !== 1) return null
 
@@ -177,22 +169,14 @@ export const Link = TiptapLink.extend<LinkOptions>({
               if (linkMark) {
                 const isAtEndOfLink = !nodeAfter || !linkMarkType.isInSet(nodeAfter.marks)
                 if (isAtEndOfLink) {
-                  // 🔹 Remove all formatting after typing at end of marked text
-                  nodeBefore?.marks?.forEach((mark) => {
-                    tr.removeMark($to.pos, $to.pos + 1, mark.type)
-                  })
-                  return tr
+                  return tr.removeMark($to.pos, $to.pos + 1, linkMarkType)
                 }
               }
             }
 
             // ✅ Case 2: Typing at the START of a link
             if ($from.pos === 0 || (!$from.nodeBefore && nodeAfter && linkMarkType.isInSet(nodeAfter.marks))) {
-              // 🔹 Remove all formatting after typing at end of marked text
-              nodeAfter?.marks?.forEach((mark) => {
-                tr.removeMark($from.pos, $from.pos + 1, mark.type)
-              })
-              return tr
+              return tr.removeMark($from.pos, $from.pos + 1, linkMarkType)
             }
 
             return null

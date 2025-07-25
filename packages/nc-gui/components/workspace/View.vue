@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
       </NcPageHeader>
     </template>
 
-    <NcTabs v-model:active-key="tab">
+    <NcTabs v-model:activeKey="tab">
       <template #leftExtra>
         <div class="w-3"></div>
       </template>
@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
         </a-tab-pane>
       </template>
 
-      <template v-if="isEeUI && !props.workspaceId && isWsAuditEnabled && isUIAllowed('workspaceAuditList')">
+      <template v-if="isEeUI && !props.workspaceId && isPaymentEnabled && isUIAllowed('workspaceAuditList')">
         <a-tab-pane key="audits" class="w-full">
           <template #tab>
             <div class="tab-title" data-testid="nc-workspace-settings-tab-audits">
@@ -210,19 +210,19 @@ onBeforeUnmount(() => {
           <WorkspaceAudits v-if="isWsAuditEnabled" />
           <div v-else>&nbsp;</div>
         </a-tab-pane>
-      </template>
 
-      <template v-if="isWorkspaceSsoAvail && isUIAllowed('workspaceSSO')">
-        <a-tab-pane key="sso" class="w-full">
-          <template #tab>
-            <div class="tab-title" data-testid="nc-workspace-settings-tab-billing">
-              <GeneralIcon icon="sso" class="flex-none h-4 w-4" />
-              {{ $t('title.sso') }}
-            </div>
-          </template>
+        <template v-if="isWorkspaceSsoAvail">
+          <a-tab-pane key="sso" class="w-full">
+            <template #tab>
+              <div class="tab-title" data-testid="nc-workspace-settings-tab-billing">
+                <GeneralIcon icon="sso" class="flex-none h-4 w-4" />
+                {{ $t('title.sso') }}
+              </div>
+            </template>
 
-          <WorkspaceSso class="!h-[calc(100vh_-_92px)]" />
-        </a-tab-pane>
+            <WorkspaceSso class="!h-[calc(100vh_-_92px)]" />
+          </a-tab-pane>
+        </template>
       </template>
 
       <template v-if="isUIAllowed('workspaceManage')">

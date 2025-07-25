@@ -8,8 +8,6 @@ import {
   type AttachmentResType,
   type ColumnType,
   type LinkToAnotherRecordType,
-  PermissionEntity,
-  PermissionKey,
   PlanFeatureTypes,
   PlanLimitTypes,
   PlanTitles,
@@ -51,11 +49,9 @@ const { isUIAllowed } = useRoles()
 
 const { metas, getMeta } = useMetas()
 
-const { base, showBaseAccessRequestOverlay } = storeToRefs(useBase())
+const { base } = storeToRefs(useBase())
 
 const { getPossibleAttachmentSrc } = useAttachment()
-
-const { isAllowed } = usePermissions()
 
 const secondsRemain = ref(0)
 
@@ -187,19 +183,6 @@ const { open, onChange: onChangeFile } = useFileDialog({
   reset: true,
 })
 
-const isAllowedToAddRecord = computed(
-  () => !meta?.value?.id || isAllowed(PermissionEntity.TABLE, meta.value.id, PermissionKey.TABLE_RECORD_ADD),
-)
-
-const disableFormSubmit = computed(
-  () =>
-    !isUIAllowed('dataInsert') ||
-    !visibleColumns.value.length ||
-    blockAddNewRecord.value ||
-    isSyncedTable.value ||
-    !isAllowedToAddRecord.value,
-)
-
 const editOrAddProviderRef = ref()
 
 const onVisibilityChange = (state: 'showAddColumn' | 'showEditColumn') => {
@@ -295,7 +278,7 @@ const getPrefillValue = (c: ColumnType, value: any) => {
 }
 
 const updatePreFillFormSearchParams = useDebounceFn(() => {
-  if (isLocked.value || disableFormSubmit.value) return
+  if (isLocked.value || !isUIAllowed('dataInsert')) return
 
   const preFilledData = { ...formState.value, ...state.value }
 
@@ -325,8 +308,7 @@ const updatePreFillFormSearchParams = useDebounceFn(() => {
 const isFormSubmitting = ref(false)
 
 async function submitForm() {
-  if (disableFormSubmit.value) return
-
+  if (!isUIAllowed('dataInsert') || blockAddNewRecord.value) return
   isFormSubmitting.value = true
 
   for (const col of localColumns.value) {
@@ -911,16 +893,6 @@ const { message: templatedMessage } = useTemplatedMessage(
         data-testid="nc-form-wrapper-submit"
       >
         <div class="max-w-[max(33%,688px)] mx-auto">
-          <div v-if="!isAllowedToAddRecord" class="mb-6">
-            <NcAlert
-              type="warning"
-              show-icon
-              class="mt-6 bg-nc-bg-orange-light max-w-[max(33%,688px)] mx-auto"
-              :message="$t('objects.permissions.formCannotAcceptSubmissions')"
-              :description="$t('objects.permissions.formCannotAcceptSubmissionsDescription')"
-            />
-          </div>
-
           <GeneralFormBanner
             v-if="!parseProp(formViewData?.meta).hide_banner"
             :banner-image-url="formViewData?.banner_image_url"
@@ -1010,16 +982,6 @@ const { message: templatedMessage } = useTemplatedMessage(
                 :style="{background:(formViewData?.meta as Record<string,any>).background_color || '#F9F9FA'}"
               >
                 <div class="min-w-[616px] overflow-x-auto nc-form-scrollbar">
-                  <div v-if="!isAllowedToAddRecord" class="mb-6">
-                    <NcAlert
-                      type="warning"
-                      show-icon
-                      class="mt-6 bg-nc-bg-orange-light max-w-[max(33%,688px)] mx-auto"
-                      :message="$t('objects.permissions.formCannotAcceptSubmissions')"
-                      :description="$t('objects.permissions.formCannotAcceptSubmissionsDescription')"
-                    />
-                  </div>
-
                   <GeneralImageCropper
                     v-if="isEditable"
                     v-model:show-cropper="showCropper"
@@ -1063,7 +1025,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                                     :feature="PlanFeatureTypes.FEATURE_FORM_CUSTOM_LOGO"
                                     :content="
                                       $t('upgrade.upgradeToAddCustomBannerSubtitle', {
-                                        plan: getPlanTitle(PlanTitles.PLUS),
+                                        plan: getPlanTitle(PlanTitles.TEAM),
                                       })
                                     "
                                   />
@@ -1181,7 +1143,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                                           :feature="PlanFeatureTypes.FEATURE_FORM_CUSTOM_LOGO"
                                           :content="
                                             $t('upgrade.upgradeToAddCustomLogoSubtitle', {
-                                              plan: getPlanTitle(PlanTitles.PLUS),
+                                              plan: getPlanTitle(PlanTitles.TEAM),
                                             })
                                           "
                                           class="-my-1"
@@ -1468,7 +1430,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                         <NcButton
                           type="secondary"
                           size="small"
-                          :disabled="disableFormSubmit"
+                          :disabled="!isUIAllowed('dataInsert') || !visibleColumns.length || isSyncedTable"
                           class="nc-form-clear nc-form-focus-element"
                           data-testid="nc-form-clear"
                           data-title="nc-form-clear"
@@ -1480,7 +1442,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                         <NcButton
                           type="primary"
                           size="small"
-                          :disabled="disableFormSubmit"
+                          :disabled="!isUIAllowed('dataInsert') || !visibleColumns.length || blockAddNewRecord || isSyncedTable"
                           :loading="isFormSubmitting"
                           class="nc-form-submit nc-form-focus-element"
                           data-testid="nc-form-submit"
@@ -1865,7 +1827,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                                     :feature="PlanFeatureTypes.FEATURE_HIDE_BRANDING"
                                     :content="
                                       $t('upgrade.upgradeToHideFormBrandingSubtitle', {
-                                        plan: getPlanTitle(PlanTitles.PLUS),
+                                        plan: getPlanTitle(PlanTitles.TEAM),
                                       })
                                     "
                                   />
@@ -1940,7 +1902,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                                       :feature="PlanFeatureTypes.FEATURE_FORM_URL_REDIRECTION"
                                       :content="
                                         $t('upgrade.upgradeToAddRedirectUrlSubtitle', {
-                                          plan: getPlanTitle(PlanTitles.PLUS),
+                                          plan: getPlanTitle(PlanTitles.TEAM),
                                         })
                                       "
                                     />
@@ -1978,7 +1940,7 @@ const { message: templatedMessage } = useTemplatedMessage(
                               <div class="text-small leading-[18px] text-gray-400 pl-3">
                                 Use {record_id} to get ID of the newly created record.
                                 <a
-                                  href="https://nocodb.com/docs/product-docs/views/view-types/form#redirect-url"
+                                  href="https://docs.nocodb.com/views/view-types/form/#redirect-url"
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   class="!no-underline !hover:underline"
@@ -2081,7 +2043,7 @@ const { message: templatedMessage } = useTemplatedMessage(
       </div>
     </template>
     <div
-      v-if="!showBaseAccessRequestOverlay && (user?.base_roles?.viewer || user?.base_roles?.commenter)"
+      v-if="user?.base_roles?.viewer || user?.base_roles?.commenter"
       class="absolute inset-0 bg-black/40 z-500 grid place-items-center"
     >
       <div class="text-center bg-white px-6 py-8 rounded-xl max-w-lg">
@@ -2113,7 +2075,7 @@ const { message: templatedMessage } = useTemplatedMessage(
     }
   }
   &.layout-list {
-    @apply h-auto !p-0;
+    @apply h-auto !pl-0 !py-1;
   }
 
   &.nc-cell-geodata {

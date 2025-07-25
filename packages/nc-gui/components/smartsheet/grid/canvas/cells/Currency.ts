@@ -1,4 +1,3 @@
-import { roundUpToPrecision } from 'nocodb-sdk'
 import { renderSingleLineText, renderTagLabel } from '../utils/canvas'
 
 export const CurrencyRenderer: CellRenderer = {
@@ -15,21 +14,15 @@ export const CurrencyRenderer: CellRenderer = {
     const currencyMeta = {
       currency_locale: 'en-US',
       currency_code: 'USD',
-      precision: 2,
       ...(parseProp(column?.meta) || {}),
     }
 
     let formattedValue = ''
     try {
-      // Round the value to the specified precision
-      const roundedValue = roundUpToPrecision(Number(value), currencyMeta.precision ?? 2)
-
       formattedValue = new Intl.NumberFormat(currencyMeta.currency_locale || 'en-US', {
         style: 'currency',
         currency: currencyMeta.currency_code || 'USD',
-        minimumFractionDigits: currencyMeta.precision ?? 2,
-        maximumFractionDigits: currencyMeta.precision ?? 2,
-      }).format(roundedValue)
+      }).format(value)
     } catch (e) {
       formattedValue = value.toString()
     }

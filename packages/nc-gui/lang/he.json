@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "בעל סביבת העבודה קיבל הודעה",
     "WorkspaceOwnerNotifiedSubtitle": "בקשתך לשדרוג נשלחה לבעל סביבת העבודה.",
     "failedToSendUpgradeRequest": "שליחת בקשת השדרוג נכשלה",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "פתח שקיפות מלאה למקורות המחוברים שלך. צפה בכל הרשומות על-ידי שדרוג לתוכנית Plus.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "אתה צופה ב-{limit} מתוך {total} רשומות. פתח גישה ל-{remaining} הרשומות הנותרות על-ידי שדרוג לתוכנית Plus.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "שדרג כדי לפתוח גישה מלאה לנתונים",
+    "upgradeToSeeMoreRecordInline": "שדרג כדי לצפות בכל הרשומות ממקורות נתונים חיצוניים",
+    "upgradeToSeeMoreRecordSubtitle": "פתח שקיפות מלאה למקורות המחוברים שלך. צפה בכל הרשומות על-ידי שדרוג לתוכנית Team.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "אתה צופה ב-{limit} מתוך {total} רשומות. פתח גישה ל-{remaining} הרשומות הנותרות על-ידי שדרוג לתוכנית Team.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "התוכנית החינמית מאפשרת עד {limit} משתמשי Editor. שדרג כדי לקבל כמות בלתי מוגבלת.",
     "adjustCollaboratorRoles": "התאם תפקידי משתפי פעולה",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "שדרג כדי להעלות תמונת סביבת עבודה",
     "upgradeToUploadWsImageSubtitle": "התוכנית הנוכחית שלך {activePlan} מאפשרת שימוש באייקונים ואימוג׳ים בלבד. שדרג לתוכנית {plan} כדי להעלות תמונה מותאמת כאווטאר של סביבת העבודה.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "אתה עוזב את NocoDB",
     "onlyProceedIfYouTrustThisLink": "המשך רק אם אתה סומך על קישור זה.",
     "reAssignViewModalSubtitle": "לאחר ההקצאה מחדש, הבעלים הנוכחי לא יוכל עוד לערוך את תצורת התצוגה.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "הנאמנות משתלמת — תהנה ממחיר מוגבל!",
     "loyaltyBannerSubtitle": "פתח מושבים ללא הגבלה, רשומות נוספות, עוד אחסון, Webhooks מותנים, SSO, אינטגרציות, ועוד הרבה!",
     "selectTimezone": "הצג אזור זמן",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "כלול תצוגות",
-    "includeScripts": "Include scripts",
     "includeWebhook": "כלול Webhook",
     "includeComments": "כלול תגובות",
     "zoomInToViewColumns": "התמקד לצפות בעמודות",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "לחץ כדי לפתור",
@@ -1649,7 +1631,6 @@
     "changePlan": "שנה תוכנית"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "כל מרחב עבודה חייב לכלול לפחות בעל אחד. אנא הקצה משתמש אחר כבעלים לפני עזיבת מרחב העבודה. אם אתה החבר האחרון, שקול למחוק את מרחב העבודה במקום זאת.",
     "currentDateNotAvail": "אפשרות התאריך הנוכחי לא זמינה עבור מקור הנתונים או סוג הנתונים",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "חפש אייקונים",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

@@ -704,7 +704,7 @@ watch(
         <GeneralIcon :icon="importMeta.icon" class="w-6 h-6" />
         {{ importMeta.header }}
         <a
-          href="https://nocodb.com/docs/product-docs/tables/create-table-via-import"
+          href="https://docs.nocodb.com/tables/create-table-via-import/"
           class="!text-nc-content-gray-subtle2 text-sm font-weight-500 ml-auto"
           target="_blank"
           rel="noopener"
@@ -738,7 +738,7 @@ watch(
           @change="onChange"
         />
         <div v-else>
-          <NcTabs v-model:active-key="activeTab" class="nc-quick-import-tabs" @update:active-key="handleResetImportError">
+          <NcTabs v-model:activeKey="activeTab" class="nc-quick-import-tabs" @update:active-key="handleResetImportError">
             <a-tab-pane :key="ImportTypeTabs.upload" :disabled="preImportLoading" class="!h-full">
               <template #tab>
                 <div class="flex gap-2 items-center">
@@ -747,7 +747,7 @@ watch(
               </template>
               <div class="relative mt-5">
                 <a-upload-dragger
-                  v-model:file-list="importState.fileList"
+                  v-model:fileList="importState.fileList"
                   name="file"
                   class="nc-modern-drag-import nc-input-import !scrollbar-thin-dull !py-4 !transition !rounded-lg !border-gray-200"
                   :class="{

@@ -74,8 +74,6 @@ const { isUIAllowed } = useRoles()
 
 const { showUpgradeToUseCurrentUserFilter } = useEeConfig()
 
-const isFormListView = computed(() => !isEditColumn.value && isForm.value && parseProp(column.value.meta)?.isList)
-
 const options = computed(() => {
   const currentUserField: any[] = []
   if (isEeUI && isInFilter.value) {
@@ -86,16 +84,6 @@ const options = computed(() => {
     })
   }
   return [...currentUserField, ...(userOptions ?? getOptions(column.value, false, isForm.value, baseUsers.value))]
-})
-
-const nonDeletedOptions = computed(() => {
-  return options.value.filter((op) => !op.deleted)
-})
-
-const filteredOptions = computed(() => {
-  return nonDeletedOptions.value.filter((op) => {
-    return searchVal.value ? searchCompare([op.display_name, op.email], searchVal.value) : true
-  })
 })
 
 const optionsMap = computed(() => {
@@ -150,9 +138,6 @@ const vModelListLayout = computed(() => {
 })
 
 watch(isOpen, (n, _o) => {
-  // If it is form list view then we don't need to do anything here
-  if (isFormListView.value) return
-
   if (!n) searchVal.value = ''
 
   if (editAllowed.value) {
@@ -268,12 +253,13 @@ const handleClose = (e: MouseEvent) => {
 
 useEventListener(document, 'click', handleClose, true)
 
-// search with email or display_name
-const filterOption = (input: string, option: any): boolean => {
+// search with email
+const filterOption = (input: string, option: any) => {
   const opt = options.value.find((o) => o.id === option.value)
-  if (!opt) return false
-
-  return searchCompare([opt.display_name, opt.email], input)
+  const searchVal = opt?.display_name || opt?.email
+  if (searchVal) {
+    return searchVal.toLowerCase().includes(input.toLowerCase())
+  }
 }
 
 // check if user is part of the base
@@ -309,16 +295,10 @@ const isExpandedForm = inject(IsExpandedFormOpenInj, ref(false))
 const isCanvasInjected = inject(IsCanvasInjectionInj, false)
 const isGrid = inject(IsGridInj, ref(false))
 const isUnderLookup = inject(IsUnderLookupInj, ref(false))
-const canvasCellEventData = inject(CanvasCellEventDataInj, reactive<CanvasCellEventDataInjType>({}))
+
 onMounted(() => {
   if (isGrid.value && isCanvasInjected && !isExpandedForm.value && !isEditColumn.value && !isUnderLookup.value) {
-    forcedNextTick(() => {
-      onFocus()
-      const key = canvasCellEventData.keyboardKey
-      if (key && isSinglePrintableKey(key)) {
-        searchVal.value = key
-      }
-    })
+    isOpen.value = true
   }
 })
 </script>
@@ -329,93 +309,62 @@ onMounted(() => {
     :class="{ 'read-only': readOnly }"
     @click="toggleMenu"
   >
-    <div v-if="isFormListView" class="w-full max-w-full">
-      <div class="rounded-lg border-1 border-nc-border-gray-medium w-full max-w-full">
-        <div v-if="nonDeletedOptions.length > 6" class="border-b-1 border-nc-border-gray-medium pl-1 group" @click.stop>
-          <a-input
-            ref="inputRef"
-            v-model:value="searchVal"
-            :placeholder="$t('general.search')"
-            class="nc-user-select-search-field-input !pl-2 !pr-1.5 flex-1 !py-2"
-            allow-clear
-            autocomplete="off"
-            :bordered="false"
-          >
-            <template #prefix>
-              <GeneralIcon icon="search" class="nc-search-icon text-nc-content-gray-muted opacity-50 h-4 w-4 mr-1.5" /> </template
-          ></a-input>
-        </div>
-        <div class="w-full max-w-full max-h-[328px] nc-scrollbar-thin p-1">
+    <div v-if="!isEditColumn && isForm && parseProp(column.meta)?.isList" class="w-full max-w-full">
+      <component
+        :is="isMultiple ? CheckboxGroup : RadioGroup"
+        :value="vModelListLayout"
+        :disabled="readOnly || !editAllowed"
+        class="nc-field-layout-list"
+        @update:value="
+          (value) => {
+            vModel = isMultiple ? value : [value]
+          }
+        "
+      >
+        <template v-for="op of options" :key="op.id || op.email">
           <component
-            :is="isMultiple ? CheckboxGroup : RadioGroup"
-            :value="vModelListLayout"
-            :disabled="readOnly || !editAllowed"
-            class="nc-field-layout-list nc-user-select-list"
-            @update:value="
-              (value) => {
-                vModel = isMultiple ? value : [value]
-              }
-            "
+            :is="isMultiple ? Checkbox : Radio"
+            v-if="!op.deleted"
+            :key="op.id || op.email"
+            :value="op.id"
+            :data-testid="`select-option-${column.title}-${location === 'filter' ? 'filter' : rowIndex}`"
+            :class="`nc-select-option-${column.title}-${op.email}`"
           >
-            <!-- If we have not rendered all options then update value will not work properly so we have to use display: hidden on option which is not visible -->
-            <template v-for="op of options" :key="op.id || op.email">
-              <component
-                :is="isMultiple ? Checkbox : Radio"
-                v-if="!op.deleted"
-                :key="op.id || op.email"
-                :value="op.id"
-                :data-testid="`select-option-${column.title}-${location === 'filter' ? 'filter' : rowIndex}`"
-                :class="[
-                  `nc-select-option-${column.title}-${op.email}`,
-                  {
-                    '!hidden nc-hidden-option': !searchCompare([op.display_name, op.email], searchVal ?? ''),
-                  },
-                ]"
+            <a-tag class="rounded-tag max-w-full !pl-0" color="'#ccc'">
+              <span
+                :style="{
+                  color: tinycolor.isReadable('#ccc' || '#ccc', '#fff', { level: 'AA', size: 'large' })
+                    ? '#fff'
+                    : tinycolor.mostReadable('#ccc' || '#ccc', ['#0b1d05', '#fff']).toHex8String(),
+                }"
+                class="flex items-stretch gap-2 text-small"
               >
-                <div class="w-full flex gap-2 items-center py-1.5">
-                  <GeneralUserIcon :user="op" size="base" class="flex-none" :disabled="!isCollaborator(op.id || op.email)" />
-
-                  <div class="flex flex-col w-[calc(100%_-_40px)]">
-                    <div class="w-full flex gap-3">
-                      <NcTooltip
-                        class="text-bodyDefaultSmBold !leading-5 capitalize truncate max-w-full text-gray-800"
-                        :class="{
-                          '!text-gray-500': !isCollaborator(op.id || op.email),
-                        }"
-                        show-on-truncate-only
-                        placement="bottom"
-                      >
-                        <template #title>
-                          {{ op.display_name?.trim() || extractNameFromEmail(op.email) }}
-                        </template>
-                        {{ op.display_name?.trim() || extractNameFromEmail(op.email) }}
-                      </NcTooltip>
-                    </div>
-                    <NcTooltip
-                      class="text-xs !leading-4 text-nc-content-gray-muted truncate max-w-full"
-                      show-on-truncate-only
-                      placement="bottom"
-                    >
-                      <template #title>
-                        {{ op.email === CURRENT_USER_TOKEN ? $t('title.filteredByLoggedInUser') : op.email }}
-                      </template>
-
-                      {{ op.email === CURRENT_USER_TOKEN ? $t('title.filteredByLoggedInUser') : op.email }}
-                    </NcTooltip>
-                  </div>
+                <div>
+                  <GeneralUserIcon size="auto" :user="op" class="!text-[0.5rem] !h-[16.8px]" :disabled="!isCollaborator(op.id)" />
                 </div>
-              </component>
-            </template>
+                <NcTooltip class="truncate max-w-full" show-on-truncate-only>
+                  <template #title>
+                    {{ op.display_name?.trim() || op.email }}
+                  </template>
+                  <span
+                    class="text-ellipsis overflow-hidden"
+                    :style="{
+                      wordBreak: 'keep-all',
+                      whiteSpace: 'nowrap',
+                      display: 'inline',
+                    }"
+                    :class="{
+                      'text-gray-600': !isCollaborator(op.id || op.email),
+                    }"
+                  >
+                    {{ op.display_name?.trim() || op.email }}
+                  </span>
+                </NcTooltip>
+              </span>
+            </a-tag>
           </component>
-
-          <div
-            v-if="nonDeletedOptions.length && searchVal && !filteredOptions.length"
-            class="h-full text-center flex items-center justify-center gap-3 mt-4"
-          >
-            <a-empty :image="Empty.PRESENTED_IMAGE_SIMPLE" :description="$t('labels.noData')" class="!my-0" />
-          </div>
-        </div>
-      </div>
+        </template>
+      </component>
       <div
         v-if="!readOnly && !isMultiple && vModel.length"
         class="inline-block px-2 pt-2 cursor-pointer text-xs text-gray-500 hover:text-gray-800"
@@ -439,11 +388,10 @@ onMounted(() => {
       :open="isOpen && editAllowed"
       :disabled="readOnly || !editAllowed"
       :class="{ 'caret-transparent': !hasEditRoles }"
-      :dropdown-class-name="`nc-dropdown-user-select-cell !min-w-256px ${isInFilter ? '!min-w-256px' : '!min-w-180px'}  ${
-        isOpen ? 'active' : ''
-      }`"
+      :dropdown-class-name="`nc-dropdown-user-select-cell ${
+        isInFilter ? '!min-w-256px nc-dropdown-user-select-cell-filter' : '!min-w-156px'
+      }  ${isOpen ? 'active' : ''}`"
       :filter-option="filterOption"
-      :search-value="searchVal ?? ''"
       @search="search"
       @focus="onFocus"
       @blur="isOpen = false"
@@ -469,19 +417,13 @@ onMounted(() => {
             v-if="op.email === CURRENT_USER_TOKEN"
             class="absolute -bottom-1 w-[calc(100%_+_16px)] border-b-1 border-nc-border-gray-medium -ml-4"
           ></div>
-          <div class="w-full flex gap-2 items-center">
+          <div v-if="location === 'filter'" class="w-full flex gap-2 items-center">
             <GeneralUserIcon :user="op" size="base" class="flex-none" :show-placeholder-icon="op.email === CURRENT_USER_TOKEN" />
 
-            <div
-              class="flex flex-col"
-              :class="{
-                'w-[calc(100%_-_32px)]': !vModel.find((i) => i.email === op.email),
-                'w-[calc(100%_-_68px)]': !!vModel.find((i) => i.email === op.email),
-              }"
-            >
+            <div class="flex-1 flex flex-col max-w-[calc(100%_-_44px)]">
               <div class="w-full flex gap-3">
                 <NcTooltip
-                  class="text-bodyDefaultSmBold !leading-5 capitalize truncate max-w-full"
+                  class="text-bodyDefaultSmBold !leading-5 capitalize truncate"
                   :class="{
                     'text-nc-content-brand': op.email === CURRENT_USER_TOKEN,
                     'text-gray-800': op.email !== CURRENT_USER_TOKEN,
@@ -495,11 +437,7 @@ onMounted(() => {
                   {{ op.display_name?.trim() || extractNameFromEmail(op.email) }}
                 </NcTooltip>
               </div>
-              <NcTooltip
-                class="text-xs !leading-4 text-nc-content-gray-muted truncate max-w-full"
-                show-on-truncate-only
-                placement="bottom"
-              >
+              <NcTooltip class="text-xs !leading-4 text-nc-content-gray-muted truncate" show-on-truncate-only placement="bottom">
                 <template #title>
                   {{ op.email === CURRENT_USER_TOKEN ? $t('title.filteredByLoggedInUser') : op.email }}
                 </template>
@@ -514,6 +452,43 @@ onMounted(() => {
               class="flex-none text-primary w-4 h-4"
             />
           </div>
+          <a-tag
+            v-else
+            class="rounded-tag max-w-full !pl-0"
+            :class="{
+              '!my-0': !rowHeight || rowHeight === 1,
+            }"
+            color="'#ccc'"
+          >
+            <span
+              :style="{
+                color: tinycolor.isReadable('#ccc' || '#ccc', '#fff', { level: 'AA', size: 'large' })
+                  ? '#fff'
+                  : tinycolor.mostReadable('#ccc' || '#ccc', ['#0b1d05', '#fff']).toHex8String(),
+              }"
+              class="flex items-stretch gap-2"
+              :class="{ 'text-sm': isKanban, 'text-small': !isKanban }"
+            >
+              <div>
+                <GeneralUserIcon size="auto" :user="op" class="!text-[0.5rem] !h-[16.8px]" />
+              </div>
+              <NcTooltip class="truncate max-w-full" show-on-truncate-only placement="right">
+                <template #title>
+                  {{ op.display_name?.trim() || op.email }}
+                </template>
+                <span
+                  class="text-ellipsis overflow-hidden"
+                  :style="{
+                    wordBreak: 'keep-all',
+                    whiteSpace: 'nowrap',
+                    display: 'inline',
+                  }"
+                >
+                  {{ op.display_name?.trim() || op.email }}
+                </span>
+              </NcTooltip>
+            </span>
+          </a-tag>
         </a-select-option>
       </template>
 
@@ -652,13 +627,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.ant-select-dropdown.nc-dropdown-user-select-cell {
-  .ant-select-item-option-content {
-    @apply w-full;
-  }
-
-  .ant-select-item-option-state {
-    @apply !hidden;
-  }
+.ant-select-dropdown.nc-dropdown-user-select-cell-filter .ant-select-item-option-state {
+  @apply !hidden;
 }
 </style>

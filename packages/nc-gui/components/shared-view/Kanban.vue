@@ -20,8 +20,6 @@ useProvideSmartsheetLtarHelpers(meta)
 useProvideSmartsheetStore(sharedView, meta, true, ref([]), nestedFilters)
 
 useProvideKanbanViewStore(meta, sharedView, true)
-
-useViewRowColorProvider({ shared: true })
 </script>
 
 <template>

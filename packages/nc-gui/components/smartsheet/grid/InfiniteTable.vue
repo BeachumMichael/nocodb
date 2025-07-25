@@ -4,7 +4,6 @@ import {
   type ColumnReqType,
   type ColumnType,
   PlanLimitTypes,
-  PlanTitles,
   type TableType,
   UITypes,
   type ViewType,
@@ -150,7 +149,9 @@ const { addLTARRef, syncLTARRefs, clearLTARCell, cleaMMCell } = useSmartsheetLta
 
 const { loadViewAggregate } = useViewAggregateOrThrow()
 
-const { isAiFeaturesEnabled, generateRows, generatingRows, generatingColumnRows, generatingColumns, aiIntegrations } = useNocoAi()
+const { generateRows, generatingRows, generatingColumnRows, generatingColumns, aiIntegrations } = useNocoAi()
+
+const { isFeatureEnabled } = useBetaFeatureToggle()
 
 const {
   showRecordPlanLimitExceededModal,
@@ -858,8 +859,6 @@ async function expandRows({
     'newColumns': newColumns,
     'cellsOverwritten': cellsOverwritten,
     'rowsUpdated': rowsUpdated,
-    'isAddingEmptyRowPermitted': true,
-    'meta': meta.value,
     'onUpdate:expand': closeDialog,
     'onUpdate:modelValue': closeDlg,
   })
@@ -1237,7 +1236,7 @@ const bulkExecuteScript = async () => {
   }
 }
 
-const isAIFillMode = computed(() => metaKey.value && isAiFeaturesEnabled.value)
+const isAIFillMode = computed(() => metaKey.value && isFeatureEnabled(FEATURE_FLAG.AI_FEATURES))
 
 const generateAIBulk = async () => {
   if (!isSelectedOnlyAI.value.enabled || !meta?.value?.id || !meta.value.columns) return
@@ -2212,7 +2211,7 @@ const cellFilteredOrSortedClass = (colId: string) => {
 }
 
 const headerFilteredOrSortedClass = (colId: string) => {
-  const columnState = isColumnSortedOrFiltered(colId, true)
+  const columnState = isColumnSortedOrFiltered(colId)
   if (columnState) {
     const headerBgClass = filteredOrSortedAppearanceConfig[columnState]?.headerBgClass
     if (headerBgClass) {
@@ -2555,7 +2554,7 @@ const headerFilteredOrSortedClass = (colId: string) => {
                       </div>
                     </div>
                     <tr
-                      class="nc-grid-row transition-all duration-500 opacity-100 !xs:h-14"
+                      class="nc-grid-row transition transition-all duration-500 opacity-100 !xs:h-14"
                       :style="{
                         height: `${rowHeight}px`,
                         filter:
@@ -2582,7 +2581,7 @@ const headerFilteredOrSortedClass = (colId: string) => {
                       >
                         <div class="w-full flex items-center h-full px-1 gap-0.5">
                           <div
-                            class="nc-row-no min-w-4 h-4 flex items-center justify-between text-gray-500 pl-1.5 w-full"
+                            class="nc-row-no min-w-4 h-4 flex items-center justify-center text-gray-500 pl-1.5"
                             :class="{
                               'toggle': !readOnly,
                               'hidden': row.rowMeta?.selected || vSelectedAllRecords,
@@ -2591,10 +2590,7 @@ const headerFilteredOrSortedClass = (colId: string) => {
                               'text-small': row.rowMeta.rowIndex + 1 < 1000,
                             }"
                           >
-                            <span>
-                              {{ row.rowMeta.rowIndex + 1 }}
-                            </span>
-                            <div class="inline-block min-w-[4px] h-full rounded-full"></div>
+                            {{ row.rowMeta.rowIndex + 1 }}
                           </div>
 
                           <div
@@ -3142,7 +3138,6 @@ const headerFilteredOrSortedClass = (colId: string) => {
             <div>
               {{
                 $t('upgrade.upgradeToSeeMoreRecordInlineSubtitle', {
-                  plan: PlanTitles.BUSINESS,
                   limit: 100,
                   total: Math.max(props.totalRows, props.actualTotalRows),
                   remaining: Math.max(props.totalRows, props.actualTotalRows) - 100,
@@ -3158,12 +3153,7 @@ const headerFilteredOrSortedClass = (colId: string) => {
             </a>
             <NcButton
               size="small"
-              @click="
-                navigateToPricing({
-                  limitOrFeature: PlanLimitTypes.LIMIT_EXTERNAL_SOURCE_PER_WORKSPACE,
-                  ctaPlan: PlanTitles.BUSINESS,
-                })
-              "
+              @click="navigateToPricing({ limitOrFeature: PlanLimitTypes.LIMIT_EXTERNAL_SOURCE_PER_WORKSPACE })"
             >
               {{ isWsOwner ? $t('general.upgrade') : t('general.requestUpgrade') }}
             </NcButton>

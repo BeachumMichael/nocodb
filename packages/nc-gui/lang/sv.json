@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Arbetsutrymmesägaren har meddelats",
     "WorkspaceOwnerNotifiedSubtitle": "Din begäran om uppgradering har delats med arbetsutrymmesägaren.",
     "failedToSendUpgradeRequest": "Det gick inte att skicka uppgraderingsbegäran",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Lås upp full insyn i dina anslutna källor. Visa alla poster genom att uppgradera till Plus-planen.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Du visar {limit} av {total} poster. Lås upp åtkomst till de återstående {remaining} posterna genom att uppgradera till Plus-planen.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Uppgradera för att låsa upp fullständig dataåtkomst",
+    "upgradeToSeeMoreRecordInline": "Uppgradera för att visa alla poster från externa datakällor",
+    "upgradeToSeeMoreRecordSubtitle": "Lås upp full insyn i dina anslutna källor. Visa alla poster genom att uppgradera till Team-planen.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Du visar {limit} av {total} poster. Lås upp åtkomst till de återstående {remaining} posterna genom att uppgradera till Team-planen.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Gratisplanen tillåter upp till {limit} redaktörsanvändare, uppgradera för att få obegränsat antal",
     "adjustCollaboratorRoles": "Justera medarbetarroller",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Uppgradera för att ladda upp en arbetsutrymmesbild",
     "upgradeToUploadWsImageSubtitle": "Din nuvarande {activePlan}-plan tillåter endast ikoner och emojis. Uppgradera till {plan}-planen för att ladda upp en egen bild som arbetsutrymmesavatar.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Du lämnar NocoDB",
     "onlyProceedIfYouTrustThisLink": "Fortsätt bara om du litar på länken.",
     "reAssignViewModalSubtitle": "När vyn har omfördelats kan den nuvarande ägaren inte längre redigera vykonfigurationen.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "Lojalitet lönar sig – njut av fast prissättning!",
     "loyaltyBannerSubtitle": "Lås upp obegränsade platser, fler poster, mer lagring, villkorliga webhooks, SSO, integrationer och mycket mer!",
     "selectTimezone": "Visa tidszon",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Inkludera vyer",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Inkludera webhook",
     "includeComments": "Inkludera kommentarer",
     "zoomInToViewColumns": "Zooma in för att visa kolumner",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Klicka för att lösa",
@@ -1649,7 +1631,6 @@
     "changePlan": "Ändra plan"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Varje arbetsutrymme måste ha minst en ägare. Tilldela en annan användare som ägare innan du lämnar arbetsutrymmet. Om du är sista medlemmen bör du istället överväga att ta bort arbetsutrymmet.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Sök ikoner",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

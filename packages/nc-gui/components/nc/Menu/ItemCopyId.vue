@@ -80,3 +80,5 @@ const onClickCopy = async () => {
     </NcTooltip>
   </div>
 </template>
+
+<style lang="scss" scoped></style>

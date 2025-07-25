@@ -37,6 +37,8 @@ const { sqlUi, column, fromTableExplorer, validateInfos } = useColumnCreateStore
 
 const { isAiModeFieldModal } = usePredictFields()
 
+const { isFeatureEnabled } = useBetaFeatureToggle()
+
 const meta = inject(MetaInj, ref())
 
 const supportedColumns = computed(
@@ -616,7 +618,7 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 }
 
-const { isAiFeaturesEnabled, aiIntegrationAvailable, aiLoading, predictFormula, repairFormula } = useNocoAi()
+const { aiIntegrationAvailable, aiLoading, predictFormula, repairFormula } = useNocoAi()
 
 enum AI_MODE {
   NONE = 'none',
@@ -736,7 +738,7 @@ const enableAI = async () => {
       @keydown.stop="handleKeydown"
     ></div>
   </a-form-item>
-  <template v-if="isAiFeaturesEnabled">
+  <template v-if="isFeatureEnabled(FEATURE_FLAG.AI_FEATURES)">
     <div v-if="aiMode === AI_MODE.NONE" class="w-full flex justify-end mt-2">
       <NcButton size="small" type="text" :loading="aiLoading" @click="enableAI">
         <template #icon>

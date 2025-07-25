@@ -11,8 +11,6 @@ const props = withDefaults(
     iconOnly?: boolean
     size?: 'xs' | 'sm' | 'md' | 'lg'
     disabled?: boolean
-    ncBadgeClass?: string
-    showTooltip?: boolean
   }>(),
   {
     clickable: false,
@@ -21,8 +19,6 @@ const props = withDefaults(
     size: 'sm',
     iconOnly: false,
     showIcon: true,
-    ncBadgeClass: '',
-    showTooltip: false,
   },
 )
 
@@ -46,16 +42,13 @@ const roleProperties = computed(() => {
 </script>
 
 <template>
-  <NcTooltip
-    :disabled="!showTooltip"
+  <div
     class="flex items-start rounded-md w-[fit-content] nc-role-badge"
     :class="{
       'cursor-pointer': clickableRef,
     }"
   >
-    <template #title> {{ $t(`objects.roleType.${roleProperties.label}`) }}</template>
-
-    <NcBadge class="!px-2 w-full" :class="ncBadgeClass" :color="roleProperties.color" :border="borderRef" :size="sizeSelect">
+    <NcBadge class="!px-2 w-full" :color="roleProperties.color" :border="borderRef" :size="sizeSelect">
       <div
         class="badge-text w-full flex items-center justify-between gap-2"
         :class="{
@@ -80,11 +73,10 @@ const roleProperties = computed(() => {
         <GeneralIcon v-if="clickableRef" icon="arrowDown" class="flex-none" />
       </div>
     </NcBadge>
-
     <!--
     <a-tooltip v-if="inheritRef" placement="bottom">
       <div class="text-gray-400 text-xs p-1 rounded-md">Workspace Role</div>
     </a-tooltip>
     -->
-  </NcTooltip>
+  </div>
 </template>

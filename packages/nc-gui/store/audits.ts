@@ -1,4 +1,4 @@
-import { type AuditType, type UserType, type WorkspaceUserType } from 'nocodb-sdk'
+import { type AuditType, type PaginatedType, type UserType, type WorkspaceUserType } from 'nocodb-sdk'
 
 const defaultAuditLogsQuery = {
   type: [],
@@ -15,6 +15,8 @@ const defaultAuditLogsQuery = {
   },
 } as AuditLogsQuery
 
+const defaultPaginationData = { page: 1, pageSize: 25, totalRows: 0 }
+
 export type CollaboratorType = (WorkspaceUserType & { id: string }) | User | UserType
 
 export const useAuditsStore = defineStore('auditsStore', () => {
@@ -28,7 +30,7 @@ export const useAuditsStore = defineStore('auditsStore', () => {
 
   const auditLogsQuery = ref<AuditLogsQuery>(defaultAuditLogsQuery)
 
-  const hasMoreAudits = ref(false)
+  const auditPaginationData = ref<PaginatedType>(defaultPaginationData)
 
   const basesList = computed<NcProject[]>(() => {
     return []
@@ -70,6 +72,7 @@ export const useAuditsStore = defineStore('auditsStore', () => {
     isRowExpanded,
     selectedAudit,
     auditLogsQuery,
+    auditPaginationData,
     isLoadingAudits,
     handleReset,
     loadAudits,
@@ -80,7 +83,6 @@ export const useAuditsStore = defineStore('auditsStore', () => {
     onInit,
     getUserName,
     loadActionWorkspaceLogsOnly,
-    hasMoreAudits,
   }
 })
 

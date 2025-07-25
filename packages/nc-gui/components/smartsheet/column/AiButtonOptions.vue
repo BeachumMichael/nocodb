@@ -35,7 +35,9 @@ const {
   fromTableExplorer,
 } = useColumnCreateStoreOrThrow()
 
-const { isAiBetaFeaturesEnabled, aiIntegrationAvailable, aiLoading, aiError, generateRows } = useNocoAi()
+const { aiIntegrationAvailable, aiLoading, aiError, generateRows } = useNocoAi()
+
+const { isFeatureEnabled } = useBetaFeatureToggle()
 
 const isOpenConfigModal = ref<boolean>(false)
 
@@ -249,7 +251,7 @@ const isAiButtonEnabled = computed(() => {
     return true
   }
 
-  return isAiBetaFeaturesEnabled.value
+  return isFeatureEnabled(FEATURE_FLAG.AI_FEATURES)
 })
 
 const previewPanelDom = ref<HTMLElement>()

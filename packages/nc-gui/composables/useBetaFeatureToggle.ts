@@ -1,3 +1,6 @@
+import { onMounted, ref } from 'vue'
+import { createSharedComposable } from '@vueuse/core'
+
 import rfdc from 'rfdc'
 
 const deepClone = rfdc()
@@ -15,15 +18,6 @@ const FEATURES = [
     description: 'High-performance grid view with enhanced scrolling and rendering capabilities.',
     enabled: !ncIsPlaywright(),
     version: 1,
-  },
-  {
-    id: 'dashboard',
-    title: 'Dashboard',
-    isEngineering: true,
-    description: 'Build interactive dashboards with charts, widgets, and visualizations to monitor your data at a glance.',
-    enabled: false,
-    version: 1,
-    isEE: true,
   },
   {
     id: 'canvas_group_grid_view',
@@ -55,17 +49,18 @@ const FEATURES = [
     isEngineering: true,
   },
   {
-    id: 'ai_features',
-    title: 'AI features',
-    description: 'Unlock AI features to enhance your NocoDB experience.',
-    enabled: true,
-    version: 2,
+    id: 'payment',
+    title: 'Payment Flows',
+    description: 'Enable NocoDB Payment Flows.',
+    enabled: false,
+    version: 1,
+    isEngineering: true,
     isEE: true,
   },
   {
-    id: 'ai_beta_features',
-    title: 'AI beta features',
-    description: 'Unlock AI beta features to enhance your NocoDB experience.',
+    id: 'ai_features',
+    title: 'AI features',
+    description: 'Unlock AI features to enhance your NocoDB experience.',
     enabled: false,
     version: 1,
     isEngineering: true,
@@ -73,18 +68,10 @@ const FEATURES = [
   },
   {
     id: 'nocodb_scripts',
-    title: 'NocoDB Scripts',
+    title: 'NocoDB Scripts (Beta)',
     description: 'Enable NocoDB Scripts to automate repetitive workflow',
-    enabled: true,
-    version: 2,
-    isEE: true,
-  },
-  {
-    id: 'row_action',
-    title: 'Row Actions',
-    description: 'Allows user to execute script on a row.',
     enabled: false,
-    version: 0,
+    version: 1,
     isEngineering: true,
     isEE: true,
   },
@@ -110,7 +97,7 @@ const FEATURES = [
     title: 'OSS to Enterprise migration',
     description: 'Enable import from NocoDB OSS instance to Enterprise Edition.',
     enabled: true,
-    version: 2,
+    version: 1,
     isEE: true,
   },
   {
@@ -155,6 +142,31 @@ const FEATURES = [
     isEngineering: true,
   },
   {
+    id: 'expanded_form_file_preview_mode',
+    title: 'Expanded form file preview mode',
+    description: 'Preview mode allows you to see attachments inline',
+    enabled: true,
+    version: 2,
+    isEE: true,
+  },
+  {
+    id: 'expanded_form_discussion_mode',
+    title: 'Expanded form discussion mode',
+    description: 'Discussion mode allows you to see the comments and records audits combined in one place',
+    enabled: true,
+    version: 2,
+    isEE: true,
+  },
+  {
+    id: 'language',
+    title: 'Language',
+    description: 'Community/AI Translated',
+    enabled: false,
+    version: 1,
+    isEngineering: true,
+    isEE: true,
+  },
+  {
     id: 'cross_base_link',
     title: 'Cross Base Link',
     description: 'Enables link creation between tables in different bases.',
@@ -168,14 +180,6 @@ const FEATURES = [
     description: 'Allows user to create custom links using existing fields.',
     enabled: false,
     version: 1,
-    isEE: true,
-  },
-  {
-    id: 'table_and_field_permissions',
-    title: 'Table and Field Permissions',
-    description: 'Allows user to manage table and field permissions.',
-    enabled: true,
-    version: 2,
     isEE: true,
   },
 ] as const
@@ -204,8 +208,6 @@ export const useBetaFeatureToggle = createSharedComposable(() => {
 
   const isEngineeringModeOn = ref(false)
 
-  const isExperimentalFeatureModalOpen = ref(false)
-
   const saveFeatures = () => {
     try {
       const featuresToSave = features.value.map((feature) => ({
@@ -215,6 +217,7 @@ export const useBetaFeatureToggle = createSharedComposable(() => {
       }))
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(featuresToSave))
+      window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }))
     } catch (error) {
       console.error('Failed to save features:', error)
     }
@@ -281,12 +284,27 @@ export const useBetaFeatureToggle = createSharedComposable(() => {
     saveFeatures()
   }
 
+  const handleStorageEvent = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY && event.newValue !== null) {
+      if (JSON.parse(event.newValue) !== features.value) {
+        initializeFeatures()
+      }
+    }
+  }
+
+  onMounted(() => {
+    initializeFeatures()
+    window.addEventListener('storage', handleStorageEvent)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('storage', handleStorageEvent)
+  })
+
   return {
     features,
     toggleFeature,
     isFeatureEnabled,
     isEngineeringModeOn,
-    isExperimentalFeatureModalOpen,
-    initializeFeatures,
   }
 })

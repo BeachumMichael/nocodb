@@ -9,6 +9,8 @@ const $route = useRoute()
 
 const { appInfo, signedIn, signOut } = useGlobal()
 
+const { isFeatureEnabled } = useBetaFeatureToggle()
+
 const selectedKeys = computed(() => [
   /^\/account\/users\/?$/.test($route.fullPath)
     ? isUIAllowed('superAdminUserManagement')
@@ -47,8 +49,8 @@ const isPending = computed(() => !emailConfigured.value || !storageConfigured.va
 
           <div class="h-full bg-white nc-user-sidebar overflow-y-auto nc-scrollbar-thin min-w-[312px]">
             <NcMenu
-              v-model:open-keys="openKeys"
-              v-model:selected-keys="selectedKeys"
+              v-model:openKeys="openKeys"
+              v-model:selectedKeys="selectedKeys"
               :inline-indent="16"
               class="tabs-menu h-full"
               mode="inline"
@@ -214,13 +216,18 @@ const isPending = computed(() => !emailConfigured.value || !storageConfigured.va
 
               <LazyGeneralReleaseInfo />
 
-              <NcTooltip placement="bottom" class="mr-4">
-                <template #title>{{ $t('labels.community.communityTranslated') }}</template>
+              <a-tooltip
+                v-if="!appInfo.ee || isFeatureEnabled(FEATURE_FLAG.LANGUAGE) || appInfo.isOnPrem"
+                placement="bottom"
+                :mouse-enter-delay="1"
+                class="mr-4"
+              >
+                <template #title>{{ $t('title.switchLanguage') }}</template>
 
                 <div class="flex items-center">
-                  <LazyGeneralLanguage button class="cursor-pointer text-2xl hover:text-gray-800" />
+                  <LazyGeneralLanguage class="cursor-pointer text-2xl hover:text-gray-800" />
                 </div>
-              </NcTooltip>
+              </a-tooltip>
 
               <template v-if="signedIn">
                 <NcDropdown :trigger="['click']" overlay-class-name="nc-dropdown-user-accounts-menu">

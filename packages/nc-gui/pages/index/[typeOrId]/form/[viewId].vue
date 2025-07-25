@@ -25,8 +25,6 @@ if (!notFound.value) {
 
   useProvideSmartsheetStore(sharedView, meta, true)
 
-  useViewRowColorProvider({ shared: true })
-
   applyLanguageDirection(sharedViewMeta.value.rtl ? 'rtl' : 'ltr')
 
   if (sharedViewMeta.value.language) {

@@ -25,7 +25,7 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
 
     const { $e, $api } = useNuxtApp()
 
-    const { sorts, nestedFilters, eventBus } = useSmartsheetStoreOrThrow()
+    const { sorts, nestedFilters } = useSmartsheetStoreOrThrow()
 
     const { sharedView, fetchSharedViewData, fetchSharedViewGroupedData } = useSharedView()
 
@@ -38,8 +38,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
     const { search } = useFieldQuery()
 
     const { addUndo, clone, defineViewScope } = useUndoRedo()
-
-    const { getEvaluatedRowMetaRowColorInfo } = useViewRowColorRender()
 
     // save history of stack changes for undo/redo
     const moveHistory = ref<{ op: 'added' | 'removed'; pk: string; stack: string; index: number }[]>([])
@@ -106,16 +104,11 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
 
     const shouldScrollToRight = ref(false)
 
-    const formatData = (
-      list: Record<string, any>[],
-      evaluateRowMetaRowColorInfoCallback?: (row: Record<string, any>) => RowMetaRowColorInfo,
-    ) =>
+    const formatData = (list: Record<string, any>[]) =>
       list.map((row) => ({
         row: { ...row },
         oldRow: { ...row },
-        rowMeta: {
-          ...(evaluateRowMetaRowColorInfoCallback?.(row) ?? {}),
-        },
+        rowMeta: {},
       }))
 
     async function loadKanbanData() {
@@ -132,7 +125,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
         groupData = await fetchSharedViewGroupedData(groupingFieldColumn!.value!.id!, {
           sortsArr: sorts.value,
           filtersArr: nestedFilters.value,
-          include_row_color: true,
         })
       } else {
         groupData = await api.dbViewRow.groupedDataList(
@@ -141,14 +133,14 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
           meta.value!.id!,
           viewMeta.value!.id!,
           groupingFieldColumn!.value!.id!,
-          { where: xWhere.value, include_row_color: true },
+          { where: xWhere.value },
           {},
         )
       }
 
       for (const data of groupData ?? []) {
         const key = typeof data.key === 'string' ? (data.key?.length ? data.key : null) : null
-        formattedData.value.set(key, formatData(data.value.list, getEvaluatedRowMetaRowColorInfo))
+        formattedData.value.set(key, formatData(data.value.list))
         countByStack.value.set(key, data.value.pageInfo.totalRows || 0)
       }
     }
@@ -199,10 +191,7 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
 
       formattedData.value.set(stackTitle, [
         ...formattedData.value.get(stackTitle)!,
-        ...filerDuplicateRecords(
-          formattedData.value.get(stackTitle)!,
-          formatData(response!.list!, getEvaluatedRowMetaRowColorInfo),
-        ),
+        ...filerDuplicateRecords(formattedData.value.get(stackTitle)!, formatData(response!.list!)),
       ])
     }
 
@@ -377,7 +366,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
               fn: async function redo(this: UndoRedoAction, row: Row, rowIndex: number) {
                 const pkData = rowPkData(row.row, meta.value?.columns as ColumnType[])
                 row.row = { ...pkData, ...row.row }
-                Object.assign(row.rowMeta, getEvaluatedRowMetaRowColorInfo(row.row))
                 await insertRow(row, rowIndex, true)
                 addOrEditStackRow(row, true)
               },
@@ -397,9 +385,7 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
 
         formattedData.value.get(null)?.splice(rowIndex ?? 0, 1, {
           row: insertedData,
-          rowMeta: {
-            ...getEvaluatedRowMetaRowColorInfo(insertedData),
-          },
+          rowMeta: {},
           oldRow: { ...insertedData },
         })
 
@@ -438,8 +424,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
                 const row = findRowInState(toUpdate.row)
                 if (row) {
                   Object.assign(row.row, updatedData)
-                  Object.assign(row.rowMeta, getEvaluatedRowMetaRowColorInfo(updatedData))
-
                   if (row.row[groupingField.value] !== row.oldRow[groupingField.value])
                     addOrEditStackRow(row, false, nextRowIndex?.index)
                   Object.assign(row.oldRow, updatedData)
@@ -457,8 +441,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
                 const row = findRowInState(toUpdate.row)
                 if (row) {
                   Object.assign(row.row, updatedData)
-                  Object.assign(row.rowMeta, getEvaluatedRowMetaRowColorInfo(updatedData))
-
                   if (row.row[groupingField.value] !== row.oldRow[groupingField.value])
                     addOrEditStackRow(row, false, oldRowIndex?.index)
                   Object.assign(row.oldRow, updatedData)
@@ -472,7 +454,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
           /** update row data(to sync formula and other related columns) */
           Object.assign(toUpdate.row, updatedRowData)
           Object.assign(toUpdate.oldRow, updatedRowData)
-          Object.assign(toUpdate.rowMeta, getEvaluatedRowMetaRowColorInfo(updatedRowData))
         }
 
         return updatedRowData
@@ -724,29 +705,6 @@ const [useProvideKanbanViewStore, useKanbanViewStore] = useInjectionState(
       }
       return true
     }
-
-    /**
-     * This is used to update the rowMeta color info when the row colour info is updated
-     */
-    eventBus.on((event) => {
-      if (![SmartsheetStoreEvents.TRIGGER_RE_RENDER, SmartsheetStoreEvents.ON_ROW_COLOUR_INFO_UPDATE].includes(event)) {
-        return
-      }
-
-      const groupKeys = Array.from(formattedData.value.keys())
-
-      groupKeys.forEach((key) => {
-        const formattedDataCopy = formattedData.value.get(key) ?? []
-
-        if (!formattedDataCopy.length) return
-
-        formattedDataCopy.forEach((row) => {
-          Object.assign(row.rowMeta, getEvaluatedRowMetaRowColorInfo(row.row))
-        })
-
-        formattedData.value.set(key, formattedDataCopy)
-      })
-    })
 
     return {
       loadKanbanData,

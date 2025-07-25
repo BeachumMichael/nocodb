@@ -11,53 +11,11 @@ export default function convertCellData(
     appInfo: AppInfo
     files?: FileList | File[]
     oldValue?: unknown
-    maxAttachmentsAllowedInCell?: number
-    showUpgradeToAddMoreAttachmentsInCell?: (args: {
-      callback?: (type: 'ok' | 'cancel') => void
-      totalAttachments: number
-    }) => boolean | undefined
-    isInfoShown?: boolean
-    markInfoShown?: () => void
   },
   isMysql = false,
   isMultiple = false,
 ) {
-  const {
-    to,
-    value,
-    column,
-    files = [],
-    oldValue,
-    maxAttachmentsAllowedInCell: _maxAttachmentsAllowedInCell,
-    showUpgradeToAddMoreAttachmentsInCell: _showUpgradeToAddMoreAttachmentsInCell,
-    markInfoShown,
-  } = args
-
-  const maxAttachmentsAllowedInCell =
-    _maxAttachmentsAllowedInCell || Math.max(1, +args.appInfo.ncMaxAttachmentsAllowed || 50) || 50
-  const showUpgradeToAddMoreAttachmentsInCell = ncIsFunction(_showUpgradeToAddMoreAttachmentsInCell)
-    ? _showUpgradeToAddMoreAttachmentsInCell
-    : ({
-        totalAttachments,
-        avoidShowError,
-      }: {
-        callback?: (type: 'ok' | 'cancel') => void
-        totalAttachments: number
-        forceShowToastMessage?: boolean
-        avoidShowError?: boolean
-      }) => {
-        // If it's not ee or total attachments are less than or equal to max attachments allowed in cell, then return
-        if (!args.appInfo.ee || totalAttachments <= maxAttachmentsAllowedInCell) return
-
-        if (avoidShowError) return true
-
-        message.error(
-          `You can only upload at most ${maxAttachmentsAllowedInCell} file${
-            maxAttachmentsAllowedInCell > 1 ? 's' : ''
-          } to this cell.`,
-        )
-        return true
-      }
+  const { to, value, column, files = [], oldValue } = args
 
   // return null if value is empty
   if (value === '' && to !== UITypes.Attachment) return null
@@ -104,7 +62,7 @@ export default function convertCellData(
         const defaultAttachmentMeta = {
           ...(args.appInfo.ee && {
             // Maximum Number of Attachments per cell
-            maxNumberOfAttachments: maxAttachmentsAllowedInCell,
+            maxNumberOfAttachments: Math.max(1, +args.appInfo.ncMaxAttachmentsAllowed || 50) || 50,
             // Maximum File Size per file
             maxAttachmentSize: Math.max(1, +args.appInfo.ncAttachmentFieldSize || 20) || 20,
             supportedAttachmentMimeTypes: ['*'],
@@ -118,19 +76,15 @@ export default function convertCellData(
 
         const attachments: Record<string, any>[] = []
 
-        const totalNewAttachments = value ? parsedVal.length : files.length
-
         for (const attachment of value ? parsedVal : files) {
           if (args.appInfo.ee) {
             // verify number of files
-            if (
-              showUpgradeToAddMoreAttachmentsInCell({
-                totalAttachments: oldAttachments.length + totalNewAttachments,
-                forceShowToastMessage: isMultiple,
-                avoidShowError: args.isInfoShown,
-              })
-            ) {
-              markInfoShown?.()
+            if (parsedVal.length > attachmentMeta.maxNumberOfAttachments) {
+              message.error(
+                `You can only upload at most ${attachmentMeta.maxNumberOfAttachments} file${
+                  attachmentMeta.maxNumberOfAttachments > 1 ? 's' : ''
+                } to this cell.`,
+              )
               return
             }
 

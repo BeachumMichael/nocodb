@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "แจ้งเจ้าของเวิร์กสเปซแล้ว",
     "WorkspaceOwnerNotifiedSubtitle": "คำขออัปเกรดของคุณถูกส่งไปยังเจ้าของเวิร์กสเปซแล้ว",
     "failedToSendUpgradeRequest": "ส่งคำขออัปเกรดไม่สำเร็จ",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "ปลดล็อกการมองเห็นแหล่งข้อมูลที่เชื่อมต่อทั้งหมด ดูระเบียนทั้งหมดได้โดยอัปเกรดเป็นแผน Plus",
-    "upgradeToSeeMoreRecordInlineSubtitle": "คุณกำลังดู {limit} จาก {total} ระเบียน ปลดล็อกการเข้าถึงอีก {remaining} ระเบียนได้โดยอัปเกรดเป็นแผน Plus",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "อัปเกรดเพื่อปลดล็อกการเข้าถึงข้อมูลทั้งหมด",
+    "upgradeToSeeMoreRecordInline": "อัปเกรดเพื่อดูระเบียนทั้งหมดจากแหล่งข้อมูลภายนอก",
+    "upgradeToSeeMoreRecordSubtitle": "ปลดล็อกการมองเห็นแหล่งข้อมูลที่เชื่อมต่อทั้งหมด ดูระเบียนทั้งหมดได้โดยอัปเกรดเป็นแผน Team",
+    "upgradeToSeeMoreRecordInlineSubtitle": "คุณกำลังดู {limit} จาก {total} ระเบียน ปลดล็อกการเข้าถึงอีก {remaining} ระเบียนได้โดยอัปเกรดเป็นแผน Team",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "แผนฟรีอนุญาตผู้ใช้ประเภท Editor ได้สูงสุด {limit} คน อัปเกรดเพื่อใช้งานได้ไม่จำกัด",
     "adjustCollaboratorRoles": "ปรับบทบาทผู้ร่วมงาน",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "อัปเกรดเพื่ออัปโหลดภาพเวิร์กสเปซ",
     "upgradeToUploadWsImageSubtitle": "แผน {activePlan} ปัจจุบันของคุณอนุญาตเฉพาะไอคอนและอีโมจิ อัปเกรดเป็นแผน {plan} เพื่ออัปโหลดภาพที่กำหนดเองเป็นอวาตาร์เวิร์กสเปซ",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "คุณกำลังออกจาก NocoDB",
     "onlyProceedIfYouTrustThisLink": "ดำเนินการต่อก็ต่อเมื่อคุณเชื่อมั่นในลิงก์นี้",
     "reAssignViewModalSubtitle": "เมื่อมอบหมายใหม่แล้ว เจ้าของปัจจุบันจะไม่สามารถแก้ไขการกำหนดค่ามุมมองได้อีก",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "ความภักดีให้ผลตอบแทน — รับราคาพิเศษคงที่!",
     "loyaltyBannerSubtitle": "ปลดล็อกที่นั่งไม่จำกัด ระเบียนเพิ่มเติม พื้นที่เก็บข้อมูลมากขึ้น เว็บฮุคตามเงื่อนไข SSO การผสานการทำงาน และอื่น ๆ อีกมากมาย!",
     "selectTimezone": "แสดงเขตเวลา",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "รวมมุมมอง",
-    "includeScripts": "Include scripts",
     "includeWebhook": "รวมเว็บฮุค",
     "includeComments": "รวมความคิดเห็น",
     "zoomInToViewColumns": "ซูมเข้าดูคอลัมน์",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "คลิกเพื่อแก้ไข",
@@ -1649,7 +1631,6 @@
     "changePlan": "เปลี่ยนแผน"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "แต่ละพื้นที่ทำงานต้องมีเจ้าของอย่างน้อยหนึ่งคน โปรดกำหนดผู้ใช้อื่นเป็นเจ้าของก่อนออกจากพื้นที่ทำงาน หากคุณเป็นสมาชิกคนสุดท้าย ให้พิจารณาลบพื้นที่ทำงานแทน",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "ค้นหาไอคอน",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

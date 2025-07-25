@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "Munkatér tulajdonos értesítve",
     "WorkspaceOwnerNotifiedSubtitle": "A frissítési kérését megosztottuk a munkatér tulajdonosával.",
     "failedToSendUpgradeRequest": "Nem sikerült elküldeni a frissítési kérelmet",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "Szerezzen teljes rálátást a csatlakoztatott forrásokra: frissítsen a Plus csomagra az összes rekord megtekintéséhez.",
-    "upgradeToSeeMoreRecordInlineSubtitle": "Jelenleg {total} rekordból {limit} rekordot lát. Frissítsen a Plus csomagra a fennmaradó {remaining} rekord eléréséhez.",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "Frissítés a teljes adat-hozzáférés feloldásához",
+    "upgradeToSeeMoreRecordInline": "Frissítés az összes rekord megtekintéséhez a külső adatforrásokból",
+    "upgradeToSeeMoreRecordSubtitle": "Szerezzen teljes rálátást a csatlakoztatott forrásokra: frissítsen a Team csomagra az összes rekord megtekintéséhez.",
+    "upgradeToSeeMoreRecordInlineSubtitle": "Jelenleg {total} rekordból {limit} rekordot lát. Frissítsen a Team csomagra a fennmaradó {remaining} rekord eléréséhez.",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "Az ingyenes csomag legfeljebb {limit} szerkesztő típusú felhasználót engedélyez; frissítsen a korlátlanhoz",
     "adjustCollaboratorRoles": "Közreműködő szerepkörök módosítása",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "Frissítés munkatérkép feltöltéséhez",
     "upgradeToUploadWsImageSubtitle": "A jelenlegi {activePlan} csomag csak ikonokat és emojikat enged. Frissítsen a(z) {plan} csomagra, hogy egyéni képet tölthessen fel munkatér avatárként.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "Elhagyja a NocoDB-t",
     "onlyProceedIfYouTrustThisLink": "Csak akkor folytassa, ha megbízik ebben a linkben.",
     "reAssignViewModalSubtitle": "Átrendelés után a jelenlegi tulajdonos nem fogja tudni szerkeszteni a nézet beállításait.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "Hűségét díjazzuk — élvezze a rögzített árakat!",
     "loyaltyBannerSubtitle": "Oldjon fel korlátlan helyeket, további rekordokat, nagyobb tárhelyet, feltételes webhookokat, SSO-t, integrációkat és még sok mást!",
     "selectTimezone": "Időzóna megjelenítése",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "Nézetek beillesztése",
-    "includeScripts": "Include scripts",
     "includeWebhook": "Webhook beillesztése",
     "includeComments": "Megjegyzések beillesztése",
     "zoomInToViewColumns": "Közelítés az oszlopok megtekintéséhez",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "Kattintson a megoldáshoz",
@@ -1649,7 +1631,6 @@
     "changePlan": "Csomagváltás"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "Minden munkaterülethez legalább egy tulajdonos szükséges. Kérjük, jelöljön ki egy másik felhasználót tulajdonosként, mielőtt elhagyja a munkaterületet. Ha Ön az utolsó tag, fontolja meg a munkaterület törlését.",
     "currentDateNotAvail": "Current date option not available for this data source / data type",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "Ikonok keresése",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

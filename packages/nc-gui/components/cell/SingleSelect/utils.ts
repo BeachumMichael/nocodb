@@ -1,8 +1,10 @@
 import type { ColumnType, SelectOptionType } from 'nocodb-sdk'
 
-export type LocalSelectOptionType = SelectOptionType & { value?: string }
-
-export const getOptions = (column: ColumnType, isEditColumn: boolean, isForm: boolean): LocalSelectOptionType[] => {
+export const getOptions = (
+  column: ColumnType,
+  isEditColumn: boolean,
+  isForm: boolean,
+): (SelectOptionType & { value?: string })[] => {
   if (column && column?.colOptions) {
     const opts = column.colOptions
       ? // todo: fix colOptions type, options does not exist as a property
@@ -31,7 +33,7 @@ export const getOptions = (column: ColumnType, isEditColumn: boolean, isForm: bo
 
     if (!isEditColumn && isForm && parseProp(column.meta)?.isLimitOption && (parseProp(column.meta)?.limitOptions || []).length) {
       return opts
-        .filter((o: LocalSelectOptionType) => {
+        .filter((o: SelectOptionType & { value: string }) => {
           if (limitOptionsById[o.id]?.show !== undefined) {
             return limitOptionsById[o.id]?.show
           }

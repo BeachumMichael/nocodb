@@ -139,15 +139,15 @@
     "WorkspaceOwnerNotified": "បានជូនដំណឹងដល់ម្ចាស់ Workspace",
     "WorkspaceOwnerNotifiedSubtitle": "សំណើធ្វើបច្ចុប្បន្នភាពរបស់អ្នកត្រូវបានចែករំលែកជាមួយម្ចាស់ Workspace។",
     "failedToSendUpgradeRequest": "ផ្ញើសំណើធ្វើបច្ចុប្បន្នភាពមិនជោគជ័យ",
-    "upgradeToSeeMoreRecord": "Upgrade to unlock full data access",
-    "upgradeToSeeMoreRecordInline": "Upgrade to view all records from external datasources",
-    "upgradeToSeeMoreRecordSubtitle": "បើកចំហការមើលឃើញពេញលេញលើប្រភពដែលបានភ្ជាប់។ មើលកំណត់ត្រាទាំងអស់ ដោយធ្វើបច្ចុប្បន្នភាពទៅគម្រោង Plus។",
-    "upgradeToSeeMoreRecordInlineSubtitle": "អ្នកកំពុងមើល {limit} នៃ {total} កំណត់ត្រា។ បើកចំហដើម្បីចូលដំណើរការកំណត់ត្រា {remaining} នៅសល់ ដោយធ្វើបច្ចុប្បន្នភាពទៅគម្រោង Plus។",
-    "editorLimitExceedTooltip": "{prefix}. {activePlan} plan has an editor limit set to {limit}.",
-    "recordLimitExceedTooltip": "{prefix}. {activePlan} plan supports up to {limit} records per workspace.",
-    "storageLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} GB of attachment storage per workspace.",
-    "webhookLimitExceedTooltip": "{prefix}. {activePlan} plan allows up to {limit} webhook calls per month.",
-    "apiLimitExceedTooltip": "{prefix}. {activePlan} plan includes {limit} API calls per month.",
+    "upgradeToSeeMoreRecord": "ធ្វើបច្ចុប្បន្នភាពដើម្បីដោះសោការចូលដំណើរការទិន្នន័យពេញលេញ",
+    "upgradeToSeeMoreRecordInline": "ធ្វើបច្ចុប្បន្នភាពដើម្បីមើលកំណត់ត្រាទាំងអស់ពីប្រភពទិន្នន័យខាងក្រៅ",
+    "upgradeToSeeMoreRecordSubtitle": "បើកចំហការមើលឃើញពេញលេញលើប្រភពដែលបានភ្ជាប់។ មើលកំណត់ត្រាទាំងអស់ ដោយធ្វើបច្ចុប្បន្នភាពទៅគម្រោង Team។",
+    "upgradeToSeeMoreRecordInlineSubtitle": "អ្នកកំពុងមើល {limit} នៃ {total} កំណត់ត្រា។ បើកចំហដើម្បីចូលដំណើរការកំណត់ត្រា {remaining} នៅសល់ ដោយធ្វើបច្ចុប្បន្នភាពទៅគម្រោង Team។",
+    "editorLimitExceedTooltip": "{activePlan} plan has an editor limit set to {limit}.",
+    "recordLimitExceedTooltip": "{activePlan} plan supports up to {limit} records per workspace.",
+    "storageLimitExceedTooltip": "{activePlan} plan includes {limit} GB of attachment storage per workspace.",
+    "webhookLimitExceedTooltip": "{activePlan} plan allows up to {limit} webhook calls per month.",
+    "apiLimitExceedTooltip": "{activePlan} plan includes {limit} API calls per month.",
     "freePlanEditorLimitTooltip": "គម្រោងឥតគិតថ្លៃអនុញ្ញាតអ្នកប្រើប្រភេទ Editor បានដល់ {limit} នាក់ សូមធ្វើបច្ចុប្បន្នភាពដើម្បីបានគ្មានកំណត់",
     "adjustCollaboratorRoles": "លៃតម្រូវតួនាទីអ្នកសហការគ្នា",
     "newEditorWillBeChanged": "New Editors will be charged",
@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "ធ្វើបច្ចុប្បន្នភាពដើម្បីផ្ទុករូប Workspace",
     "upgradeToUploadWsImageSubtitle": "គម្រោង {activePlan} បច្ចុប្បន្នអនុញ្ញាតបានតែរូបតំណាងនិងអ៊ីមូជី។ សូមធ្វើបច្ចុប្បន្នភាពទៅគម្រោង {plan} ដើម្បីផ្ទុករូបភាពផ្ទាល់ខ្លួនជារូបអាវ៉ាតារ Workspace របស់អ្នក។",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "អ្នកកំពុងចាកចេញពី NocoDB",
     "onlyProceedIfYouTrustThisLink": "សូមបន្តតែបើអ្នកទុកចិត្តលីងនេះ។",
     "reAssignViewModalSubtitle": "បន្ទាប់ពីបានប្តូរអ្នកកាន់ ម្ចាស់បច្ចុប្បន្នមិនអាចកែប្រែការ​កំណត់​ទិដ្ឋភាពបាន​ទៀតទេ។",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "ភាពស្មោះត្រង់ផ្តល់អត្ថប្រយោជន៍ — រីករាយនឹងតម្លៃថេរ!",
     "loyaltyBannerSubtitle": "បើកចំហកន្លែងគ្មានកំណត់ កំណត់ត្រាបន្ថែម ទំហំផ្ទុកបន្ថែម Webhook លក្ខខណ្ឌ SSO សមាហរណកម្ម និងច្រើនទៀត!",
     "selectTimezone": "បង្ហាញតំបន់ពេលវេលា",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "រួមបញ្ចូលទិដ្ឋភាព",
-    "includeScripts": "Include scripts",
     "includeWebhook": "រួមបញ្ចូល Webhook",
     "includeComments": "រួមបញ្ចូលមតិយោបល់",
     "zoomInToViewColumns": "ផ្លោងចូលផ្ដើមមើលចំណង",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "ចុចដើម្បីដោះស្រាយ",
@@ -1649,7 +1631,6 @@
     "changePlan": "ផ្លាស់ប្តូរគម្រោង"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "workspace ទៀងទាល់ត្រូវមានម្ចាស់យ៉ាងហោចណាស់ម្នាក់។ សូមផ្ដល់អ្នកប្រើផ្សេងទៀតជាម្ចាស់ មុនពេលចាកចេញពី workspace។ ប្រសិនបើអ្នកជាសមាជិកចុងក្រោយ សូមពិចារណាលុប workspace ផ្ទាល់ទៅវិញ។",
     "currentDateNotAvail": "ជម្រើសកាលបរិច្ឆេទបច្ចុប្បន្នមិនមានសម្រាប់ប្រភពទិន្នន័យ ឬប្រភេទទិន្នន័យ",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "ស្វែងរកនិមិត្តសញ្ញា",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

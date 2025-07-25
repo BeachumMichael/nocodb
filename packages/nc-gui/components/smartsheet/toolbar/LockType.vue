@@ -59,11 +59,15 @@ const { getPlanTitle } = useEeConfig()
               :feature="PlanFeatureTypes.FEATURE_PERSONAL_VIEWS"
               :content="
                 $t('upgrade.upgradeToAccessPersonalViewSubtitle', {
-                  plan: getPlanTitle(PlanTitles.PLUS),
+                  plan: getPlanTitle(PlanTitles.TEAM),
                 })
               "
-              :on-click-callback="() => emit('cancel')"
-              size="xs"
+              :callback="
+                (type) => {
+                  if (type !== 'ok') return
+                  emit('cancel')
+                }
+              "
             />
             <span v-else />
           </template>

@@ -5,8 +5,6 @@ import {
   type FormulaType,
   type LinkToAnotherRecordType,
   type LookupType,
-  PermissionEntity,
-  PermissionKey,
   type RollupType,
   type TableType,
   isLinksOrLTAR,
@@ -19,9 +17,7 @@ const props = defineProps<{
   hideMenu?: boolean
   required?: boolean | number
   hideIcon?: boolean
-  hideIconTooltip?: boolean
   isHiddenCol?: boolean
-  showLockIcon?: boolean
 }>()
 
 const { t } = useI18n()
@@ -45,14 +41,6 @@ const isDropDownOpen = ref(false)
 const enableDescription = ref(false)
 
 provide(ColumnInj, column)
-
-const { isAllowed } = usePermissions()
-
-const isAllowedToEditField = computed(() => {
-  if (!props.showLockIcon || !column.value?.id) return true
-
-  return isAllowed(PermissionEntity.FIELD, column.value.id, PermissionKey.RECORD_FIELD_EDIT)
-})
 
 const { metas } = useMetas()
 
@@ -242,7 +230,7 @@ const onClick = (e: Event) => {
       }"
     >
       <template v-if="column && !props.hideIcon">
-        <NcTooltip v-if="isGrid" :disabled="hideIconTooltip" class="flex items-center" placement="bottom">
+        <NcTooltip v-if="isGrid" class="flex items-center" placement="bottom">
           <template #title> {{ columnTypeName }} </template>
           <LazySmartsheetHeaderVirtualCellIcon />
         </NcTooltip>
@@ -265,13 +253,6 @@ const onClick = (e: Event) => {
       </NcTooltip>
 
       <span v-if="isVirtualColRequired(column, meta?.columns || []) || required" class="text-red-500">&nbsp;*</span>
-
-      <GeneralIcon
-        v-if="!isAllowedToEditField"
-        icon="ncLock"
-        class="nc-column-lock-icon flex-none !ml-1 w-3.5 h-3.5 opacity-90"
-      />
-
       <GeneralIcon
         v-if="isExpandedForm && !isMobileMode && isUIAllowed('fieldEdit') && !isExpandedBulkUpdateForm && !hideMenu"
         icon="arrowDown"

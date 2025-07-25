@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { VNodeRef } from '@vue/runtime-core'
-import { PermissionEntity, PermissionKey, UITypes } from 'nocodb-sdk'
+import { UITypes } from 'nocodb-sdk'
 import dayjs from 'dayjs'
 
 const props = defineProps<{
@@ -387,7 +387,7 @@ const selectOption = (option) => {
             class="font-medium text-nc-content-gray cursor-pointer gap-2 flex items-center font-bold leading-6"
             data-testid="nc-calendar-sidebar-filter"
           >
-            <div class="truncate">
+            <div>
               <span class="capitalize">
                 {{ sideBarFilterOption !== 'allRecords' ? $t('objects.records') : '' }}
               </span>
@@ -459,29 +459,21 @@ const selectOption = (option) => {
 
         <div class="flex-1" />
 
-        <PermissionsTooltip
+        <NcButton
           v-if="isUIAllowed('dataEdit') && props.visible && !isSyncedTable"
-          :entity="PermissionEntity.TABLE"
-          :entity-id="meta?.id"
-          :permission="PermissionKey.TABLE_RECORD_ADD"
-          placement="left"
-          show-overlay
+          v-e="['c:calendar:calendar-sidemenu-new-record-btn']"
+          data-testid="nc-calendar-side-menu-new-btn"
+          class="!h-7 !rounded-md"
+          size="small"
+          type="secondary"
+          @click="newRecord"
         >
-          <NcButton
-            v-e="['c:calendar:calendar-sidemenu-new-record-btn']"
-            data-testid="nc-calendar-side-menu-new-btn"
-            class="!h-7 !rounded-md"
-            size="small"
-            type="secondary"
-            @click="newRecord"
-          >
-            <div class="flex items-center gap-2">
-              <component :is="iconMap.plus" />
+          <div class="flex items-center gap-2">
+            <component :is="iconMap.plus" />
 
-              Record
-            </div>
-          </NcButton>
-        </PermissionsTooltip>
+            Record
+          </div>
+        </NcButton>
       </div>
 
       <div

@@ -155,9 +155,7 @@
     "upgradeToUploadWsImage": "വർക്ക്സ്പേസ് ഇമേജ് അപ്‌ലോഡ് ചെയ്യാൻ അപ്‌ഗ്രേഡ് ചെയ്യുക",
     "upgradeToUploadWsImageSubtitle": "നിങ്ങളുടെ നിലവിലെ {activePlan} പ്ലാൻ ഐക്കണുകളും ഇമോജികളും മാത്രം പിന്തുണയ്ക്കുന്നു. വർക്ക്സ്പേസ് അവതാറായി കസ്റ്റം ഇമേജ് അപ്‌ലോഡ് ചെയ്യാൻ {plan} പ്ലാനിലേക്ക് അപ്‌ഗ്രേഡ് ചെയ്യുക.",
     "upgradeToUseCurrentUserFilter": "Upgrade to filter by current user",
-    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user.",
-    "upgradeToUseRowColoring": "Upgrade to use row colouring",
-    "upgradeToUseRowColoringSubtitle": "Upgrade to the {plan} plan to colour rows based on field values or conditions, making it easier to scan and prioritize your data."
+    "upgradeToUseCurrentUserFilterSubtitle": "Upgrade to the {plan} plan to use filters that show data based on the current user."
   },
   "general": {
     "script": "Script",
@@ -574,14 +572,6 @@
       "storageUsedGB": "Storage Used (GB)",
       "webhookCallsMonthly": "Webhook calls (monthly)",
       "apiCallsMonthly": "API calls (monthly)"
-    },
-    "coloring": {
-      "usingSingleSelectField": "Using Single select field",
-      "usingSingleSelectFieldDescription": "Colour records based on single select field",
-      "usingSingleSelectFieldTooltip": "No single select field found. Add one to enable select-field based row colouring.",
-      "usingConditions": "Using Conditions",
-      "usingConditionsDescription": "Colour records based on conditions",
-      "colourRecordsByField": "Colour records by field"
     }
   },
   "datatype": {
@@ -808,8 +798,8 @@
     "youAreLeavingNocoDB": "നിങ്ങൾ NocoDB വിട്ട് പോകുകയാണു",
     "onlyProceedIfYouTrustThisLink": "ഈ ലിങ്ക് വിശ്വസിക്കുന്നുണ്ടെങ്കിൽ മാത്രം തുടരുക.",
     "reAssignViewModalSubtitle": "വീണ്ടും നിയോഗിച്ചാൽ നിലവിലുള്ള ഉടമയ്ക്ക് ഇനി കാഴ്ച സജ്ജീകരണം എഡിറ്റ് ചെയ്യാൻ കഴിയില്ല.",
-    "getMoreFromNocodb": "More editors, more impact — Upgrade to Plus",
-    "getMoreFromNocodbSubtitle": "Unlock unlimited seats, additional records, more storage, conditional webhooks, SSO, Integrations, and much more!",
+    "getMoreFromNocodb": "Get more from NocoDB",
+    "getMoreFromNocodbSubtitle": "Unlock more seats, extra records, more storage, conditional webhooks, integrations, NocoAI, and more!",
     "loyaltyBannerTitle": "വിശ്വസ്തത ഫലം തരുന്നു — പരിധിയിട്ട നിരക്കുകൾ ആസ്വദിക്കുക!",
     "loyaltyBannerSubtitle": "പരിമിതിയില്ലാത്ത സീറ്റുകൾ, അധിക റെക്കോഡുകൾ, കൂടുതൽ സ്റ്റോറേജ്, കണ്ടീഷണൽ വെബ്‌ഹുക്കുകൾ, SSO, ഇന്റഗ്രേഷനുകൾ തുടങ്ങിയവ അന്ലോക്ക് ചെയ്യുക!",
     "selectTimezone": "ടൈംസോൺ പ്രദർശിപ്പിക്കുക",
@@ -830,8 +820,7 @@
     "currentUser": "Current User",
     "filteredByLoggedInUser": "Filtered by logged-in user",
     "hideExtensions": "Hide Extensions",
-    "duplicatesFound": "Duplicates found",
-    "matchingResultsInRecords": "Matching results in {count} records"
+    "duplicatesFound": "Duplicates found"
   },
   "labels": {
     "crossBase": "Link to external base",
@@ -1267,7 +1256,6 @@
     "baseDuplicateMessage": "Note: Cross-base links, Audit logs & integrations will not be duplicated.",
     "tableDuplicateMessage": "Note: Cross-base links will not be duplicated.",
     "includeView": "കാഴ്ചകള്‍ ഉള്‍പ്പെടുത്തുക",
-    "includeScripts": "Include scripts",
     "includeWebhook": "വെബ്‌ഹുക്ക് ഉള്‍പ്പെടുത്തുക",
     "includeComments": "കമന്റുകള്‍ ഉള്‍പ്പെടുത്തുക",
     "zoomInToViewColumns": "കോളങ്ങൾ കാണുന്നതിന് സൂം ചെയ്യുക",
@@ -1355,13 +1343,7 @@
     "dataApiV2": "Data APIs V2",
     "metaApiV2": "Meta APIs V2",
     "showExtraFields": "Show additional fields",
-    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records",
-    "includeUser": "Include User",
-    "removeColouring": "Remove colouring",
-    "backgroundColour": "Background colour",
-    "addColour": "Add Colour",
-    "defaultColours": "Default colours",
-    "customColours": "Custom colours"
+    "showExtraFieldsDescription": "Display extra fields alongside the display value when selecting linked records"
   },
   "activity": {
     "clickToResolve": "പരിഹരിക്കാൻ ക്ലിക് ചെയ്യുക",
@@ -1649,7 +1631,6 @@
     "changePlan": "പദ്ധതി മാറ്റുക"
   },
   "tooltip": {
-    "includeUserHint": "The user who triggered the webhook will be included in the payload as a 'user' object.",
     "crossBase": "Link records from a table in a different base",
     "leaveWorkspace": "ഓരോ വർക്ക്സ്പേസും കുറഞ്ഞത് ഒരു ഉടമ വേണം. jūs? translation: Each workspace ...",
     "currentDateNotAvail": "ഡാറ്റാ സ്രോതസ്സിനോ ഡാറ്റാ തരം കൊണ്ടോ നിലവിലെ ശൈലിയ്ക്ക് ഓപ്ഷൻ ലഭ്യമല്ല",
@@ -1715,8 +1696,7 @@
     "navigateToTableToCreateView": "Navigate to a table to a create view",
     "youDontHaveAccessToCreateNewTable": "You don't have access to create new table",
     "youDontHaveAccessToCreateNewView": "You don't have access to create new view",
-    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation",
-    "formViewCreationNotSupportedForSyncedTable": "Form view creation is not supported for synced table"
+    "youDontHaveAccessToCreateNewAutomation": "You don't have access to create new automation"
   },
   "placeholder": {
     "searchIcons": "ചിഹ്നങ്ങൾ തിരയുക",
@@ -2331,8 +2311,6 @@
     },
     "noAccess": "No Access",
     "noAccessDescription": "You don't have access to any workspace. Please contact your administrator to request access.",
-    "tryAgain": "Try Again",
-    "internalUrlsNotAllowed": "Internal URLs are not allowed",
-    "cyclicCallsWarning": "This URL points to the same NocoDB instance which may cause cyclic calls"
+    "tryAgain": "Try Again"
   }
 }

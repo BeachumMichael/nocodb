@@ -21,7 +21,7 @@ const { copy } = useCopy()
 
 const sharedBase = ref<null | ShareBase>(null)
 
-const { base, isPrivateBase } = storeToRefs(useBase())
+const { base } = storeToRefs(useBase())
 
 const { appInfo } = useGlobal()
 
@@ -95,11 +95,7 @@ onMounted(() => {
   }
 })
 
-const isSharedBaseEnabled = computed(() => {
-  // If base is private, then we have to restrict sharing
-  if (isPrivateBase.value) return false
-  return !!sharedBase.value?.uuid
-})
+const isSharedBaseEnabled = computed(() => !!sharedBase.value?.uuid)
 const isToggleBaseLoading = ref(false)
 const isRoleToggleLoading = ref(false)
 
@@ -145,14 +141,12 @@ const copyCustomUrl = async (custUrl = '') => {
       <div class="flex flex-row w-full justify-between">
         <div class="text-gray-900 font-medium">{{ $t('activity.enablePublicAccess') }}</div>
         <a-switch
-          v-if="!isPrivateBase"
           v-e="['c:share:base:enable:toggle']"
           :checked="isSharedBaseEnabled"
           :loading="isToggleBaseLoading"
           class="ml-2"
           @click="toggleSharedBase"
         />
-        <div v-else class="text-nc-content-gray-muted">{{ $t('labels.sharingRestricted') }}</div>
       </div>
       <div v-if="isSharedBaseEnabled" class="flex flex-col gap-3 w-full mt-3 border-t-1 pt-3 border-gray-100">
         <GeneralCopyUrl v-model:url="url" />
@@ -161,7 +155,6 @@ const copyCustomUrl = async (custUrl = '') => {
           :id="sharedBase.fk_custom_url_id"
           :backend-url="appInfo.ncSiteUrl"
           :copy-custom-url="copyCustomUrl"
-          :disabled="isPrivateBase"
           @update-custom-url="createShareBase(undefined, $event)"
         />
         <div

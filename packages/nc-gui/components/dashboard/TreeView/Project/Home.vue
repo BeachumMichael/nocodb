@@ -238,7 +238,6 @@ const openBaseHomePage = async () => {
       id: base.value.id!,
       type: 'database',
       isSharedBase: isSharedBase.value,
-      projectPage: !isUIAllowed('projectOverviewTab') ? 'collaborator' : undefined,
     })}`,
     cmdOrCtrl
       ? {
@@ -247,12 +246,6 @@ const openBaseHomePage = async () => {
       : undefined,
   )
 }
-
-const isVisibleCreateNew = ref(false)
-
-const hasTableCreatePermission = computed(() => {
-  return isUIAllowed('tableCreate', { roles: base.value.project_role, source: base.value?.sources?.[0] })
-})
 </script>
 
 <template>
@@ -279,33 +272,30 @@ const hasTableCreatePermission = computed(() => {
         <DashboardTreeViewProjectNode v-else ref="projectNodeRef" is-project-header />
       </DashboardSidebarHeaderWrapper>
 
-      <DashboardTreeViewProjectHomeSearchInput placeholder="Search table, view" />
+      <DashboardTreeViewProjectHomeSearchInput :placeholder="`Search table, view${showCreateNewAsDropdown ? ', script' : ''}`" />
 
-      <div v-if="!isSharedBase" class="nc-project-home-section pt-1 !pb-2 xs:hidden flex flex-col gap-2">
-        <div v-if="hasTableCreatePermission" class="flex items-center w-full">
-          <NcDropdown v-model:visible="isVisibleCreateNew">
-            <NcButton
-              type="text"
-              size="small"
-              full-width
-              class="nc-home-create-new-btn nc-home-create-new-dropdown-btn !text-brand-500 !hover:(text-brand-600) !xs:hidden !w-full !px-3"
-              :class="isVisibleCreateNew ? 'active' : ''"
-              icon-position="right"
-            >
-              <template #icon>
-                <GeneralIcon icon="chevronDown" class="flex-none" />
-              </template>
-              <div class="flex items-center gap-2">
-                <GeneralIcon icon="ncPlusCircleSolid" />
+      <div class="nc-project-home-section pt-1 !pb-2 xs:hidden flex flex-col gap-2">
+        <div
+          v-if="isUIAllowed('tableCreate', { roles: base.project_role, source: base?.sources?.[0] })"
+          class="flex items-center w-full"
+        >
+          <NcButton
+            type="text"
+            size="small"
+            full-width
+            class="nc-home-create-new-btn !text-brand-500 !hover:(text-brand-600) !xs:hidden w-full !px-3"
+            @click="addNewProjectChildEntity"
+          >
+            <div class="flex items-center gap-2">
+              <GeneralIcon icon="ncPlusCircleSolid" />
 
-                <div>{{ $t('labels.createNew') }}</div>
-              </div>
-            </NcButton>
-
-            <template #overlay>
-              <DashboardTreeViewProjectCreateNewMenu v-model:visible="isVisibleCreateNew" @new-table="addNewProjectChildEntity" />
-            </template>
-          </NcDropdown>
+              {{
+                $t('general.createEntity', {
+                  entity: $t('objects.table'),
+                })
+              }}
+            </div>
+          </NcButton>
         </div>
         <NcButton
           v-e="['c:base:home']"
@@ -326,7 +316,7 @@ const hasTableCreatePermission = computed(() => {
             }"
           >
             <GeneralIcon icon="home1" class="!h-4 w-4" />
-            <div>{{ $t('general.overview') }}</div>
+            <div>Overview</div>
           </div>
         </NcButton>
       </div>
@@ -335,7 +325,7 @@ const hasTableCreatePermission = computed(() => {
     <div class="flex-1 relative overflow-y-auto nc-scrollbar-thin">
       <div class="nc-project-home-section">
         <div class="nc-project-home-section-header !cursor-pointer" @click.stop="isExpanded = !isExpanded">
-          <div class="flex-1">{{ $t('objects.tables') }}</div>
+          <div class="flex-1">Tables</div>
 
           <GeneralIcon
             icon="chevronRight"
@@ -348,7 +338,7 @@ const hasTableCreatePermission = computed(() => {
             <div class="flex-1 overflow-y-auto overflow-x-hidden flex flex-col" :class="{ 'mb-[20px]': isSharedBase }">
               <div v-if="base?.sources?.[0]?.enabled" class="flex-1">
                 <div class="transition-height duration-200">
-                  <DashboardTreeViewTableList :base="base" :source-index="0" :show-create-table-btn="hasTableCreatePermission" />
+                  <DashboardTreeViewTableList :base="base" :source-index="0" />
                 </div>
               </div>
 
@@ -358,7 +348,7 @@ const hasTableCreatePermission = computed(() => {
                     <template v-if="sourceIndex === 0"></template>
                     <a-collapse
                       v-else-if="source && source.enabled"
-                      v-model:active-key="activeKey"
+                      v-model:activeKey="activeKey"
                       v-e="['c:source:toggle-expand']"
                       class="!mx-0 !px-0 nc-sidebar-source-node"
                       :class="[{ hidden: searchActive && !!filterQuery }]"

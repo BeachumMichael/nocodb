@@ -290,18 +290,6 @@ const onToggleShowMore = () => {
   isExpandedPredefiendBasePromts.value = !isExpandedPredefiendBasePromts.value
 }
 
-const handleMouseOverTag = (description: string) => {
-  if (!aiIntegrationAvailable.value || (aiLoading.value && callFunction.value === 'onPredictSchema')) return
-
-  aiFormState.value.onHoverTagPrompt = description
-}
-
-const handleMouseLeaveTag = () => {
-  if (!aiIntegrationAvailable.value || (aiLoading.value && callFunction.value === 'onPredictSchema')) return
-
-  aiFormState.value.onHoverTagPrompt = ''
-}
-
 const resetToDefault = () => {
   aiMode.value = null
   aiStep.value = AI_STEP.PROMPT
@@ -360,7 +348,7 @@ onMounted(() => {
         <!-- create base config panel -->
         <div class="flex-1 p-6 flex flex-col gap-6">
           <div class="text-sm font-bold text-nc-content-purple-dark">Tell us more about your usecase</div>
-          <div class="flex flex-wrap gap-3 max-h-[188px] nc-scrollbar-thin">
+          <div class="flex flex-wrap gap-3 max-h-[188px] nc-scrollbar-thin overflow-visible">
             <!-- Predefined tags -->
 
             <template v-for="prompt of predefinedBasePrompts" :key="prompt.tag">
@@ -371,8 +359,8 @@ onMounted(() => {
                   'nc-disabled': !aiIntegrationAvailable || (aiLoading && callFunction === 'onPredictSchema'),
                 }"
                 :disabled="!aiIntegrationAvailable || (aiLoading && callFunction === 'onPredictSchema')"
-                @mouseover="handleMouseOverTag(prompt.description)"
-                @mouseleave="handleMouseLeaveTag"
+                @mouseover="aiFormState.onHoverTagPrompt = aiIntegrationAvailable ? prompt.description : ''"
+                @mouseleave="aiFormState.onHoverTagPrompt = ''"
                 @click="handleUpdatePrompt(prompt.description)"
               >
                 <div class="flex flex-row items-center gap-1 py-1 text-sm">
@@ -411,7 +399,6 @@ onMounted(() => {
               class="!w-full !min-h-[120px] !rounded-lg mt-2 overflow-y-auto nc-scrollbar-thin nc-input-shadow nc-ai-input"
               size="middle"
               :disabled="!aiIntegrationAvailable || (aiLoading && callFunction === 'onPredictSchema')"
-              :maxlength="8192"
               @update:value="aiFormState.prompt = $event"
             />
           </div>
@@ -544,7 +531,7 @@ onMounted(() => {
 
             <div class="rounded-xl border-1 border-purple-100">
               <div
-                v-for="idx in 7"
+                v-for="(_row, idx) of ncArrayFrom(7)"
                 :key="idx"
                 class="px-3 py-2 flex items-center gap-2 border-b-1 border-purple-100 !last-of-type:border-b-0"
               >
