@@ -53,7 +53,7 @@ const closeAndShowAgain = () => {
 </script>
 
 <template>
-  <div v-if="isAvailable && !isBannerClosed && appInfo.giftUrl" class="container" @click="open">
+  <!-- <div v-if="isAvailable && !isBannerClosed && appInfo.giftUrl" class="container" @click="open">
     <div class="wrapper">
       <div class="header">
         <GeneralIcon class="icon" icon="gift" size="xlarge" />
@@ -77,7 +77,7 @@ const closeAndShowAgain = () => {
         </div>
       </div>
     </NcModal>
-  </div>
+  </div> -->
 </template>
 
 <style scoped lang="scss">

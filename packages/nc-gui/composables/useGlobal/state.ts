@@ -8,7 +8,7 @@ export function useGlobalState(storageKey = 'nocodb-gui-v2'): State {
   const preferredLanguages = usePreferredLanguages()
   /** todo: reimplement; get the preferred dark mode setting, according to browser settings */
   //   const prefersDarkMode = $(usePreferredDark())
-  const prefersDarkMode = false
+  const prefersDarkMode = true
 
   /** reactive timestamp to check token expiry against */
   const timestamp = useTimestamp({ immediate: true, interval: 100 })

@@ -293,11 +293,11 @@ watch(activeViewTab, (value) => {
                 <div class="text-sm font-normal text-gray-600 mb-2">
                   <div>
                     {{ $t('msg.connectIntegrations') }}
-                    <a href="https://docs.nocodb.com/category/integrations" target="_blank" rel="noopener noreferrer">{{
+                    <!-- <a href="https://docs.nocodb.com/category/integrations" target="_blank" rel="noopener noreferrer">{{
                       $t('msg.learnMore')
-                    }}</a>
+                    }}</a> -->
                   </div>
-                </div>
+                </div> 
                 <div class="flex items-center gap-2 !max-w-[400px]">
                   <a-input
                     v-if="easterEggToggle"

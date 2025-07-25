@@ -52,7 +52,7 @@ const formState = reactive({
 
 const handleFinish = () => {
   vModel.value = latLongToJoinedString(parseFloat(formState.latitude), parseFloat(formState.longitude))
-  isExpanded.value = false
+  ised.value = false
 }
 
 const clear = () => {

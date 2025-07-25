@@ -151,7 +151,8 @@ const isMiniSidebarSize = computed(() => size.value === 'mini-sidebar')
       />
       <template v-else>
         <div v-if="props.showNocodbIcon && blockWsImageLogoUpload" class="h-full w-full p-0.25">
-          <GeneralIcon icon="nocodb1" class="!h-full !w-full" />
+          <!-- <GeneralIcon icon="nocodb1" class="!h-full !w-full" /> -->
+          <img src="../../assets/img/brand/nocodb-logo.svg" alt="Custom Icon" className="!h-full !w-full" />
         </div>
         <div
           v-else

@@ -381,14 +381,15 @@ const sourceIdToIconMap = computed(() => {
             <template v-if="column.key === 'sourceName'">
               <ProjectAllTablesViewRow v-if="isRecordAView(record)" :column="column" :record="record" />
               <div v-else class="w-full flex justify-center items-center max-w-full" data-testid="proj-view-list__item-type">
-                <div class="w-8 h-8 flex justify-center items-center">
+                <img src="../../assets/img/brand/nocodb-logo.svg" alt="Custom Icon" className="!h-8 !w-8" />
+                <!-- <div class="w-8 h-8 flex justify-center items-center">
                   <component
                     :is="sourceIdToIconMap[record.source_id!]"
                     v-if="sourceIdToIconMap[record.source_id!]"
                     class="w-6 h-6"
                   />
                   <div v-else>-</div>
-                </div>
+                </div> -->
               </div>
             </template>
             <div

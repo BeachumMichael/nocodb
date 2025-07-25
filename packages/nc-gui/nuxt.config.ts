@@ -77,24 +77,24 @@ export default defineNuxtConfig({
           content: process.env.npm_package_description || '',
         },
         // Open Graph
-        { hid: 'og:site_name', property: 'og:site_name', content: 'NocoDB' },
+        { hid: 'og:site_name', property: 'og:site_name', content: 'CODI' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: 'NocoDB' },
+        { hid: 'og:title', property: 'og:title', content: 'CODI' },
         {
           hid: 'og:description',
           property: 'og:description',
           content:
-            'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
+            'CODI provides an intuitive spreadsheet interface for databases, either from CODI workflows or by connecting to any Postgres/MySQL.',
         },
-        { hid: 'og:url', property: 'og:url', content: 'https://nocodb.com' },
+        { hid: 'og:url', property: 'og:url', content: 'https://db.streamlineautomations.io' },
         // Twitter
         { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'NocoDB' },
+        { hid: 'twitter:title', name: 'twitter:title', content: 'CODI' },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
           content:
-            'NocoDB provides an intuitive spreadsheet interface for creating online databases, either from scratch or by connecting to any Postgres/MySQL. Access your data through interactive UIs or via API and SQL. Get started for free.',
+            'CODI provides an intuitive spreadsheet interface for databases, either from CODI workflows or by connecting to any Postgres/MySQL.',
         },
         {
           hid: 'twitter:image',

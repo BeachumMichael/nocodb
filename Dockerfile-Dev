@@ -1,0 +1,22 @@
+FROM node:20-slim
+
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Set working directory
+WORKDIR /app
+
+# Copy everything from the ./app context
+COPY . .
+
+# Install deps and bootstrap
+RUN pnpm install && pnpm bootstrap
+
+# Expose frontend + backend ports
+EXPOSE 3000 8080
+
+# Run both frontend and backend together
+CMD pnpm dlx concurrently \
+  "pnpm start:frontend --host" \
+  "pnpm start:backend"
+

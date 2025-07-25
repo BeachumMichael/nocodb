@@ -69,7 +69,7 @@ const onMouseover = async () => {
 }
 </script>
 
-<template>
+<!-- <template>
   <div class="flex flex-row items-center w-full bg-white rounded-lg border-1 border-brand-500 shadow-sm mb-0.5 overflow-hidden">
     <a
       v-e="['c:navbar:join-cloud']"
@@ -133,7 +133,7 @@ const onMouseover = async () => {
       </template>
     </a-tooltip>
   </div>
-</template>
+</template> -->
 
 <style lang="scss" scoped>
 .nc-plan-description-gradient {

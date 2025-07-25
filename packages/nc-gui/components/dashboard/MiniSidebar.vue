@@ -190,21 +190,21 @@ useEventListener(document, 'keydown', async (e: KeyboardEvent) => {
         <div class="px-2 w-full">
           <NcDivider class="!my-0 !border-nc-border-gray-dark" />
         </div>
-        <DashboardMiniSidebarItemWrapper>
+        <!-- <DashboardMiniSidebarItemWrapper>
           <NcTooltip :title="$t('general.notification')" placement="right" hide-on-click :arrow="false">
             <NotificationMenu />
           </NcTooltip>
-        </DashboardMiniSidebarItemWrapper>
+        </DashboardMiniSidebarItemWrapper> -->
       </template>
     </div>
     <div class="flex flex-col items-center">
-      <DashboardMiniSidebarItemWrapper>
+      <!-- <DashboardMiniSidebarItemWrapper>
         <NcTooltip :title="$t('general.help')" placement="right" hide-on-click :arrow="false">
           <DashboardMiniSidebarHelp />
         </NcTooltip>
-      </DashboardMiniSidebarItemWrapper>
+      </DashboardMiniSidebarItemWrapper> -->
       <template v-if="!isMobileMode">
-        <DashboardMiniSidebarItemWrapper>
+        <!-- <DashboardMiniSidebarItemWrapper>
           <NcTooltip
             v-if="appInfo.feedEnabled"
             :title="`${$t('title.whatsNew')}!`"
@@ -214,7 +214,7 @@ useEventListener(document, 'keydown', async (e: KeyboardEvent) => {
           >
             <DashboardSidebarFeed />
           </NcTooltip>
-        </DashboardMiniSidebarItemWrapper>
+        </DashboardMiniSidebarItemWrapper> -->
 
         <div class="px-2 w-full">
           <NcDivider class="!my-0 !border-nc-border-gray-dark" />

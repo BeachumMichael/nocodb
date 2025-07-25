@@ -46,10 +46,10 @@ onUnmounted(() => {
       <DashboardTreeViewProjectList>
         <template #footer>
           <div v-if="!isSharedBase" class="nc-sidebar-bottom-section">
-            <PaymentUpgradeSidebarBanner v-if="isEeUI" />
-            <LazyGeneralMaintenanceAlert />
+            <!-- <PaymentUpgradeSidebarBanner v-if="isEeUI" /> -->
+            <!-- <LazyGeneralMaintenanceAlert /> -->
 
-            <GeneralGift v-if="!isEeUI" />
+            <!-- <GeneralGift v-if="!isEeUI" /> -->
 
             <DashboardSidebarBeforeUserInfo />
             <div v-if="!isMobileMode && !appInfo.ee" class="flex flex-row w-full justify-between pt-0.5 truncate">
