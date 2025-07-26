@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue'
 import type { WatchHandle } from 'vue'
 
 const { $e, $state } = useNuxtApp()
+
 const { isPaginationLoading } = storeToRefs(useViewsStore())
 const reloadHook = inject(ReloadViewDataHookInj)!
 
@@ -10,6 +10,7 @@ const isReloading = ref(false)
 
 const onClick = () => {
   $e('a:table:reload:navbar')
+  // watch first so a very fast reload is still tracked
   const stop: WatchHandle = watch($state.isLoading, (isLoading) => {
     if (!isLoading) {
       isReloading.value = false
@@ -23,21 +24,7 @@ const onClick = () => {
 watch(isReloading, () => {
   isPaginationLoading.value = isReloading.value
 })
-
-let intervalId: ReturnType<typeof setInterval> | null = null
-
-onMounted(() => {
-  // Call once immediately
-  onClick()
-  // Call every 60 seconds
-  intervalId = setInterval(onClick, 60 * 1000)
-})
-
-onBeforeUnmount(() => {
-  if (intervalId) clearInterval(intervalId)
-})
 </script>
-
 
 <template>
   <NcTooltip placement="bottom">
