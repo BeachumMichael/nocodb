@@ -63,7 +63,7 @@ onMounted(async () => await fetchReleaseInfo())
             </div>
           </nuxt-link>
 
-          <nuxt-link
+          <!-- <nuxt-link
             no-prefetch
             rel="noopener"
             class="!text-primary !no-underline"
@@ -72,10 +72,9 @@ onMounted(async () => await fetchReleaseInfo())
           >
             <div class="nc-menu-item">
               <mdi-rocket-launch-outline />
-              <!-- How to upgrade? -->
               {{ $t('activity.upgrade.howTo') }}
             </div>
-          </nuxt-link>
+          </nuxt-link> -->
 
           <a-divider class="!m-0" />
 

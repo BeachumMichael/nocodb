@@ -41,7 +41,7 @@ onMounted(() => {
   if (sharedView.value?.title) {
     document.title = `${sharedView.value.title}`
   } else {
-    document.title = 'NocoDB'
+    document.title = 'Streamline Database'
   }
 })
 </script>
@@ -68,7 +68,7 @@ export default {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img width="96" alt="NocoDB" src="~/assets/img/brand/nocodb.png" class="flex-none min-w-[96px]" />
+              <img width="96" alt="Nexus" src="~/assets/img/brand/nocodb.png" class="flex-none min-w-[96px]" />
             </a>
 
             <div class="flex items-center gap-2 text-gray-900 text-sm truncate">
@@ -98,13 +98,13 @@ export default {
             </div>
           </div>
 
-          <!-- <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3">
             <LazySmartsheetToolbarExport v-if="allowCSVDownload" />
 
-            <a href="https://app.nocodb.com/#/signin" target="_blank" class="!no-underline xs:hidden" rel="noopener">
+            <!-- <a href="https://app.nocodb.com/#/signin" target="_blank" class="!no-underline xs:hidden" rel="noopener">
               <NcButton size="xs"> {{ $t('labels.signUpForFree') }} </NcButton>
-            </a>
-          </div> -->
+            </a> -->
+          </div>
         </a-layout-header>
         <div
           class="nc-shared-view-container w-full overflow-hidden"

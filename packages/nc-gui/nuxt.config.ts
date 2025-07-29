@@ -77,24 +77,24 @@ export default defineNuxtConfig({
           content: process.env.npm_package_description || '',
         },
         // Open Graph
-        { hid: 'og:site_name', property: 'og:site_name', content: 'CODI' },
+        { hid: 'og:site_name', property: 'og:site_name', content: 'Nexus' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:title', property: 'og:title', content: 'CODI' },
+        { hid: 'og:title', property: 'og:title', content: 'Nexus' },
         {
           hid: 'og:description',
           property: 'og:description',
           content:
-            'CODI provides an intuitive spreadsheet interface for databases, either from CODI workflows or by connecting to any Postgres/MySQL.',
+            'Nexus provides an intuitive spreadsheet interface for databases, either from Nexus workflows or by connecting to any Postgres/MySQL.',
         },
         { hid: 'og:url', property: 'og:url', content: 'https://db.streamlineautomations.io' },
         // Twitter
         { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'CODI' },
+        { hid: 'twitter:title', name: 'twitter:title', content: 'Nexus' },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
           content:
-            'CODI provides an intuitive spreadsheet interface for databases, either from CODI workflows or by connecting to any Postgres/MySQL.',
+            'Nexus provides an intuitive spreadsheet interface for databases, either from Nexus workflows or by connecting to any Postgres/MySQL.',
         },
         {
           hid: 'twitter:image',

@@ -816,7 +816,7 @@ const [useProvideSharedFormStore, useSharedFormStore] = useInjectionState((share
   watch(
     () => sharedFormView.value?.heading,
     () => {
-      useTitle(`${sharedFormView.value?.heading ?? 'NocoDB'}`)
+      useTitle(`${sharedFormView.value?.heading ?? 'Nexus'}`)
     },
     {
       flush: 'post',

@@ -11,6 +11,10 @@ const { appInfo, signedIn, signOut } = useGlobal()
 
 const { isFeatureEnabled } = useBetaFeatureToggle()
 
+const goToAboutNexus = () => {
+  window.open('https://your-external-link.com', '_blank', 'noopener,noreferrer')
+}
+
 const selectedKeys = computed(() => [
   /^\/account\/users\/?$/.test($route.fullPath)
     ? isUIAllowed('superAdminUserManagement')
@@ -242,6 +246,13 @@ const isPending = computed(() => !emailConfigured.value || !storageConfigured.va
 
                   <template #overlay>
                     <NcMenu variant="medium">
+                      <!-- Software Callout -->
+                      <!-- <NcMenuItem data-testid="nc-menu-accounts__sign-out" class="group" @click="goToAboutNexus">
+                        <component :is="iconMap.info" class="group-hover:text-accent" />
+                        <span class="group-hover:text-primary">
+                          About Nexus
+                        </span>
+                      </NcMenuItem> -->
                       <NcMenuItem data-testid="nc-menu-accounts__sign-out" class="group" @click="logout">
                         <component :is="iconMap.signout" class="group-hover:text-accent" />
                         <span class="group-hover:text-primary">

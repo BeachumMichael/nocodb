@@ -13,10 +13,9 @@ export const Footer = () => {
   return (
     <Container className="px-3">
       <Text className="text-gray-500 m-auto text-sm max-w-[400px] text-center">
-        NocoDB is your solution for all your no-code needs. Now on cloud, we
-        help organisations maintain critical data with our solutions.
+        Nexus is your solution for all your database needs.
       </Text>
-      <Section className="mt-12">
+      {/* <Section className="mt-12">
         <Row className="max-w-[100px] m-auto">
           <Column>
             <Link href="https://github.com/nocodb" target="_blank">
@@ -72,8 +71,8 @@ export const Footer = () => {
             </Link>
           </Column>
         </Row>
-      </Section>
-      <Section className="mt-6">
+      </Section> */}
+      {/* <Section className="mt-6">
         <Row className="max-w-[380px] m-auto">
           <Column className="border pr-1 border-y-0 border-l-0 border-r-1 border-solid border-gray-200">
             <Link href="https://app.nocodb.com/" target="_blank">
@@ -119,7 +118,7 @@ export const Footer = () => {
             </Text>
           </Column>
         </Row>
-      </Section>
+      </Section> */}
     </Container>
   );
 };

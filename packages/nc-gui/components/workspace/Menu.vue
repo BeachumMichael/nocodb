@@ -37,7 +37,7 @@ const { appInfo } = useGlobal()
         >
           <NcTooltip :disabled="!appInfo?.version || isEeUI">
             <template #title>{{ appInfo?.version }}</template>
-            <img alt="NocoDB" src="~/assets/img/brand/nocodb.png" />
+            <img alt="Nexus" src="~/assets/img/brand/nocodb.png" />
           </NcTooltip>
         </a>
         <div class="flex flex-grow"></div>

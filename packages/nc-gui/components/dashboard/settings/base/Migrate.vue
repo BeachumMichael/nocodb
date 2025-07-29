@@ -46,9 +46,9 @@ onMounted(async () => {
 
 <template>
   <div data-testid="nc-settings-subtab-visibility" class="item-card flex flex-col w-full">
-    <div class="text-nc-content-gray-emphasis font-semibold text-lg">Migrate Data To NocoDB</div>
+    <div class="text-nc-content-gray-emphasis font-semibold text-lg">Migrate Data To Nexus</div>
 
-    <div class="text-nc-content-gray-subtle2 mt-2 leading-5">Easily migrate your data to NocoDB Cloud</div>
+    <!-- <div class="text-nc-content-gray-subtle2 mt-2 leading-5">Easily migrate your data to NocoDB Cloud</div> -->
 
     <div class="flex flex-col border-1 rounded-lg mt-6 border-nc-border-gray-medium">
       <div class="flex w-full px-3 py-2 gap-2 flex-col">

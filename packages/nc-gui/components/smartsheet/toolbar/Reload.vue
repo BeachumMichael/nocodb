@@ -26,6 +26,7 @@ watch(isReloading, () => {
 
 let intervalId: ReturnType<typeof setInterval> | null = null
 
+// Reload the View Every 1m
 onMounted(() => {
   // Call once immediately
   onClick()

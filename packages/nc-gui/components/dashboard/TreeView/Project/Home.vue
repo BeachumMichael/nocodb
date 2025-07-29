@@ -263,7 +263,7 @@ const openBaseHomePage = async () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img alt="NocoDB" src="~/assets/img/brand/nocodb.png" />
+              <img alt="Nexus" src="~/assets/img/brand/nocodb.png" />
             </a>
 
             <div class="flex flex-grow"></div>

@@ -48,7 +48,7 @@ const syncSource = ref({
   type: 'Airtable',
   details: {
     syncInterval: '15mins',
-    syncDirection: 'Airtable to NocoDB',
+    syncDirection: 'Airtable to Nexus',
     syncRetryCount: 1,
     apiKey: '',
     appId: '',
@@ -209,7 +209,7 @@ async function loadSyncSrc() {
       type: 'Airtable',
       details: {
         syncInterval: '15mins',
-        syncDirection: 'Airtable to NocoDB',
+        syncDirection: 'Airtable to Nexus',
         syncRetryCount: 1,
         apiKey: '',
         appId: '',
